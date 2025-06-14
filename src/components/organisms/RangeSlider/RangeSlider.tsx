@@ -14,7 +14,7 @@ type SliderDataType = {
     unit: string;
 };
 
-export type RangeSliderConfigJsonStringType = SliderDataType;
+export type RangeSliderConfigJsonType = SliderDataType;
 
 type Props = {
     question: QuestionType;
@@ -26,7 +26,7 @@ type Props = {
             | number
             | boolean
             | OptionType[]
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
 };
@@ -52,17 +52,17 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
         (key: keyof SliderDataType, newValue: SliderDataType[typeof key]) => {
             if (typeof handleUpdateQuestion !== "function") return;
 
-            const currentData = question?.configJsonString || defaultData;
-            handleUpdateQuestion("configJsonString", {
+            const currentData = question?.ConfigJson || defaultData;
+            handleUpdateQuestion("ConfigJson", {
                 ...currentData,
                 [key]: newValue,
             });
         },
-        [handleUpdateQuestion, question?.configJsonString]
+        [handleUpdateQuestion, question?.ConfigJson]
     );
 
     useEffect(() => {
-        const config = question?.configJsonString;
+        const config = question?.ConfigJson;
         const isEmptyConfigObject =
             config &&
             typeof config === "object" &&
@@ -71,15 +71,15 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
 
         if (isEmptyConfigObject || isDataMissing) {
             if (typeof handleUpdateQuestion === "function") {
-                handleUpdateQuestion("configJsonString", { ...defaultData });
+                handleUpdateQuestion("ConfigJson", { ...defaultData });
                 setValue([defaultData.min, defaultData.max]);
             }
         } else {
             setValue([Number(config.min), Number(config.max)]);
         }
-    }, [question?.configJsonString, handleUpdateQuestion]);
+    }, [question?.ConfigJson, handleUpdateQuestion]);
 
-    const config = question?.configJsonString as SliderDataType | undefined;
+    const config = question?.ConfigJson as SliderDataType | undefined;
     const currentData =
         config &&
         typeof config === "object" &&
@@ -122,10 +122,10 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
                         step={currentData.step}
                         sx={{
                             "& .MuiSlider-thumb": {
-                                backgroundColor: formData?.configJsonString
-                                    ?.buttonBackgroundColor
-                                    ? formData?.configJsonString
-                                          ?.buttonBackgroundColor
+                                backgroundColor: formData?.ConfigJson
+                                    ?.ButtonBackgroundColor
+                                    ? formData?.ConfigJson
+                                          ?.ButtonBackgroundColor
                                     : "#000",
                                 borderRadius: 0,
                                 width: 26,

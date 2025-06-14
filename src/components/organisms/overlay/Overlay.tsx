@@ -122,7 +122,7 @@ const Confirm = ({
                         setValue(Number(e.target.value));
                     }}
                 >
-                    {formData.questions.map((item, index) => {
+                    {formData.Questions.map((item, index) => {
                         return (
                             <MenuItem value={item.order} key={index}>
                                 {item.order}.
