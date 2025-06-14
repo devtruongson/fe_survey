@@ -31,7 +31,10 @@ const defaultValue = {
     SurveySpecificTopicId: 5,
     SurveyStatusId: 2, //
     SecurityModeId: 1,
-    Background: "/assets/start1.webp",
+    Background: "image",
+    IsPause: false,
+    BackgroundImageBase64: "",
+    IsUseBackgroundImageBase64: false,
     ConfigJson: {
         BackgroundGradient1Color: "#ffffff",
         BackgroundGradient2Color: "#f0f0f0",
@@ -41,12 +44,11 @@ const defaultValue = {
         ButtonContentColor: "#ffffff",
         Password: "123456",
         Brightness: 100,
+        DefaultBackgroundImageId: 1
     },
     Questions: [],
     SkipStartPage: false,
 };
-
-let isFetchDisable = false;
 
 const SurveyNew = () => {
     const { id } = useParams();

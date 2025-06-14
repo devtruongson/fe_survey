@@ -428,6 +428,12 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
     const ref = useRef<null>(null);
 
+    const [listBackground, setListBackground] = useState<any[]>([]);
+
+    useEffect(() => {
+        setListBackground(JSON.parse(localStorage.getItem("listBackground") || "[]"));
+    },[]);
+
     return (
         <div className="question-page flex flex-col h-full">
             <input
@@ -449,8 +455,8 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 <div
                     className="question-main flex-1 flex flex-col overflow-y-auto relative"
                     style={{
-                        ...(formData?.Background?.startsWith("/") && {
-                            backgroundImage: `url(${formData?.Background})`,
+                        ...(formData?.Background === "image" && {
+                            backgroundImage: `url(${formData?.IsUseBackgroundImageBase64 && formData.BackgroundImageBase64 ? formData.BackgroundImageBase64: formData?.ConfigJson?.DefaultBackgroundImageId ? listBackground.find(item => item.id === formData?.ConfigJson?.DefaultBackgroundImageId)?.url : ""})`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",

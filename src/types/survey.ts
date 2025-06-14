@@ -48,6 +48,8 @@ export type SurveyType = {
     SecurityModeId: number;
     Background: string;
     ImageBase64?: string;
+    BackgroundImageBase64?: string;
+    IsUseBackgroundImageBase64?: boolean;
     CustomBackgroundImageUrl?: string | null;
     ConfigJson: {
         BackgroundGradient1Color: string;
@@ -59,6 +61,7 @@ export type SurveyType = {
         Password: string | null;
         Brightness: number;
         IsResizableIframeEnabled?: boolean;
+        DefaultBackgroundImageId: number;
     };
     Questions: QuestionType[];
     SkipStartPage: boolean;

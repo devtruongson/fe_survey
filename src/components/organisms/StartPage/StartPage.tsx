@@ -283,7 +283,7 @@ const StartPage = ({
         if (listBackground) {
             setListBackground(JSON.parse(listBackground));
         }
-    }, []);
+    },[]);
 
     return (
         <div

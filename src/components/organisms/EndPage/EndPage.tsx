@@ -4,18 +4,25 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { useEffect, useState } from "react";
 
 type Props = {
     formData: SurveyType;
 };
 
 const EndPage = ({ formData }: Props) => {
+    const [listBackground, setListBackground] = useState<any[]>([]);
+
+    useEffect(() => {
+        setListBackground(JSON.parse(localStorage.getItem("listBackground") || "[]"));
+    },[]);
+    
     return (
         <div
             className="min-h-[100%] question-main flex-1 flex flex-col overflow-y-auto relative items-center justify-center"
             style={{
-                ...(formData.Background.startsWith("/") && {
-                    backgroundImage: `url(${formData.Background})`,
+                ...(formData?.Background === "image" && {
+                    backgroundImage: `url(${formData?.IsUseBackgroundImageBase64 && formData.BackgroundImageBase64 ? formData.BackgroundImageBase64: formData?.ConfigJson?.DefaultBackgroundImageId ? listBackground.find(item => item.id === formData?.ConfigJson?.DefaultBackgroundImageId)?.url : ""})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
