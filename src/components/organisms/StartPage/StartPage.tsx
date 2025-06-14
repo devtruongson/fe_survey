@@ -24,30 +24,30 @@ const backgrounds = Array.from(
 );
 
 const mockSurveyData: SurveyType = {
-    id: 1,
-    requesterId: 1,
-    marketSurveyVersionStatusId: 1,
-    surveyTypeId: 1,
-    surveyTopicId: 0,
-    surveySpecificTopicId: 0,
-    surveyStatusId: 1,
-    securityModeId: 1,
-    background: "start1",
-    customBackgroundImageUrl: null,
-    configJsonString: {
-        backgroundGradient1Color: "#FCE38A",
-        backgroundGradient2Color: "#F38181",
-        titleColor: "#FFFFFF",
-        contentColor: "#CCCCCC",
-        buttonBackgroundColor: "#007bff",
-        buttonContentColor: "#ffffff",
-        password: "",
-        brightness: 100,
+    Id: 1,
+    RequesterId: 1,
+    MarketSurveyVersionStatusId: 1,
+    SurveyTypeId: 1,
+    SurveyTopicId: 0,
+    SurveySpecificTopicId: 0,
+    SurveyStatusId: 1,
+    SecurityModeId: 1,
+    Background: "start1",
+    CustomBackgroundImageUrl: null,
+    ConfigJson: {
+        BackgroundGradient1Color: "#FCE38A",
+        BackgroundGradient2Color: "#F38181",
+        TitleColor: "#FFFFFF",
+        ContentColor: "#CCCCCC",
+        ButtonBackgroundColor: "#007bff",
+        ButtonContentColor: "#ffffff",
+        Password: "",
+        Brightness: 100,
     },
-    description: "Mô tả khảo sát mặc định",
-    title: "Tiêu đề khảo sát mặc định",
-    questions: [],
-    skipStartPage: false,
+    Description: "Mô tả khảo sát mặc định",
+    Title: "Tiêu đề khảo sát mặc định",
+    Questions: [],
+    SkipStartPage: false,
 };
 
 const fetchSurveyData = (): Promise<SurveyType> => {
@@ -83,7 +83,7 @@ const StartPage = ({
 
     const handleToggleSkipStartPage = (checked: boolean) => {
         setSkipStartPage(checked);
-        handleInputChange("skipStartPage", checked);
+        handleInputChange("SkipStartPage", checked);
     };
 
     const handleStartSurvey = () => {
@@ -96,24 +96,24 @@ const StartPage = ({
             });
     };
 
-    const [skipStartPage, setSkipStartPage] = useState(false);
-    const [brightness, setBrightness] = useState<number>(
-        formData?.configJsonString?.brightness || 100
+    const [SkipStartPage, setSkipStartPage] = useState(false);
+    const [Brightness, setBrightness] = useState<number>(
+        formData?.ConfigJson?.Brightness || 100
     );
     const [backgroundMode, setBackgroundMode] = useState<"image" | "color">(
         "image"
     );
-    const [titleColor, setTitleColor] = useState<string>(
-        formData?.configJsonString?.titleColor || "#FFFFFF"
+    const [TitleColor, setTitleColor] = useState<string>(
+        formData?.ConfigJson?.TitleColor || "#FFFFFF"
     );
-    const [contentColor, setContentColor] = useState<string>(
-        formData?.configJsonString?.contentColor || "#CCCCCC"
+    const [ContentColor, setContentColor] = useState<string>(
+        formData?.ConfigJson?.ContentColor || "#CCCCCC"
     );
     const [buttonBgColor, setButtonBgColor] = useState<string>(
-        formData?.configJsonString?.buttonBackgroundColor || "#007bff"
+        formData?.ConfigJson?.ButtonBackgroundColor || "#007bff"
     );
     const [buttonTextColor, setButtonTextColor] = useState<string>(
-        formData?.configJsonString?.buttonContentColor || "#ffffff"
+        formData?.ConfigJson?.ButtonContentColor || "#ffffff"
     );
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const [showColorModal, setShowColorModal] = useState(false);
@@ -122,15 +122,15 @@ const StartPage = ({
     > | null>(null);
     const [pickerForBackground, setPickerForBackground] = useState(false);
     const [selectedSurveyTopic, setSelectedSurveyTopic] = useState<number>(
-        formData?.surveyTopicId
+        formData?.SurveyTopicId
     );
     const [selectedSurveySpecificTopic, setSelectedSurveySpecificTopic] =
-        useState<number>(formData?.surveySpecificTopicId);
+        useState<number>(formData?.SurveySpecificTopicId);
     const [surveyStatusChecked, setSurveyStatusChecked] = useState<boolean>(
-        formData?.surveyStatusId === 1
+        formData?.SurveyStatusId === 1
     );
     const [selectedSecurityMode, setSelectedSecurityMode] = useState<number>(
-        formData?.securityModeId
+        formData?.SecurityModeId
     );
 
     useEffect(() => {
@@ -144,40 +144,40 @@ const StartPage = ({
 
             if (savedFormData) {
                 initialData = JSON.parse(savedFormData);
-                if (!initialData.configJsonString) {
-                    initialData.configJsonString = {
-                        backgroundGradient1Color: "#FCE38A",
-                        backgroundGradient2Color: "#F38181",
-                        titleColor: "#FFFFFF",
-                        contentColor: "#CCCCCC",
-                        buttonBackgroundColor: "#007bff",
-                        buttonContentColor: "#ffffff",
-                        password: "",
-                        brightness: 100,
+                if (!initialData.ConfigJson) {
+                    initialData.ConfigJson = {
+                        BackgroundGradient1Color: "#FCE38A",
+                        BackgroundGradient2Color: "#F38181",
+                        TitleColor: "#FFFFFF",
+                        ContentColor: "#CCCCCC",
+                        ButtonBackgroundColor: "#007bff",
+                        ButtonContentColor: "#ffffff",
+                        Password: "",
+                        Brightness: 100,
                     };
                 }
-                if (initialData.customBackgroundImageUrl === undefined) {
-                    initialData.customBackgroundImageUrl = null;
+                if (initialData.CustomBackgroundImageUrl === undefined) {
+                    initialData.CustomBackgroundImageUrl = null;
                 }
-                if (initialData.configJsonString?.brightness === undefined) {
-                    initialData.configJsonString.brightness = 100; // Default brightness
+                if (initialData.ConfigJson?.Brightness === undefined) {
+                    initialData.ConfigJson.Brightness = 100; // Default Brightness
                 }
-                if (initialData.skipStartPage === undefined) {
-                    initialData.skipStartPage = false;
+                if (initialData.SkipStartPage === undefined) {
+                    initialData.SkipStartPage = false;
                 }
-                if (initialData.surveyStatusId === undefined) {
-                    initialData.surveyStatusId = 1; // Default to active
+                if (initialData.SurveyStatusId === undefined) {
+                    initialData.SurveyStatusId = 1; // Default to active
                 }
-                if (initialData.securityModeId === undefined) {
-                    initialData.securityModeId = 1; // Default to no password protection
+                if (initialData.SecurityModeId === undefined) {
+                    initialData.SecurityModeId = 1; // Default to no Password protection
                 }
             } else {
                 initialData = await fetchSurveyData();
             }
             setFormData(initialData);
-            setSkipStartPage(initialData.skipStartPage || false);
-            setSurveyStatusChecked(initialData.surveyStatusId === 1);
-            setSelectedSecurityMode(initialData.securityModeId);
+            setSkipStartPage(initialData.SkipStartPage || false);
+            setSurveyStatusChecked(initialData.SurveyStatusId === 1);
+            setSelectedSecurityMode(initialData.SecurityModeId);
         };
 
         loadInitialData();
@@ -185,30 +185,30 @@ const StartPage = ({
     }, []);
 
     useEffect(() => {
-        setSelectedSurveyTopic(formData?.surveyTopicId);
-        setSelectedSurveySpecificTopic(formData?.surveySpecificTopicId);
-        setBrightness(formData?.configJsonString?.brightness);
-        setSurveyStatusChecked(formData?.surveyStatusId === 1);
-        setSelectedSecurityMode(formData?.securityModeId);
+        setSelectedSurveyTopic(formData?.SurveyTopicId);
+        setSelectedSurveySpecificTopic(formData?.SurveySpecificTopicId);
+        setBrightness(formData?.ConfigJson?.Brightness);
+        setSurveyStatusChecked(formData?.SurveyStatusId === 1);
+        setSelectedSecurityMode(formData?.SecurityModeId);
 
         if (
-            formData?.background === "custom" &&
-            formData?.customBackgroundImageUrl
+            formData?.Background === "custom" &&
+            formData?.CustomBackgroundImageUrl
         ) {
             setBackgroundMode("image");
-        } else if (backgrounds.includes(formData?.background)) {
+        } else if (backgrounds.includes(formData?.Background)) {
             setBackgroundMode("image");
         } else if (
-            formData?.background?.startsWith("#") ||
-            formData?.background === "color_gradient"
+            formData?.Background?.startsWith("#") ||
+            formData?.Background === "color_gradient"
         ) {
             setBackgroundMode("color");
         }
 
-        setTitleColor(formData?.configJsonString?.titleColor);
-        setContentColor(formData?.configJsonString?.contentColor);
-        setButtonBgColor(formData?.configJsonString?.buttonBackgroundColor);
-        setButtonTextColor(formData?.configJsonString?.buttonContentColor);
+        setTitleColor(formData?.ConfigJson?.TitleColor);
+        setContentColor(formData?.ConfigJson?.ContentColor);
+        setButtonBgColor(formData?.ConfigJson?.ButtonBackgroundColor);
+        setButtonTextColor(formData?.ConfigJson?.ButtonContentColor);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData, backgrounds]);
@@ -221,9 +221,9 @@ const StartPage = ({
         setBrightness(newBrightness);
         setFormData((prev) => ({
             ...prev,
-            configJsonString: {
-                ...prev.configJsonString,
-                brightness: newBrightness,
+            ConfigJson: {
+                ...prev.ConfigJson,
+                Brightness: newBrightness,
             },
         }));
     };
@@ -238,15 +238,15 @@ const StartPage = ({
                 const imageUrl = reader.result as string;
                 setFormData((prev) => ({
                     ...prev,
-                    background: "custom",
-                    customBackgroundImageUrl: imageUrl,
+                    Background: "custom",
+                    CustomBackgroundImageUrl: imageUrl,
                 }));
                 setBackgroundMode("image");
                 const defaultConfig = handleSelectBackground("default_color");
-                setTitleColor(defaultConfig.colors.titleColor);
-                setContentColor(defaultConfig.colors.contentColor);
-                setButtonBgColor(defaultConfig.colors.buttonBackgroundColor);
-                setButtonTextColor(defaultConfig.colors.buttonContentColor);
+                setTitleColor(defaultConfig.colors.TitleColor);
+                setContentColor(defaultConfig.colors.ContentColor);
+                setButtonBgColor(defaultConfig.colors.ButtonBackgroundColor);
+                setButtonTextColor(defaultConfig.colors.ButtonContentColor);
             };
             reader.readAsDataURL(file);
         }
@@ -256,8 +256,8 @@ const StartPage = ({
         setBackgroundMode("color");
         setFormData((prev) => ({
             ...prev,
-            customBackgroundImageUrl: null,
-            background: "color_gradient",
+            CustomBackgroundImageUrl: null,
+            Background: "color_gradient",
         })); // Set background to a color type
         setPickerForBackground(true);
         setShowColorModal(true);
@@ -277,13 +277,13 @@ const StartPage = ({
                 className="relative flex-1 flex items-center justify-center"
                 style={{
                     ...(backgroundMode === "color" && {
-                        ...(formData?.background?.startsWith("#")
+                        ...(formData?.Background?.startsWith("#")
                             ? {
-                                  backgroundColor: formData?.background,
+                                  backgroundColor: formData?.Background,
                                   overflowY: "auto",
                               }
                             : {
-                                  background: `linear-gradient(to right, ${formData?.configJsonString.backgroundGradient1Color}, ${formData?.configJsonString.backgroundGradient2Color})`,
+                                  background: `linear-gradient(to right, ${formData?.ConfigJson.BackgroundGradient1Color}, ${formData?.ConfigJson.BackgroundGradient2Color})`,
                                   overflowY: "auto",
                               }),
                     }),
@@ -293,12 +293,12 @@ const StartPage = ({
                     <div
                         className="absolute inset-0"
                         style={{
-                            backgroundImage: `url(${formData?.background})`,
+                            backgroundImage: `url(${formData?.Background})`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
-                            filter: `brightness(${
-                                (brightness ? brightness : 100) / 100
+                            filter: `Brightness(${
+                                (Brightness ? Brightness : 100) / 100
                             })`,
                             backgroundColor: "transparent",
                         }}
@@ -308,22 +308,22 @@ const StartPage = ({
                     <div className="startpage-content w-full text-center">
                         <input
                             type="text"
-                            value={formData?.title}
+                            value={formData?.Title}
                             onChange={(e) =>
-                                handleInputChange("title", e.target.value)
+                                handleInputChange("Title", e.target.value)
                             }
                             className="startpage-title-input"
                             placeholder="Nhập tiêu đề"
-                            style={{ color: titleColor }}
+                            style={{ color: TitleColor }}
                         />
                         <input
-                            value={formData?.description}
+                            value={formData?.Description}
                             onChange={(e) =>
-                                handleInputChange("description", e.target.value)
+                                handleInputChange("Description", e.target.value)
                             }
                             className="startpage-desc-input"
                             placeholder="Nhập mô tả tại đây"
-                            style={{ color: contentColor }}
+                            style={{ color: ContentColor }}
                         />
                         <button
                             onClick={handleStartSurvey}
@@ -364,7 +364,7 @@ const StartPage = ({
                             <label className="toggle-switch">
                                 <input
                                     type="checkbox"
-                                    checked={skipStartPage}
+                                    checked={SkipStartPage}
                                     onChange={(e) =>
                                         handleToggleSkipStartPage(
                                             e.target.checked
@@ -483,12 +483,12 @@ const StartPage = ({
                         handleSelectColorBackground={
                             handleSelectColorBackground
                         }
-                        brightness={brightness}
+                        Brightness={Brightness}
                     />
                     <div className="w-full max-w-md mx-auto bg-white">
                         <SurveyContentTextColor
-                            titleColor={titleColor}
-                            contentColor={contentColor}
+                            TitleColor={TitleColor}
+                            ContentColor={ContentColor}
                             setTitleColor={setTitleColor}
                             setContentColor={setContentColor}
                             setShowColorModal={setShowColorModal}
@@ -519,14 +519,14 @@ const StartPage = ({
                     onSavePassword={(newPassword) => {
                         setFormData((prev) => ({
                             ...prev,
-                            // securityModeId: newPassword ? 2 : 1,
-                            configJsonString: {
-                                ...prev.configJsonString,
-                                password: newPassword,
+                            // SecurityModeId: newPassword ? 2 : 1,
+                            ConfigJson: {
+                                ...prev.ConfigJson,
+                                Password: newPassword,
                             },
                         }));
                     }}
-                    initialPassword={formData.configJsonString.password || ""}
+                    initialPassword={formData?.ConfigJson?.Password || ""}
                 />
             )}
             {showColorModal && (
@@ -541,16 +541,16 @@ const StartPage = ({
                         if (pickerForBackground) {
                             setFormData((prev) => ({
                                 ...prev,
-                                configJsonString: {
-                                    ...prev.configJsonString,
-                                    backgroundGradient1Color: color1,
-                                    backgroundGradient2Color: color2,
+                                ConfigJson: {
+                                    ...prev.ConfigJson,
+                                    BackgroundGradient1Color: color1,
+                                    BackgroundGradient2Color: color2,
                                 },
                                 background:
                                     color1 !== color2
                                         ? "color_gradient"
                                         : color1,
-                                customBackgroundImageUrl: null,
+                                CustomBackgroundImageUrl: null,
                             }));
                         } else if (activeColorSetter) {
                             if (activeColorSetter === setButtonBgColor) {
@@ -563,9 +563,9 @@ const StartPage = ({
                                 }
                                 setFormData((prev) => ({
                                     ...prev,
-                                    configJsonString: {
-                                        ...prev.configJsonString,
-                                        buttonBackgroundColor:
+                                    ConfigJson: {
+                                        ...prev.ConfigJson,
+                                        ButtonBackgroundColor:
                                             color1 !== color2
                                                 ? `linear-gradient(to right, ${color1}, ${color2})`
                                                 : color1,
@@ -575,22 +575,22 @@ const StartPage = ({
                                 activeColorSetter(color1);
                                 setFormData((prev) => {
                                     const newConfig = {
-                                        ...prev.configJsonString,
+                                        ...prev.ConfigJson,
                                     };
                                     if (activeColorSetter === setTitleColor) {
-                                        newConfig.titleColor = color1;
+                                        newConfig.TitleColor = color1;
                                     } else if (
                                         activeColorSetter === setContentColor
                                     ) {
-                                        newConfig.contentColor = color1;
+                                        newConfig.ContentColor = color1;
                                     } else if (
                                         activeColorSetter === setButtonTextColor
                                     ) {
-                                        newConfig.buttonContentColor = color1;
+                                        newConfig.ButtonContentColor = color1;
                                     }
                                     return {
                                         ...prev,
-                                        configJsonString: newConfig,
+                                        ConfigJson: newConfig,
                                     };
                                 });
                             }
@@ -605,17 +605,17 @@ const StartPage = ({
 
                         if (pickerForBackground) {
                             initialColor1 =
-                                formData?.configJsonString
-                                    ?.backgroundGradient1Color || "#FCE38A";
+                                formData?.ConfigJson
+                                    ?.BackgroundGradient1Color || "#FCE38A";
                             initialColor2 =
-                                formData?.configJsonString
-                                    ?.backgroundGradient2Color || "#F38181";
+                                formData?.ConfigJson
+                                    ?.BackgroundGradient2Color || "#F38181";
                         } else if (activeColorSetter === setTitleColor) {
-                            initialColor1 = titleColor;
-                            initialColor2 = titleColor;
+                            initialColor1 = TitleColor;
+                            initialColor2 = TitleColor;
                         } else if (activeColorSetter === setContentColor) {
-                            initialColor1 = contentColor;
-                            initialColor2 = contentColor;
+                            initialColor1 = ContentColor;
+                            initialColor2 = ContentColor;
                         } else if (activeColorSetter === setButtonTextColor) {
                             initialColor1 = buttonTextColor;
                             initialColor2 = buttonTextColor;
@@ -703,8 +703,8 @@ function ToppicSurvey({
                             setSelectedSurveyTopic(newTopicId);
                             setFormData((prev: any) => ({
                                 ...prev,
-                                surveyTopicId: newTopicId,
-                                surveySpecificTopicId: 0,
+                                SurveyTopicId: newTopicId,
+                                SurveySpecificTopicId: 0,
                             }));
                             setSelectedSurveySpecificTopic(0);
                         }}
@@ -763,14 +763,14 @@ function ToppicSurvey({
                             setSelectedSurveySpecificTopic(newSpecificTopicId);
                             setFormData((prev: any) => ({
                                 ...prev,
-                                surveySpecificTopicId: newSpecificTopicId,
+                                SurveySpecificTopicId: newSpecificTopicId,
                             }));
                         }}
                     >
                         <MenuItem value={0}>Chọn chủ đề cụ thể</MenuItem>
                         {SurveySpecificTopic.filter(
                             (topic) =>
-                                topic.surveyTopicId === selectedSurveyTopic
+                                topic.SurveyTopicId === selectedSurveyTopic
                         ).map((topic) => (
                             <MenuItem key={topic.id} value={topic.id}>
                                 {topic.name}
@@ -804,7 +804,7 @@ function SurveyStatus({
                                 setSurveyStatusChecked(newCheckedStatus);
                                 setFormData((prev: any) => ({
                                     ...prev,
-                                    surveyStatusId: newCheckedStatus ? 1 : 2,
+                                    SurveyStatusId: newCheckedStatus ? 1 : 2,
                                 }));
                             }}
                             aria-label="Trạng thái khảo sát"
@@ -822,7 +822,8 @@ function CustomizePassword({
     setFormData,
     handleCustomizePassword,
 }: any) {
-    const hasPassword = formData.configJsonString.password !== null;
+    const hasPassword = formData?.ConfigJson?.Password !== null &&
+        formData?.ConfigJson?.Password !== undefined;
 
     return (
         <div className="config-section">
@@ -839,11 +840,11 @@ function CustomizePassword({
                             const on = e.target.checked;
                             setFormData((prev: any) => ({
                                 ...prev,
-                                configJsonString: {
-                                    ...prev.configJsonString,
+                                ConfigJson: {
+                                    ...prev.ConfigJson,
                                     // khi bật: để chuỗi rỗng để hiển thị nút Tùy chỉnh
                                     // khi tắt: set về null để ẩn nút Tùy chỉnh
-                                    password: on ? "" : null,
+                                    Password: on ? "" : null,
                                 },
                             }));
                         }}
@@ -881,7 +882,7 @@ function SecurityMode({
                         setSelectedSecurityMode(newMode);
                         setFormData((prev: any) => ({
                             ...prev,
-                            securityModeId: newMode,
+                            SecurityModeId: newMode,
                         }));
                     }}
                 >
@@ -904,7 +905,7 @@ function BackgroundMode({
     handleBrightnessChange: handleBrightnessChange,
     handleBackgroundUpload: handleBackgroundUpload,
     handleSelectColorBackground: handleSelectColorBackground,
-    brightness: brightness,
+    Brightness: Brightness,
 }: any) {
     return (
         <>
@@ -919,7 +920,7 @@ function BackgroundMode({
                         document.getElementById("backgroundInput")?.click();
                     }}
                     style={{
-                        backgroundImage: `url(${formData?.background})`,
+                        backgroundImage: `url(${formData?.Background})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}
@@ -950,9 +951,9 @@ function BackgroundMode({
                 <div>
                     <h3>ĐỘ SÁNG HÌNH NỀN</h3>
                     <Slider
-                        value={brightness}
+                        value={Brightness}
                         onChange={handleBrightnessChange}
-                        aria-labelledby="brightness-slider"
+                        aria-labelledby="Brightness-slider"
                         valueLabelDisplay="auto"
                         min={0}
                         max={100}
@@ -978,10 +979,10 @@ function BackgroundMode({
                     onClick={handleSelectColorBackground}
                     style={{
                         background:
-                            formData?.background === "color_gradient"
-                                ? `linear-gradient(to right, ${formData?.configJsonString.backgroundGradient1Color}, ${formData?.configJsonString.backgroundGradient2Color})`
-                                : formData?.background?.startsWith("#")
-                                ? formData?.background
+                            formData?.Background === "color_gradient"
+                                ? `linear-gradient(to right, ${formData?.ConfigJson.BackgroundGradient1Color}, ${formData?.ConfigJson.BackgroundGradient2Color})`
+                                : formData?.Background?.startsWith("#")
+                                ? formData?.Background
                                 : "#cccccc",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
@@ -1006,8 +1007,8 @@ function BackgroundMode({
 }
 
 function SurveyContentTextColor({
-    titleColor: titleColor,
-    contentColor: contentColor,
+    TitleColor: TitleColor,
+    ContentColor: ContentColor,
     setTitleColor: setTitleColor,
     setContentColor: setContentColor,
     setShowColorModal: setShowColorModal,
@@ -1028,7 +1029,7 @@ function SurveyContentTextColor({
                         <div className="flex-1 max-w-20">
                             <div
                                 className="w-full h-8 rounded border border-gray-300 cursor-pointer"
-                                style={{ backgroundColor: titleColor }}
+                                style={{ backgroundColor: TitleColor }}
                                 onClick={() => {
                                     setShowColorModal(true);
                                     setActiveColorSetter(() => setTitleColor);
@@ -1044,7 +1045,7 @@ function SurveyContentTextColor({
                         <div className="flex-1 max-w-20">
                             <div
                                 className="w-full h-8 rounded border border-gray-300 cursor-pointer"
-                                style={{ backgroundColor: contentColor }}
+                                style={{ backgroundColor: ContentColor }}
                                 onClick={() => {
                                     setShowColorModal(true);
                                     setActiveColorSetter(() => setContentColor);
@@ -1163,7 +1164,7 @@ function DesignSuggestions({
                                     <div
                                         key={index}
                                         className={`background-thumbnail-item ${
-                                            formData?.background ===
+                                            formData?.Background ===
                                                 `/assets/start${
                                                     index + 1
                                                 }.webp` &&
@@ -1174,23 +1175,23 @@ function DesignSuggestions({
                                         onClick={() => {
                                             setFormData((prev: any) => ({
                                                 ...prev,
-                                                background: `/assets/start${
+                                                Background: `/assets/start${
                                                     index + 1
                                                 }.webp`,
-                                                configJsonString: {
-                                                    ...prev.configJsonString,
-                                                    titleColor:
+                                                ConfigJson: {
+                                                    ...prev.ConfigJson,
+                                                    TitleColor:
                                                         selectedConfig.colors
-                                                            .titleColor,
-                                                    contentColor:
+                                                            .TitleColor,
+                                                    ContentColor:
                                                         selectedConfig.colors
-                                                            .contentColor,
-                                                    buttonBackgroundColor:
+                                                            .ContentColor,
+                                                    ButtonBackgroundColor:
                                                         selectedConfig.colors
-                                                            .buttonBackgroundColor,
-                                                    buttonContentColor:
+                                                            .ButtonBackgroundColor,
+                                                    ButtonContentColor:
                                                         selectedConfig.colors
-                                                            .buttonContentColor,
+                                                            .ButtonContentColor,
                                                 },
                                             }));
                                             setBackgroundMode("image");
