@@ -10,8 +10,8 @@ type Props = {
 
 const getErrors = (formData: SurveyType): string[] => {
     const errors: string[] = [];
-    if (formData?.questions) {
-        formData.questions.forEach((question) => {
+    if (formData?.Questions) {
+        formData.Questions.forEach((question) => {
             if (!question.content) {
                 errors.push(`Câu hỏi ${question.order} chưa điền tiêu đề`);
             }
@@ -59,26 +59,26 @@ const CompletePage = ({ formData }: Props) => {
         <div
             className="complete-page flex-1 flex flex-col items-center justify-center min-h-[100%]"
             style={{
-                ...(formData.background.startsWith("/") && {
-                    backgroundImage: `url(${formData.background})`,
+                ...(formData.Background.startsWith("/") && {
+                    backgroundImage: `url(${formData.Background})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
-                    filter: `brightness(${
-                        formData.configJsonString.brightness / 100
+                    filter: `Brightness(${
+                        formData.ConfigJson.Brightness / 100
                     })`,
                     backgroundColor: "transparent",
                 }),
-                ...(formData.background === "color_gradient" && {
-                    background: `linear-gradient(to right, ${formData.configJsonString.backgroundGradient1Color}, ${formData.configJsonString.backgroundGradient2Color})`,
-                    filter: `brightness(${
-                        formData.configJsonString.brightness / 100
+                ...(formData.Background === "color_gradient" && {
+                    background: `linear-gradient(to right, ${formData.ConfigJson.BackgroundGradient1Color}, ${formData.ConfigJson.BackgroundGradient2Color})`,
+                    filter: `Brightness(${
+                        formData.ConfigJson.Brightness / 100
                     })`,
                 }),
-                ...(formData.background.startsWith("#") && {
-                    backgroundColor: formData.background,
-                    filter: `brightness(${
-                        formData.configJsonString.brightness / 100
+                ...(formData.Background.startsWith("#") && {
+                    backgroundColor: formData.Background,
+                    filter: `Brightness(${
+                        formData.ConfigJson.Brightness / 100
                     })`,
                 }),
             }}
@@ -93,9 +93,9 @@ const CompletePage = ({ formData }: Props) => {
                 ) : (
                     <Box className="p-4">
                         <Typography variant="h4">Survey Completed!</Typography>
-                        {formData.title && (
+                        {formData.Title && (
                             <Typography variant="body1">
-                                Survey Title: {formData.title}
+                                Survey Title: {formData.Title}
                             </Typography>
                         )}
                     </Box>

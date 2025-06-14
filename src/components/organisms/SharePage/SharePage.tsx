@@ -9,13 +9,13 @@ interface SharePageProps {
 
 const SharePage = ({ formData }: SharePageProps) => {
     const getBackgroundMode = (data: SurveyType) => {
-        if (data.background === "custom" && data.customBackgroundImageUrl) {
+        if (data.Background === "custom" && data.CustomBackgroundImageUrl) {
             return "image";
-        } else if (data.background.startsWith("/assets/start")) {
+        } else if (data.Background.startsWith("/assets/start")) {
             return "image";
         } else if (
-            data.background.startsWith("#") ||
-            data.background === "color_gradient"
+            data.Background.startsWith("#") ||
+            data.Background === "color_gradient"
         ) {
             return "color";
         }
@@ -35,24 +35,24 @@ const SharePage = ({ formData }: SharePageProps) => {
                 style={{
                     ...(backgroundMode === "image" && {
                         backgroundImage: `url(${
-                            formData.customBackgroundImageUrl ||
-                            formData.background
+                            formData.CustomBackgroundImageUrl ||
+                            formData.Background
                         })`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
-                        filter: `brightness(${
-                            formData.configJsonString.brightness / 100
+                        filter: `Brightness(${
+                            formData.ConfigJson.Brightness / 100
                         })`,
                         backgroundColor: "transparent",
                     }),
                     ...(backgroundMode === "color" && {
-                        ...(formData.background.startsWith("#")
+                        ...(formData.Background.startsWith("#")
                             ? {
-                                  backgroundColor: formData.background,
+                                  backgroundColor: formData.Background,
                               }
                             : {
-                                  background: `linear-gradient(to right, ${formData.configJsonString.backgroundGradient1Color}, ${formData.configJsonString.backgroundGradient2Color})`,
+                                  background: `linear-gradient(to right, ${formData.ConfigJson.BackgroundGradient1Color}, ${formData.ConfigJson.BackgroundGradient2Color})`,
                               }),
                     }),
                 }}
@@ -63,7 +63,7 @@ const SharePage = ({ formData }: SharePageProps) => {
                             className="text-2xl font-semibold mb-4 text-center"
                             style={{
                                 color:
-                                    formData.configJsonString.titleColor ||
+                                    formData.ConfigJson.TitleColor ||
                                     "#ffffff",
                             }}
                         >
@@ -108,7 +108,7 @@ const SharePage = ({ formData }: SharePageProps) => {
                                 }}
                                 onClick={() => {
                                     navigator.clipboard.writeText(
-                                        `${window.location.origin}/survey/share/${formData.id}`
+                                        `${window.location.origin}/survey/share/${formData.Id}`
                                     );
                                     setIsCopyLink(true);
                                     setTimeout(() => {

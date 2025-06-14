@@ -4,7 +4,7 @@ import type {
     QuestionType,
     SurveyType,
 } from "../../../types/survey";
-import type { RangeSliderConfigJsonStringType } from "../../organisms/RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../../organisms/RangeSlider/RangeSlider";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -21,7 +21,7 @@ type Props = {
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
 };
@@ -38,10 +38,10 @@ const TimeLimit = ({
     const action = useCallback(() => {
         if (isOpen) {
             handleUpdateQuestion("timeLimit", 0);
-            setFormData((prev) => ({ ...prev, securityModeId: 1 }));
+            setFormData((prev) => ({ ...prev, SecurityModeId: 1 }));
         }
         if (!isOpen && !isAdvance) {
-            setFormData((prev) => ({ ...prev, securityModeId: 2 }));
+            setFormData((prev) => ({ ...prev, SecurityModeId: 2 }));
             toast("Đã cập nhật Chế độ bảo mật thành Advance");
         }
         setIsOpne(!isOpen);

@@ -5,7 +5,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
 import type { OptionType, SurveyType } from "../../../types/survey";
@@ -63,7 +62,7 @@ const Answer = ({
                     placeholder="Nhập câu trả lời tại đây"
                     onChange={handleChange}
                     style={{
-                        color: `${formData?.configJsonString?.contentColor}`,
+                        color: `${formData?.ConfigJson?.ContentColor}`,
                     }}
                 />
                 <input

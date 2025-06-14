@@ -28,40 +28,37 @@ export type QuestionType = {
     timeLimit: number;
     isVoice: boolean;
     order: number;
-    configJsonString: Record<
-        string,
-        string | number | SlideType[] | JumpLogicsType[]
-    >;
+    ConfigJson: Record<string, string | number | SlideType[] | JumpLogicsType[]>;
     options: OptionType[];
 };
 
 export type SurveyType = {
-    id: number;
-    requesterId: number;
-    title: string;
-    description: string;
-    marketSurveyVersionStatusId: number;
-    surveyTypeId: number;
-    surveyTopicId: number;
-    surveySpecificTopicId: number;
-    surveyStatusId: number;
-    securityModeId: number;
-    background: string;
+    Id: number;
+    RequesterId: number;
+    Title: string;
+    Description: string;
+    MarketSurveyVersionStatusId: number | null;
+    SurveyTypeId: number;
+    SurveyTopicId: number;
+    SurveySpecificTopicId: number;
+    SurveyStatusId: number;
+    SecurityModeId: number;
+    Background: string;
     ImageBase64?: string;
-    customBackgroundImageUrl?: string | null;
-    configJsonString: {
-        backgroundGradient1Color: string;
-        backgroundGradient2Color: string;
-        titleColor: string;
-        contentColor: string;
-        buttonBackgroundColor: string;
-        buttonContentColor: string;
-        password: string | null;
-        brightness: number;
-        isResizableIframeEnabled?: boolean;
+    CustomBackgroundImageUrl?: string | null;
+    ConfigJson: {
+        BackgroundGradient1Color: string;
+        BackgroundGradient2Color: string;
+        TitleColor: string;
+        ContentColor: string;
+        ButtonBackgroundColor: string;
+        ButtonContentColor: string;
+        Password: string | null;
+        Brightness: number;
+        IsResizableIframeEnabled?: boolean;
     };
-    questions: QuestionType[];
-    skipStartPage: boolean;
+    Questions: QuestionType[];
+    SkipStartPage: boolean;
 };
 
 export interface PageProps {

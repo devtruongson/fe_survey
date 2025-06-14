@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import type { OptionType, QuestionType } from "../../../../types/survey";
-import type { RangeSliderConfigJsonStringType } from "../../RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../../RangeSlider/RangeSlider";
 
 type DisplayLogicType = {
     conditions: {
@@ -14,17 +14,17 @@ type DisplayLogicType = {
     targetQuestionOrder: number | "end";
 };
 
-type ConfigJsonStringType = {
+type ConfigJsonType = {
     displayLogics?: DisplayLogicType[];
-    backgroundGradient1Color?: string;
-    backgroundGradient2Color?: string;
-    titleColor?: string;
-    contentColor?: string;
-    buttonBackgroundColor?: string;
-    buttonContentColor?: string;
-    password?: string;
-    brightness?: number;
-    isResizableIframeEnabled?: boolean;
+    BackgroundGradient1Color?: string;
+    BackgroundGradient2Color?: string;
+    TitleColor?: string;
+    ContentColor?: string;
+    ButtonBackgroundColor?: string;
+    ButtonContentColor?: string;
+    Password?: string;
+    Brightness?: number;
+    IsResizableIframeEnabled?: boolean;
 };
 
 type OperatorType = {
@@ -47,7 +47,7 @@ export default function LogicComponentDisplay({
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
 }) {
@@ -109,11 +109,11 @@ function ModalLogic({
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
 }) {
-    const configJson = question?.configJsonString as ConfigJsonStringType;
+    const configJson = question?.ConfigJson as ConfigJsonType;
     const displayLogics = (configJson?.displayLogics ||
         []) as DisplayLogicType[];
 
@@ -122,7 +122,7 @@ function ModalLogic({
             conditions: [],
             targetQuestionOrder: "end",
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
             displayLogics: [...displayLogics, newLogic],
         });
@@ -132,7 +132,7 @@ function ModalLogic({
         const newLogics = displayLogics.filter(
             (_, index) => index !== logicIndex
         );
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
             displayLogics: newLogics,
         });
@@ -152,7 +152,7 @@ function ModalLogic({
             ...logic,
             conditions: [...logic.conditions, newCondition],
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
             displayLogics: newLogics,
         });
@@ -171,7 +171,7 @@ function ModalLogic({
             ...logic,
             conditions: newConditions,
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
             displayLogics: newLogics,
         });
@@ -193,7 +193,7 @@ function ModalLogic({
             ...logic,
             conditions: newConditions,
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
             displayLogics: newLogics,
         });
@@ -558,7 +558,7 @@ function ModalLogic({
                                             newLogics[logicIndex] =
                                                 updatedLogic;
                                             handleUpdateQuestion(
-                                                "configJsonString",
+                                                "ConfigJson",
                                                 {
                                                     ...configJson,
                                                     displayLogics: newLogics,

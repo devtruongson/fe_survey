@@ -13,7 +13,7 @@ import type {
 } from "../../../types/survey";
 import FormSelectType from "../../molecules/form-select-type/FormSelectType";
 import MultipleChoice from "../MultipleChoice/MultipleChoice";
-import type { RangeSliderConfigJsonStringType } from "../RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../RangeSlider/RangeSlider";
 import RangeSlider from "../RangeSlider/RangeSlider";
 import Ranking from "../Ranking/Ranking";
 import Rating from "../Rating/Rating";
@@ -33,7 +33,7 @@ const questionDefault = {
     timeLimit: 0,
     isVoice: false,
     order: 0,
-    configJsonString: {},
+    ConfigJson: {},
     options: [],
 };
 
@@ -48,7 +48,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
     const [isOpenOverlay, setIsOpenOverlay] = useState(false);
 
     const questionedit = useMemo(() => {
-        return (formData?.questions || []).find((item) => {
+        return (formData?.Questions || []).find((item) => {
             return item?.order === orderCurrent;
         });
     }, [formData, orderCurrent]);
@@ -62,12 +62,12 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 | boolean
                 | OptionType[]
                 | Record<string, string | number>
-                | RangeSliderConfigJsonStringType
+                | RangeSliderConfigJsonType
                 | Record<string, unknown>
         ) => {
             setFormData((prev) => ({
                 ...prev,
-                questions: prev.questions.map((item) => {
+                questions: prev.Questions.map((item) => {
                     if (
                         questionedit?.order &&
                         item.order === questionedit?.order
@@ -330,15 +330,15 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
         setFormData((prev) => ({
             ...prev,
             questions: [
-                ...prev.questions,
+                ...prev.Questions,
                 {
                     ...questionDefault,
-                    order: prev.questions[prev.questions.length - 1].order + 1,
+                    order: prev.Questions[prev.Questions.length - 1].order + 1,
                 },
             ],
         }));
-        setOrderCurrent(formData?.questions?.length + 1);
-    }, [formData?.questions?.length, setFormData, isTrigger]);
+        setOrderCurrent(formData?.Questions?.length + 1);
+    }, [formData?.Questions?.length, setFormData, isTrigger]);
 
     const handleChangeQuestion = (order: number) => {
         setOrderCurrent(order);
@@ -346,7 +346,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
     const handleDeleteQuestion = () => {
         if (!orderCurrent) return;
-        const newQuestions = formData?.questions
+        const newQuestions = formData?.Questions
             .filter((item) => item.order !== orderCurrent)
             .map((item, index) => ({
                 ...item,
@@ -366,7 +366,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
             return; // Không hợp lệ
         }
 
-        const questions = [...formData.questions];
+        const questions = [...formData.Questions];
         const currentIndex = questions.findIndex(
             (item) => item.order === currentOrder
         );
@@ -399,13 +399,13 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
     };
 
     useEffect(() => {
-        if (!formData?.questions?.length) {
+        if (!formData?.Questions?.length) {
             setFormData((prev) => ({
                 ...prev,
                 questions: [{ ...questionDefault, order: 1 }],
             }));
         }
-    }, [formData?.questions?.length, setFormData]);
+    }, [formData?.Questions?.length, setFormData]);
 
     const handleUploadImageBase64 = (e: any) => {
         const file = e.target.files[0];
@@ -445,33 +445,33 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 <div
                     className="question-main flex-1 flex flex-col overflow-y-auto relative"
                     style={{
-                        ...(formData?.background?.startsWith("/") && {
-                            backgroundImage: `url(${formData?.background})`,
+                        ...(formData?.Background?.startsWith("/") && {
+                            backgroundImage: `url(${formData?.Background})`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
-                            filter: `brightness(${
-                                formData?.configJsonString.brightness / 100
+                            filter: `Brightness(${
+                                formData?.ConfigJson.Brightness / 100
                             })`,
                             backgroundColor: "transparent",
                         }),
-                        ...(formData?.background === "color_gradient" && {
-                            background: `linear-gradient(to right, ${formData?.configJsonString.backgroundGradient1Color}, ${formData?.configJsonString.backgroundGradient2Color})`,
-                            filter: `brightness(${
-                                formData?.configJsonString.brightness / 100
+                        ...(formData?.Background === "color_gradient" && {
+                            background: `linear-gradient(to right, ${formData?.ConfigJson.BackgroundGradient1Color}, ${formData?.ConfigJson.BackgroundGradient2Color})`,
+                            filter: `Brightness(${
+                                formData?.ConfigJson.Brightness / 100
                             })`,
                         }),
-                        ...(formData?.background?.startsWith("#") && {
-                            backgroundColor: formData?.background,
-                            filter: `brightness(${
-                                formData?.configJsonString.brightness / 100
+                        ...(formData?.Background?.startsWith("#") && {
+                            backgroundColor: formData?.Background,
+                            filter: `Brightness(${
+                                formData?.ConfigJson.Brightness / 100
                             })`,
                         }),
                     }}
                 >
                     <div className="question-input-container relative z-10 flex flex-col items-center">
                         {questionedit?.image_header &&
-                        questionedit.configJsonString?.image_end_question ? (
+                        questionedit.ConfigJson?.image_end_question ? (
                             <img
                                 src={questionedit?.image_header}
                                 className="rounded-2xl "
@@ -494,7 +494,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                             placeholder="Nhập câu hỏi tại đây"
                             className="question-title-input"
                             style={{
-                                color: `${formData?.configJsonString?.titleColor}`,
+                                color: `${formData?.ConfigJson?.TitleColor}`,
                             }}
                             value={questionedit?.content || ""}
                             onChange={(e) =>
@@ -507,7 +507,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                             className="question-description-input"
                             value={questionedit?.description || ""}
                             style={{
-                                color: `${formData?.configJsonString?.contentColor}`,
+                                color: `${formData?.ConfigJson?.ContentColor}`,
                             }}
                             onChange={(e) =>
                                 handleUpdateQuestion(
@@ -540,7 +540,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
             <div className="question-footer flex items-center">
                 <div className="footer-content flex">
-                    {(formData?.questions || [])?.map((item) => (
+                    {(formData?.Questions || [])?.map((item) => (
                         <QuestionItem
                             key={item.order}
                             order={item.order}

@@ -4,7 +4,7 @@
 import { Box, Switch, Typography } from "@mui/material";
 import { useMemo } from "react";
 import type { OptionType, QuestionType } from "../../../../types/survey";
-import type { RangeSliderConfigJsonStringType } from "../../RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../../RangeSlider/RangeSlider";
 
 interface SwitchCustomizeProps {
     label: React.ReactNode;
@@ -17,7 +17,7 @@ interface SwitchCustomizeProps {
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
     isMinMax?: boolean;
@@ -33,20 +33,20 @@ export default function SwitchCustomize({
 }: SwitchCustomizeProps) {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.checked;
-        handleUpdateQuestion("configJsonString", {
-            ...question.configJsonString,
+        handleUpdateQuestion("ConfigJson", {
+            ...question.ConfigJson,
             [type]: value,
         });
     };
 
     const checked = useMemo(() => {
-        return question?.configJsonString[type] || false;
+        return question?.ConfigJson[type] || false;
     }, [question, type]);
 
     const valueMinMax = useMemo(() => {
         if (type === "is_choose_muitiple") {
             return (
-                question?.configJsonString?.valueMinMax || {
+                question?.ConfigJson?.valueMinMax || {
                     min: 0,
                     max: 0,
                 }
@@ -58,11 +58,11 @@ export default function SwitchCustomize({
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         const value = event.target.value;
-        handleUpdateQuestion("configJsonString", {
-            ...question.configJsonString,
+        handleUpdateQuestion("ConfigJson", {
+            ...question.ConfigJson,
             valueMinMax: {
                 min: value,
-                max: question?.configJsonString?.valueMinMax?.max,
+                max: question?.ConfigJson?.valueMinMax?.max,
             },
         });
     };
@@ -71,11 +71,11 @@ export default function SwitchCustomize({
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         const value = event.target.value;
-        handleUpdateQuestion("configJsonString", {
-            ...question.configJsonString,
+        handleUpdateQuestion("ConfigJson", {
+            ...question.ConfigJson,
             valueMinMax: {
                 max: value,
-                min: question?.configJsonString?.valueMinMax?.min,
+                min: question?.ConfigJson?.valueMinMax?.min,
             },
         });
     };

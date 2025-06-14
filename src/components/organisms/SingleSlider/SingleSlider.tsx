@@ -26,22 +26,22 @@ type Props = {
 
 const SingleSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
     const [value, setValue] = useState(
-        Number(question?.configJsonString?.max) || 10
+        Number(question?.ConfigJson?.max) || 10
     );
     const min = useMemo(
-        () => Number(question?.configJsonString?.min) || 0,
+        () => Number(question?.ConfigJson?.min) || 0,
         [question]
     );
     const max = useMemo(
-        () => Number(question?.configJsonString?.max) || 0,
+        () => Number(question?.ConfigJson?.max) || 0,
         [question]
     );
     const step = useMemo(
-        () => Number(question?.configJsonString?.step) || 0,
+        () => Number(question?.ConfigJson?.step) || 0,
         [question]
     );
     const unit = useMemo(
-        () => question?.configJsonString?.unit || "",
+        () => question?.ConfigJson?.unit || "",
         [question]
     );
     const handleSliderChange = (_event: Event, newValue: number) => {
@@ -54,12 +54,12 @@ const SingleSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
             if (value >= max) {
                 return;
             }
-            handleUpdateQuestion("configJsonString", {
-                ...question.configJsonString,
+            handleUpdateQuestion("ConfigJson", {
+                ...question.ConfigJson,
                 min: value,
             });
         },
-        [handleUpdateQuestion, max, question.configJsonString]
+        [handleUpdateQuestion, max, question.ConfigJson]
     );
 
     const handleMaxChange = useCallback(
@@ -68,12 +68,12 @@ const SingleSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
             if (value <= min) {
                 return;
             }
-            handleUpdateQuestion("configJsonString", {
-                ...question.configJsonString,
+            handleUpdateQuestion("ConfigJson", {
+                ...question.ConfigJson,
                 max: value,
             });
         },
-        [handleUpdateQuestion, min, question.configJsonString]
+        [handleUpdateQuestion, min, question.ConfigJson]
     );
 
     const handleStepChange = useCallback(
@@ -82,31 +82,31 @@ const SingleSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
             if (value >= max - min) {
                 return;
             }
-            handleUpdateQuestion("configJsonString", {
-                ...question.configJsonString,
+            handleUpdateQuestion("ConfigJson", {
+                ...question.ConfigJson,
                 step: event.target.value,
             });
         },
-        [handleUpdateQuestion, max, min, question.configJsonString]
+        [handleUpdateQuestion, max, min, question.ConfigJson]
     );
 
     const handleUnitChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        handleUpdateQuestion("configJsonString", {
-            ...question.configJsonString,
+        handleUpdateQuestion("ConfigJson", {
+            ...question.ConfigJson,
             unit: event.target.value,
         });
     };
 
     useEffect(() => {
-        if (Object.keys(question.configJsonString).length === 0) {
-            handleUpdateQuestion("configJsonString", {
+        if (Object.keys(question.ConfigJson).length === 0) {
+            handleUpdateQuestion("ConfigJson", {
                 min: 0,
                 max: 10,
                 step: 1,
                 unit: "",
             });
         }
-    }, [handleUpdateQuestion, question.configJsonString]);
+    }, [handleUpdateQuestion, question.ConfigJson]);
 
     return (
         <Box className="single-slider bg-gray-500 p-6 rounded-lg flex flex-col gap-6">
@@ -136,10 +136,10 @@ const SingleSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
                     step={step}
                     sx={{
                         "& .MuiSlider-thumb": {
-                            backgroundColor: formData?.configJsonString
-                                ?.buttonBackgroundColor
-                                ? formData?.configJsonString
-                                      ?.buttonBackgroundColor
+                            backgroundColor: formData?.ConfigJson
+                                ?.ButtonBackgroundColor
+                                ? formData?.ConfigJson
+                                      ?.ButtonBackgroundColor
                                 : "#000",
                             borderRadius: 0,
                             width: 26,
