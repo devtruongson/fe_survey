@@ -20,7 +20,7 @@ interface BackgroundConfig {
     };
 }
 
-interface ConfigJsonString {
+interface ConfigJson {
     BackgroundGradient1Color: string;
     BackgroundGradient2Color: string;
     TitleColor: string;
@@ -61,7 +61,10 @@ const backgroundConfigs: Record<string, Omit<BackgroundConfig, 'imagePath'> & { 
     custom: { colors: { ...defaultColors } }, // For custom uploaded images
 };
 
-export const handleSelectBackground = (background: string, ConfigJson?: ConfigJsonString): BackgroundConfig => {
+export const handleSelectBackground = (
+    background: string,
+    ConfigJson?: ConfigJson
+): BackgroundConfig => {
     if (background === 'color_gradient' && ConfigJson) {
         return {
             imagePath: "",

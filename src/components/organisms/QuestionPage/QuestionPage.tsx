@@ -67,7 +67,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
         ) => {
             setFormData((prev) => ({
                 ...prev,
-                questions: prev.Questions.map((item) => {
+                Questions: prev.Questions.map((item) => {
                     if (
                         questionedit?.order &&
                         item.order === questionedit?.order
@@ -329,11 +329,13 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
         if (isTrigger) return;
         setFormData((prev) => ({
             ...prev,
-            questions: [
+            Questions: [
                 ...prev.Questions,
                 {
                     ...questionDefault,
-                    order: prev.Questions[prev.Questions.length - 1].order + 1,
+                    order:
+                        (prev.Questions[prev.Questions.length - 1]?.order || 0) +
+                        1,
                 },
             ],
         }));
@@ -354,7 +356,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
             }));
         setFormData((prev) => ({
             ...prev,
-            questions: newQuestions,
+            Questions: newQuestions,
         }));
     };
 
@@ -391,7 +393,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
         setFormData((prev) => ({
             ...prev,
-            questions: newQuestions,
+            Questions: newQuestions,
         }));
 
         // Đặt lại orderCurrent là vị trí mới
@@ -402,7 +404,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
         if (!formData?.Questions?.length) {
             setFormData((prev) => ({
                 ...prev,
-                questions: [{ ...questionDefault, order: 1 }],
+                Questions: [{ ...questionDefault, order: 1 }],
             }));
         }
     }, [formData?.Questions?.length, setFormData]);
