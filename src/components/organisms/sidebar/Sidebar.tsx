@@ -66,7 +66,7 @@ const Sidebar = ({
                 })}
             </Select>
             <SwitchCustomize
-                type="required_answer"
+                type="RequiredAnswer"
                 question={question}
                 handleUpdateQuestion={handleUpdateQuestion}
                 label="Bắt buộc câu trả lời"
@@ -77,7 +77,7 @@ const Sidebar = ({
                 label="Gắn nhãn ở đầu câu hỏi"
             />
             <SwitchCustomize
-                type="image_end_question"
+                type="ImageEndQuestion"
                 question={question}
                 handleUpdateQuestion={handleUpdateQuestion}
                 label="Hình ảnh/Video ở đầu câu hỏi"
@@ -110,13 +110,13 @@ const Sidebar = ({
                 </>
             )}
             <SwitchCustomize
-                type="not_back"
+                type="NotBack"
                 question={question}
                 handleUpdateQuestion={handleUpdateQuestion}
                 label="Không cho quay lại câu trước"
             />
             <SwitchCustomize
-                type="view_number_quétion"
+                type="ViewNumberQuestion"
                 question={question}
                 handleUpdateQuestion={handleUpdateQuestion}
                 label="Hiện số thứ tự gốc của câu trả lời"
