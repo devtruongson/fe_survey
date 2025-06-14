@@ -834,8 +834,7 @@ function CustomizePassword({
     setFormData,
     handleCustomizePassword,
 }: any) {
-    const hasPassword =
-        formData?.ConfigJson?.Password !== null &&
+    const hasPassword = formData?.ConfigJson?.Password !== null &&
         formData?.ConfigJson?.Password !== undefined;
 
     return (

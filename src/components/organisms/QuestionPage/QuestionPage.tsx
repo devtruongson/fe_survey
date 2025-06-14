@@ -334,8 +334,8 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 {
                     ...questionDefault,
                     Order:
-                        (prev.Questions[prev.Questions.length - 1]?.Order ||
-                            0) + 1,
+                        (prev.Questions[prev.Questions.length - 1]?.Order || 0) +
+                        1,
                 },
             ],
         }));
@@ -348,12 +348,12 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
     const handleDeleteQuestion = () => {
         if (!orderCurrent) return;
-        const newQuestions = formData?.Questions.filter(
-            (item) => item.Order !== orderCurrent
-        ).map((item, index) => ({
-            ...item,
-            Order: index + 1,
-        }));
+        const newQuestions = formData?.Questions
+            .filter((item) => item.Order !== orderCurrent)
+            .map((item, index) => ({
+                ...item,
+                Order: index + 1,
+            }));
         setFormData((prev) => ({
             ...prev,
             Questions: newQuestions,
