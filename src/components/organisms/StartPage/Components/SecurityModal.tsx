@@ -4,13 +4,13 @@ import styles from './SecurityModal.module.scss';
 interface SecurityModalProps {
   open: boolean;
   onClose: () => void;
-  onSavePassword: (password: string) => void;
+  onSavePassword: (Password: string) => void;
   initialPassword: string;
 }
 
 const SecurityModal: React.FC<SecurityModalProps> = ({ open, onClose, onSavePassword, initialPassword }) => {
   const [activeTab, setActiveTab] = useState<'general' | 'individual'>('general');
-  const [password, setPassword] = useState(initialPassword);
+  const [Password, setPassword] = useState(initialPassword);
   const [showPassword, setShowPassword] = useState(false);
   const [customMessage, setCustomMessage] = useState('');
 
@@ -23,7 +23,7 @@ const SecurityModal: React.FC<SecurityModalProps> = ({ open, onClose, onSavePass
   };
 
   const handleSubmit = () => {
-    onSavePassword(password);
+    onSavePassword(Password);
     onClose();
   };
 
@@ -119,16 +119,16 @@ const SecurityModal: React.FC<SecurityModalProps> = ({ open, onClose, onSavePass
               <div className="space-y-4">
                 <div className="relative">
                   <input
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? 'text' : 'Password'}
                     placeholder="Nhập mật khẩu tại đây"
-                    value={password}
+                    value={Password}
                     onChange={(e) => setPassword(e.target.value)}
                     className={`${styles['input-field']} w-full px-4 py-3 pr-12`}
                   />
                   <button
                     type="button"
                     onClick={handlePasswordToggle}
-                    className={`${styles['password-toggle-button']} absolute right-3 top-1/2 transform -translate-y-1/2`}
+                    className={`${styles['Password-toggle-button']} absolute right-3 top-1/2 transform -translate-y-1/2`}
                   >
                     {showPassword ? (
                       <svg

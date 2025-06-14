@@ -13,7 +13,7 @@ import type {
 } from "../../../types/survey";
 import FormSelectType from "../../molecules/form-select-type/FormSelectType";
 import MultipleChoice from "../MultipleChoice/MultipleChoice";
-import type { RangeSliderConfigJsonStringType } from "../RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../RangeSlider/RangeSlider";
 import RangeSlider from "../RangeSlider/RangeSlider";
 import Ranking from "../Ranking/Ranking";
 import Rating from "../Rating/Rating";
@@ -33,7 +33,7 @@ const questionDefault = {
     timeLimit: 0,
     isVoice: false,
     order: 0,
-    configJsonString: {},
+    ConfigJson: {},
     options: [],
 };
 
@@ -62,12 +62,12 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 | boolean
                 | OptionType[]
                 | Record<string, string | number>
-                | RangeSliderConfigJsonStringType
+                | RangeSliderConfigJsonType
                 | Record<string, unknown>
         ) => {
             setFormData((prev) => ({
                 ...prev,
-                questions: prev.questions.map((item) => {
+                questions: prev.Questions.map((item) => {
                     if (
                         questionedit?.order &&
                         item.order === questionedit?.order
@@ -330,10 +330,10 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
         setFormData((prev) => ({
             ...prev,
             questions: [
-                ...prev.questions,
+                ...prev.Questions,
                 {
                     ...questionDefault,
-                    order: prev.questions[prev.questions.length - 1].order + 1,
+                    order: prev.Questions[prev.Questions.length - 1].order + 1,
                 },
             ],
         }));
@@ -366,7 +366,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
             return; // Không hợp lệ
         }
 
-        const questions = [...formData.questions];
+        const questions = [...formData.Questions];
         const currentIndex = questions.findIndex(
             (item) => item.order === currentOrder
         );
@@ -450,28 +450,28 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
-                            filter: `brightness(${
-                                formData?.configJsonString.brightness / 100
+                            filter: `Brightness(${
+                                formData?.ConfigJson.Brightness / 100
                             })`,
                             backgroundColor: "transparent",
                         }),
                         ...(formData?.background === "color_gradient" && {
-                            background: `linear-gradient(to right, ${formData?.configJsonString.backgroundGradient1Color}, ${formData?.configJsonString.backgroundGradient2Color})`,
-                            filter: `brightness(${
-                                formData?.configJsonString.brightness / 100
+                            background: `linear-gradient(to right, ${formData?.ConfigJson.BackgroundGradient1Color}, ${formData?.ConfigJson.BackgroundGradient2Color})`,
+                            filter: `Brightness(${
+                                formData?.ConfigJson.Brightness / 100
                             })`,
                         }),
                         ...(formData?.background?.startsWith("#") && {
                             backgroundColor: formData?.background,
-                            filter: `brightness(${
-                                formData?.configJsonString.brightness / 100
+                            filter: `Brightness(${
+                                formData?.ConfigJson.Brightness / 100
                             })`,
                         }),
                     }}
                 >
                     <div className="question-input-container relative z-10 flex flex-col items-center">
                         {questionedit?.image_header &&
-                        questionedit.configJsonString?.image_end_question ? (
+                        questionedit.ConfigJson?.image_end_question ? (
                             <img
                                 src={questionedit?.image_header}
                                 className="rounded-2xl "
@@ -494,7 +494,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                             placeholder="Nhập câu hỏi tại đây"
                             className="question-title-input"
                             style={{
-                                color: `${formData?.configJsonString?.titleColor}`,
+                                color: `${formData?.ConfigJson?.TitleColor}`,
                             }}
                             value={questionedit?.content || ""}
                             onChange={(e) =>
@@ -507,7 +507,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                             className="question-description-input"
                             value={questionedit?.description || ""}
                             style={{
-                                color: `${formData?.configJsonString?.contentColor}`,
+                                color: `${formData?.ConfigJson?.ContentColor}`,
                             }}
                             onChange={(e) =>
                                 handleUpdateQuestion(

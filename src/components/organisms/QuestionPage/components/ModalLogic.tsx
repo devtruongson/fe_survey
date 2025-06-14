@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import type { OptionType, QuestionType } from "../../../../types/survey";
-import type { RangeSliderConfigJsonStringType } from "../../RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../../RangeSlider/RangeSlider";
 
 type JumpLogicType = {
     conditions: {
@@ -14,17 +14,17 @@ type JumpLogicType = {
     targetQuestionOrder: number | "end";
 };
 
-type ConfigJsonStringType = {
+type ConfigJsonType = {
     jumpLogics?: JumpLogicType[];
-    backgroundGradient1Color?: string;
-    backgroundGradient2Color?: string;
-    titleColor?: string;
-    contentColor?: string;
-    buttonBackgroundColor?: string;
-    buttonContentColor?: string;
-    password?: string;
-    brightness?: number;
-    isResizableIframeEnabled?: boolean;
+    BackgroundGradient1Color?: string;
+    BackgroundGradient2Color?: string;
+    TitleColor?: string;
+    ContentColor?: string;
+    ButtonBackgroundColor?: string;
+    ButtonContentColor?: string;
+    Password?: string;
+    Brightness?: number;
+    IsResizableIframeEnabled?: boolean;
 };
 
 type OperatorType = {
@@ -47,7 +47,7 @@ export default function LogicComponent({
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
 }) {
@@ -110,11 +110,11 @@ function ModalLogic({
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
 }) {
-    const configJson = question?.configJsonString as ConfigJsonStringType;
+    const configJson = question?.ConfigJson as ConfigJsonType;
     const jumpLogics = (configJson?.jumpLogics || []) as JumpLogicType[];
 
     const handleAddLogic = () => {
@@ -122,7 +122,7 @@ function ModalLogic({
             conditions: [],
             targetQuestionOrder: "end",
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
             jumpLogics: [...jumpLogics, newLogic],
         });
@@ -130,7 +130,7 @@ function ModalLogic({
 
     const handleDeleteLogic = (logicIndex: number) => {
         const newLogics = jumpLogics.filter((_, index) => index !== logicIndex);
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
             jumpLogics: newLogics,
         });
@@ -150,7 +150,7 @@ function ModalLogic({
             ...logic,
             conditions: [...logic.conditions, newCondition],
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
             jumpLogics: newLogics,
         });
@@ -169,7 +169,7 @@ function ModalLogic({
             ...logic,
             conditions: newConditions,
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
             jumpLogics: newLogics,
         });
@@ -191,7 +191,7 @@ function ModalLogic({
             ...logic,
             conditions: newConditions,
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
             jumpLogics: newLogics,
         });
@@ -549,7 +549,7 @@ function ModalLogic({
                                             newLogics[logicIndex] =
                                                 updatedLogic;
                                             handleUpdateQuestion(
-                                                "configJsonString",
+                                                "ConfigJson",
                                                 {
                                                     ...configJson,
                                                     jumpLogics: newLogics,
