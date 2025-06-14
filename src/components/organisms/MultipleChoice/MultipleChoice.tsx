@@ -63,17 +63,17 @@ const MultipleChoice = ({ question, handleUpdateQuestion }: Props) => {
                               handleDeleteOption={handleDeleteOption}
                               isDisableClose={false}
                               formData={{
-                                  id: 0,
-                                  requesterId: 0,
-                                  title: "",
-                                  description: "",
+                                  Id: 0,
+                                  RequesterId: 0,
+                                  Title: "",
+                                  Description: "",
                                   MarketSurveyVersionStatusId: 1,
                                   SurveyTypeId: 0,
                                   SurveyTopicId: 0,
                                   SurveySpecificTopicId: 0,
                                   SurveyStatusId: 0,
                                   SecurityModeId: 0,
-                                  background: "",
+                                  Background: "",
                                   ConfigJson: {
                                       BackgroundGradient1Color: "",
                                       BackgroundGradient2Color: "",
@@ -84,7 +84,6 @@ const MultipleChoice = ({ question, handleUpdateQuestion }: Props) => {
                                       Password: "",
                                       Brightness: 0,
                                   },
-                                  questions: [],
                                   SkipStartPage: false,
                               }}
                           />

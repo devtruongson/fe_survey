@@ -10,7 +10,7 @@ type Props = {
 
 const getErrors = (formData: SurveyType): string[] => {
     const errors: string[] = [];
-    if (formData?.questions) {
+    if (formData?.Questions) {
         formData.Questions.forEach((question) => {
             if (!question.content) {
                 errors.push(`Câu hỏi ${question.order} chưa điền tiêu đề`);
@@ -93,9 +93,9 @@ const CompletePage = ({ formData }: Props) => {
                 ) : (
                     <Box className="p-4">
                         <Typography variant="h4">Survey Completed!</Typography>
-                        {formData.title && (
+                        {formData.Title && (
                             <Typography variant="body1">
-                                Survey Title: {formData.title}
+                                Survey Title: {formData.Title}
                             </Typography>
                         )}
                     </Box>

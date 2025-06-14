@@ -98,12 +98,12 @@ const Sidebar = ({
             {formData?.SurveyTypeId === 3 ? null : (
                 <>
                     <LogicComponent
-                        questions={formData?.questions || []}
+                        questions={formData?.Questions || []}
                         question={question}
                         handleUpdateQuestion={handleUpdateQuestion}
                     />
                     <LogicComponentDisplay
-                        questions={formData?.questions || []}
+                        questions={formData?.Questions || []}
                         question={question}
                         handleUpdateQuestion={handleUpdateQuestion}
                     />

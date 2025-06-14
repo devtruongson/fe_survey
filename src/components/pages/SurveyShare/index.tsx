@@ -98,20 +98,20 @@ interface Question {
 }
 
 interface SurveyData {
-    id: number;
-    requesterId: number;
-    title: string;
-    description: string;
+    Id: number;
+    RequesterId: number;
+    Title: string;
+    Description: string;
     SurveyTypeId: number;
     SurveyTopicId: number;
     SurveySpecificTopicId: number;
     SurveyStatusId: number;
     SecurityModeId: number;
-    background: string;
+    Background: string;
     ConfigJson: SurveyConfig;
-    questions: Question[];
+    Questions: Question[];
     SkipStartPage: boolean;
-    customBackgroundImageUrl: string | null;
+    CustomBackgroundImageUrl: string | null;
 }
 
 
@@ -418,7 +418,7 @@ const SurveyPreview: React.FC = () => {
                             mb: 2
                         }}
                     >
-                        {surveyData.title || 'Khảo sát không có tiêu đề'}
+                        {surveyData.Title || 'Khảo sát không có tiêu đề'}
                     </Typography>
 
                     <Typography
@@ -428,11 +428,11 @@ const SurveyPreview: React.FC = () => {
                             mb: 3
                         }}
                     >
-                        {surveyData.description || 'Không có mô tả'}
+                        {surveyData.Description || 'Không có mô tả'}
                     </Typography>
 
                     <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', flexWrap: 'wrap', mb: 3 }}>
-                        <Chip label={`ID: ${surveyData.id}`} size="small" />
+                        <Chip label={`ID: ${surveyData.Id}`} size="small" />
                         <Chip label={`Loại: ${surveyData.SurveyTypeId}`} size="small" />
                         <Chip label={`Chủ đề: ${surveyData.SurveyTopicId}`} size="small" />
                         <Chip label={`Trạng thái: ${surveyData.SurveyStatusId}`} size="small" />

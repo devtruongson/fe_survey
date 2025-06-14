@@ -37,7 +37,7 @@ export type SurveyType = {
     RequesterId: number;
     Title: string;
     Description: string;
-    MarketSurveyVersionStatusId: number;
+    MarketSurveyVersionStatusId: number | null;
     SurveyTypeId: number;
     SurveyTopicId: number;
     SurveySpecificTopicId: number;

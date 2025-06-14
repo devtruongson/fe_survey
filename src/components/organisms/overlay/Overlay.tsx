@@ -115,7 +115,7 @@ const Confirm = ({
     }, [orderCurrent]);
     return (
         <div className="overlay-content flex flex-col space-y-6 gap-4">
-            {formData?.questions?.length && isSwap ? (
+            {formData?.Questions?.length && isSwap ? (
                 <Select
                     value={value}
                     onChange={(e) => {

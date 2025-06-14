@@ -48,7 +48,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
     const [isOpenOverlay, setIsOpenOverlay] = useState(false);
 
     const questionedit = useMemo(() => {
-        return (formData?.questions || []).find((item) => {
+        return (formData?.Questions || []).find((item) => {
             return item?.order === orderCurrent;
         });
     }, [formData, orderCurrent]);
@@ -337,8 +337,8 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 },
             ],
         }));
-        setOrderCurrent(formData?.questions?.length + 1);
-    }, [formData?.questions?.length, setFormData, isTrigger]);
+        setOrderCurrent(formData?.Questions?.length + 1);
+    }, [formData?.Questions?.length, setFormData, isTrigger]);
 
     const handleChangeQuestion = (order: number) => {
         setOrderCurrent(order);
@@ -346,7 +346,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
     const handleDeleteQuestion = () => {
         if (!orderCurrent) return;
-        const newQuestions = formData?.questions
+        const newQuestions = formData?.Questions
             .filter((item) => item.order !== orderCurrent)
             .map((item, index) => ({
                 ...item,
@@ -399,13 +399,13 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
     };
 
     useEffect(() => {
-        if (!formData?.questions?.length) {
+        if (!formData?.Questions?.length) {
             setFormData((prev) => ({
                 ...prev,
                 questions: [{ ...questionDefault, order: 1 }],
             }));
         }
-    }, [formData?.questions?.length, setFormData]);
+    }, [formData?.Questions?.length, setFormData]);
 
     const handleUploadImageBase64 = (e: any) => {
         const file = e.target.files[0];
@@ -445,8 +445,8 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 <div
                     className="question-main flex-1 flex flex-col overflow-y-auto relative"
                     style={{
-                        ...(formData?.background?.startsWith("/") && {
-                            backgroundImage: `url(${formData?.background})`,
+                        ...(formData?.Background?.startsWith("/") && {
+                            backgroundImage: `url(${formData?.Background})`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
@@ -455,14 +455,14 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                             })`,
                             backgroundColor: "transparent",
                         }),
-                        ...(formData?.background === "color_gradient" && {
+                        ...(formData?.Background === "color_gradient" && {
                             background: `linear-gradient(to right, ${formData?.ConfigJson.BackgroundGradient1Color}, ${formData?.ConfigJson.BackgroundGradient2Color})`,
                             filter: `Brightness(${
                                 formData?.ConfigJson.Brightness / 100
                             })`,
                         }),
-                        ...(formData?.background?.startsWith("#") && {
-                            backgroundColor: formData?.background,
+                        ...(formData?.Background?.startsWith("#") && {
+                            backgroundColor: formData?.Background,
                             filter: `Brightness(${
                                 formData?.ConfigJson.Brightness / 100
                             })`,
@@ -540,7 +540,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
             <div className="question-footer flex items-center">
                 <div className="footer-content flex">
-                    {(formData?.questions || [])?.map((item) => (
+                    {(formData?.Questions || [])?.map((item) => (
                         <QuestionItem
                             key={item.order}
                             order={item.order}

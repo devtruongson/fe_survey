@@ -24,16 +24,16 @@ const backgrounds = Array.from(
 );
 
 const mockSurveyData: SurveyType = {
-    id: 1,
-    requesterId: 1,
+    Id: 1,
+    RequesterId: 1,
     MarketSurveyVersionStatusId: 1,
     SurveyTypeId: 1,
     SurveyTopicId: 0,
     SurveySpecificTopicId: 0,
     SurveyStatusId: 1,
     SecurityModeId: 1,
-    background: "start1",
-    customBackgroundImageUrl: null,
+    Background: "start1",
+    CustomBackgroundImageUrl: null,
     ConfigJson: {
         BackgroundGradient1Color: "#FCE38A",
         BackgroundGradient2Color: "#F38181",
@@ -44,9 +44,9 @@ const mockSurveyData: SurveyType = {
         Password: "",
         Brightness: 100,
     },
-    description: "Mô tả khảo sát mặc định",
-    title: "Tiêu đề khảo sát mặc định",
-    questions: [],
+    Description: "Mô tả khảo sát mặc định",
+    Title: "Tiêu đề khảo sát mặc định",
+    Questions: [],
     SkipStartPage: false,
 };
 
@@ -156,8 +156,8 @@ const StartPage = ({
                         Brightness: 100,
                     };
                 }
-                if (initialData.customBackgroundImageUrl === undefined) {
-                    initialData.customBackgroundImageUrl = null;
+                if (initialData.CustomBackgroundImageUrl === undefined) {
+                    initialData.CustomBackgroundImageUrl = null;
                 }
                 if (initialData.ConfigJson?.Brightness === undefined) {
                     initialData.ConfigJson.Brightness = 100; // Default Brightness
@@ -192,15 +192,15 @@ const StartPage = ({
         setSelectedSecurityMode(formData?.SecurityModeId);
 
         if (
-            formData?.background === "custom" &&
-            formData?.customBackgroundImageUrl
+            formData?.Background === "custom" &&
+            formData?.CustomBackgroundImageUrl
         ) {
             setBackgroundMode("image");
-        } else if (backgrounds.includes(formData?.background)) {
+        } else if (backgrounds.includes(formData?.Background)) {
             setBackgroundMode("image");
         } else if (
-            formData?.background?.startsWith("#") ||
-            formData?.background === "color_gradient"
+            formData?.Background?.startsWith("#") ||
+            formData?.Background === "color_gradient"
         ) {
             setBackgroundMode("color");
         }
@@ -238,8 +238,8 @@ const StartPage = ({
                 const imageUrl = reader.result as string;
                 setFormData((prev) => ({
                     ...prev,
-                    background: "custom",
-                    customBackgroundImageUrl: imageUrl,
+                    Background: "custom",
+                    CustomBackgroundImageUrl: imageUrl,
                 }));
                 setBackgroundMode("image");
                 const defaultConfig = handleSelectBackground("default_color");
@@ -256,8 +256,8 @@ const StartPage = ({
         setBackgroundMode("color");
         setFormData((prev) => ({
             ...prev,
-            customBackgroundImageUrl: null,
-            background: "color_gradient",
+            CustomBackgroundImageUrl: null,
+            Background: "color_gradient",
         })); // Set background to a color type
         setPickerForBackground(true);
         setShowColorModal(true);
@@ -277,9 +277,9 @@ const StartPage = ({
                 className="relative flex-1 flex items-center justify-center"
                 style={{
                     ...(backgroundMode === "color" && {
-                        ...(formData?.background?.startsWith("#")
+                        ...(formData?.Background?.startsWith("#")
                             ? {
-                                  backgroundColor: formData?.background,
+                                  backgroundColor: formData?.Background,
                                   overflowY: "auto",
                               }
                             : {
@@ -293,7 +293,7 @@ const StartPage = ({
                     <div
                         className="absolute inset-0"
                         style={{
-                            backgroundImage: `url(${formData?.background})`,
+                            backgroundImage: `url(${formData?.Background})`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
@@ -308,18 +308,18 @@ const StartPage = ({
                     <div className="startpage-content w-full text-center">
                         <input
                             type="text"
-                            value={formData?.title}
+                            value={formData?.Title}
                             onChange={(e) =>
-                                handleInputChange("title", e.target.value)
+                                handleInputChange("Title", e.target.value)
                             }
                             className="startpage-title-input"
                             placeholder="Nhập tiêu đề"
                             style={{ color: TitleColor }}
                         />
                         <input
-                            value={formData?.description}
+                            value={formData?.Description}
                             onChange={(e) =>
-                                handleInputChange("description", e.target.value)
+                                handleInputChange("Description", e.target.value)
                             }
                             className="startpage-desc-input"
                             placeholder="Nhập mô tả tại đây"
@@ -526,7 +526,7 @@ const StartPage = ({
                             },
                         }));
                     }}
-                    initialPassword={formData.ConfigJson.Password || ""}
+                    initialPassword={formData?.ConfigJson?.Password || ""}
                 />
             )}
             {showColorModal && (
@@ -550,7 +550,7 @@ const StartPage = ({
                                     color1 !== color2
                                         ? "color_gradient"
                                         : color1,
-                                customBackgroundImageUrl: null,
+                                CustomBackgroundImageUrl: null,
                             }));
                         } else if (activeColorSetter) {
                             if (activeColorSetter === setButtonBgColor) {
@@ -822,7 +822,8 @@ function CustomizePassword({
     setFormData,
     handleCustomizePassword,
 }: any) {
-    const hasPassword = formData.ConfigJson.Password !== null;
+    const hasPassword = formData?.ConfigJson?.Password !== null &&
+        formData?.ConfigJson?.Password !== undefined;
 
     return (
         <div className="config-section">
@@ -919,7 +920,7 @@ function BackgroundMode({
                         document.getElementById("backgroundInput")?.click();
                     }}
                     style={{
-                        backgroundImage: `url(${formData?.background})`,
+                        backgroundImage: `url(${formData?.Background})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}
@@ -978,10 +979,10 @@ function BackgroundMode({
                     onClick={handleSelectColorBackground}
                     style={{
                         background:
-                            formData?.background === "color_gradient"
+                            formData?.Background === "color_gradient"
                                 ? `linear-gradient(to right, ${formData?.ConfigJson.BackgroundGradient1Color}, ${formData?.ConfigJson.BackgroundGradient2Color})`
-                                : formData?.background?.startsWith("#")
-                                ? formData?.background
+                                : formData?.Background?.startsWith("#")
+                                ? formData?.Background
                                 : "#cccccc",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
@@ -1163,7 +1164,7 @@ function DesignSuggestions({
                                     <div
                                         key={index}
                                         className={`background-thumbnail-item ${
-                                            formData?.background ===
+                                            formData?.Background ===
                                                 `/assets/start${
                                                     index + 1
                                                 }.webp` &&
@@ -1174,7 +1175,7 @@ function DesignSuggestions({
                                         onClick={() => {
                                             setFormData((prev: any) => ({
                                                 ...prev,
-                                                background: `/assets/start${
+                                                Background: `/assets/start${
                                                     index + 1
                                                 }.webp`,
                                                 ConfigJson: {
