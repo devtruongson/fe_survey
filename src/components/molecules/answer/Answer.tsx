@@ -61,22 +61,26 @@ const Answer = ({
                     className="answer-input flex-grow"
                     placeholder="Nhập câu trả lời tại đây"
                     onChange={handleChange}
-                    style={{
-                        color: `${formData?.ConfigJson?.ContentColor}`,
+                    sx={{
+                        "& .MuiInputBase-input": {
+                            color: formData?.ConfigJson?.ContentColor,
+                        },
+                        "& .MuiOutlinedInput-root": {
+                            "& fieldset": {
+                                borderColor: formData?.ConfigJson?.ContentColor,
+                            },
+                        },
                     }}
                 />
                 <input
                     type="file"
                     accept="image/*"
                     onChange={handleImageUpload}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                     id={`image-upload-${data.Order}`}
                 />
                 <label htmlFor={`image-upload-${data.Order}`}>
-                    <IconButton
-                        size="small"
-                        component="span"
-                    >
+                    <IconButton size="small" component="span">
                         <ImageIcon fontSize="small" />
                     </IconButton>
                 </label>
@@ -84,9 +88,13 @@ const Answer = ({
                     <IconButton
                         size="small"
                         onClick={toggleImage}
-                        style={{ marginLeft: '4px' }}
+                        style={{ marginLeft: "4px" }}
                     >
-                        {showImage ? <VisibilityOffIcon fontSize="small" /> : <VisibilityIcon fontSize="small" />}
+                        {showImage ? (
+                            <VisibilityOffIcon fontSize="small" />
+                        ) : (
+                            <VisibilityIcon fontSize="small" />
+                        )}
                     </IconButton>
                 )}
                 <IconButton
@@ -103,16 +111,16 @@ const Answer = ({
                 </IconButton>
             </div>
             {data.Image && showImage && (
-                <div className="mt-2" style={{ maxWidth: '300px' }}>
-                    <img 
+                <div className="mt-2" style={{ maxWidth: "300px" }}>
+                    <img
                         src={data.Image}
-                        alt="Uploaded answer" 
-                        style={{ 
-                            width: '100%', 
-                            height: 'auto',
-                            borderRadius: '4px',
-                            border: '1px solid #ddd'
-                        }} 
+                        alt="Uploaded answer"
+                        style={{
+                            width: "100%",
+                            height: "auto",
+                            borderRadius: "4px",
+                            border: "1px solid #ddd",
+                        }}
                     />
                 </div>
             )}
