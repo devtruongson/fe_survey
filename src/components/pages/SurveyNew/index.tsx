@@ -25,7 +25,7 @@ const defaultValue = {
     RequesterId: 10,
     Title: "",
     Description: "",
-    MarketSurveyVersionStatusId: null, // SurveyStatusId: 3
+    MarketSurveyVersionStatusId: 1, // SurveyStatusId: 3
     SurveyTypeId: 2,
     SurveyTopicId: 2,
     SurveySpecificTopicId: 5,
@@ -46,6 +46,8 @@ const defaultValue = {
     SkipStartPage: false,
 };
 
+let isFetchDisable = false;
+
 const SurveyNew = () => {
     const { id } = useParams();
     const [activeTab, setActiveTab] = useState(0);
@@ -53,13 +55,15 @@ const SurveyNew = () => {
     const [isSaving, setIsSaving] = useState(false);
     const [saveCountdown, setSaveCountdown] = useState(0);
     const [hasChanges, setHasChanges] = useState(false);
+    const [isDisable, setIsDisable] = useState(!!id);
     const latestDataRef = useRef(formData);
     const timeoutRef = useRef<number | null>(null);
     const countdownRef = useRef<number | null>(null);
 
-    const isTrigger = useMemo(() => formData?.SurveyStatusId === 2 && formData?.MarketSurveyVersionStatusId !== 1, [formData]);
-    const isDisable = useMemo(
-        () => typeof formData?.MarketSurveyVersionStatusId === "object" ? false : formData?.MarketSurveyVersionStatusId !== 1,
+    const isTrigger = useMemo(
+        () =>
+            formData?.SurveyStatusId === 2 &&
+            formData?.MarketSurveyVersionStatusId !== 1,
         [formData]
     );
 
@@ -79,7 +83,7 @@ const SurveyNew = () => {
                     formData={formData}
                     setFormData={setFormData}
                     handleTabClick={handleTabClick}
-                    isDisable={false}
+                    isDisable={isDisable}
                 />
             ),
         },
@@ -87,7 +91,11 @@ const SurveyNew = () => {
             label: "Bảng Hỏi",
             value: 1,
             component: (
-                <QuestionPage formData={formData} setFormData={setFormData} isTrigger={isTrigger} />
+                <QuestionPage
+                    formData={formData}
+                    setFormData={setFormData}
+                    isTrigger={isTrigger}
+                />
             ),
         },
         {
@@ -120,11 +128,12 @@ const SurveyNew = () => {
             onSuccess(newData) {
                 setFormData(newData.data);
                 latestDataRef.current = newData.data;
+                setIsDisable(newData?.data?.IsPause);
                 if (!id) {
                     window.history.pushState(
                         {},
                         "",
-                        `/survey/update/${newData.data.id}`
+                        `/survey/update/${newData.data.Id}`
                     );
                 }
             },
@@ -139,7 +148,11 @@ const SurveyNew = () => {
             confirmButtonText: "Save",
         }).then((result: SweetAlertResult) => {
             if (result.isConfirmed) {
-                mutate({ ...latestDataRef.current, ...formData, type: "update" });
+                mutate({
+                    ...latestDataRef.current,
+                    ...formData,
+                    type: "update",
+                });
             }
         });
     };
@@ -168,39 +181,37 @@ const SurveyNew = () => {
     };
 
     useEffect(() => {
+        if (!id || !data) return;
+        setFormData(data.data);
+        setIsDisable(data?.data?.IsPause);
+        latestDataRef.current = data.data;
+    }, [id, data]);
+
+    useEffect(() => {
         if (isTrigger || isDisable) return;
 
         if (!isEqual(latestDataRef.current, formData)) {
             latestDataRef.current = formData;
             setHasChanges(true);
-            console.log("run");
             if (!timeoutRef.current) {
                 handleSave();
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
-
-    useEffect(() => {
-        if (!id || !data) return;
-
-        setFormData(data.data);
-        latestDataRef.current = data.data;
-    }, [id, data]);
+    }, [formData, isDisable]);
 
     useEffect(() => {
         if (!isDisable) return;
 
         window.addEventListener("keydown", (e) => {
             e.preventDefault();
-        })
+        });
 
         return () => {
             window.removeEventListener("keydown", (e) => {
                 e.preventDefault();
             });
         };
-
     }, [isDisable]);
 
     useBlocker(true);
@@ -245,24 +256,26 @@ const SurveyNew = () => {
                         <Button
                             variant="text"
                             className="btn-save"
-                            onClick={() => (!isTrigger ? null : handleConfirm())}
+                            onClick={() =>
+                                !isTrigger ? null : handleConfirm()
+                            }
                             sx={{
                                 ...(hasChanges &&
                                     !isSaving && {
-                                    backgroundColor: "#cccccc",
-                                    color: "#000000",
-                                    "&:hover": {
-                                        backgroundColor: "#bbbbbb",
-                                    },
-                                }),
+                                        backgroundColor: "#cccccc",
+                                        color: "#000000",
+                                        "&:hover": {
+                                            backgroundColor: "#bbbbbb",
+                                        },
+                                    }),
                             }}
                         >
                             {!isTrigger
                                 ? isSaving
                                     ? `Đang lưu ... ${saveCountdown}`
                                     : hasChanges
-                                        ? "Đã Lưu"
-                                        : "Đã lưu"
+                                    ? "Đã Lưu"
+                                    : "Đã lưu"
                                 : "Lưu"}
                         </Button>
                     </div>
