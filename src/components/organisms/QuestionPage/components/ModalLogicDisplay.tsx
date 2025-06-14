@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import type { OptionType, QuestionType } from "../../../../types/survey";
-import type { RangeSliderConfigJsonStringType } from "../../RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../../RangeSlider/RangeSlider";
 
 type DisplayLogicType = {
-    conditions: {
-        questionOrder: number;
-        conjunction: string | null;
-        operator: string;
-        optionOrder?: number;
-        compareValue?: number;
+    Conditions: {
+        QuestionOrder: number;
+        Conjunction: string | null;
+        Operator: string;
+        OptionOrder?: number;
+        CompareValue?: number;
     }[];
-    targetQuestionOrder: number | "end";
+    TargetQuestionOrder: number | "end";
 };
 
-type ConfigJsonStringType = {
-    displayLogics?: DisplayLogicType[];
-    backgroundGradient1Color?: string;
-    backgroundGradient2Color?: string;
-    titleColor?: string;
-    contentColor?: string;
-    buttonBackgroundColor?: string;
-    buttonContentColor?: string;
-    password?: string;
-    brightness?: number;
-    isResizableIframeEnabled?: boolean;
+type ConfigJsonType = {
+    DisplayLogics?: DisplayLogicType[];
+    BackgroundGradient1Color?: string;
+    BackgroundGradient2Color?: string;
+    TitleColor?: string;
+    ContentColor?: string;
+    ButtonBackgroundColor?: string;
+    ButtonContentColor?: string;
+    Password?: string;
+    Brightness?: number;
+    IsResizableIframeEnabled?: boolean;
 };
 
 type OperatorType = {
@@ -37,7 +37,7 @@ export default function LogicComponentDisplay({
     question,
     questions,
 }: {
-    question: any;
+    question: QuestionType;
     questions: QuestionType[];
     handleUpdateQuestion: (
         key: keyof QuestionType,
@@ -47,7 +47,7 @@ export default function LogicComponentDisplay({
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
 }) {
@@ -98,7 +98,7 @@ function ModalLogic({
     handleUpdateQuestion,
     question,
 }: {
-    question: any;
+    question: QuestionType;
     onClose: () => void;
     questionsData: QuestionType[];
     handleUpdateQuestion: (
@@ -109,52 +109,52 @@ function ModalLogic({
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
 }) {
-    const configJson = question?.configJsonString as ConfigJsonStringType;
-    const displayLogics = (configJson?.displayLogics ||
+    const configJson = question?.ConfigJson as ConfigJsonType;
+    const DisplayLogics = (configJson?.DisplayLogics ||
         []) as DisplayLogicType[];
 
     const handleAddLogic = () => {
         const newLogic: DisplayLogicType = {
-            conditions: [],
-            targetQuestionOrder: "end",
+            Conditions: [],
+            TargetQuestionOrder: "end",
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
-            displayLogics: [...displayLogics, newLogic],
+            DisplayLogics: [...DisplayLogics, newLogic],
         });
     };
 
     const handleDeleteLogic = (logicIndex: number) => {
-        const newLogics = displayLogics.filter(
+        const newLogics = DisplayLogics.filter(
             (_, index) => index !== logicIndex
         );
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
-            displayLogics: newLogics,
+            DisplayLogics: newLogics,
         });
     };
 
     const handleAddCondition = (logicIndex: number) => {
-        const logic = displayLogics[logicIndex];
+        const logic = DisplayLogics[logicIndex];
         const newCondition = {
-            questionOrder: 0,
-            conjunction: logic.conditions.length > 0 ? "AND" : null,
-            operator: "",
-            optionOrder: 0,
-            compareValue: 0,
+            QuestionOrder: 0,
+            Conjunction: logic.Conditions.length > 0 ? "AND" : null,
+            Operator: "",
+            OptionOrder: 0,
+            CompareValue: 0,
         };
-        const newLogics = [...displayLogics];
+        const newLogics = [...DisplayLogics];
         newLogics[logicIndex] = {
             ...logic,
-            conditions: [...logic.conditions, newCondition],
+            Conditions: [...logic.Conditions, newCondition],
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
-            displayLogics: newLogics,
+            DisplayLogics: newLogics,
         });
     };
 
@@ -162,18 +162,18 @@ function ModalLogic({
         logicIndex: number,
         conditionIndex: number
     ) => {
-        const logic = displayLogics[logicIndex];
-        const newConditions = logic.conditions.filter(
+        const logic = DisplayLogics[logicIndex];
+        const newConditions = logic.Conditions.filter(
             (_, index) => index !== conditionIndex
         );
-        const newLogics = [...displayLogics];
+        const newLogics = [...DisplayLogics];
         newLogics[logicIndex] = {
             ...logic,
-            conditions: newConditions,
+            Conditions: newConditions,
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
-            displayLogics: newLogics,
+            DisplayLogics: newLogics,
         });
     };
 
@@ -183,38 +183,38 @@ function ModalLogic({
         key: string,
         value: string | number
     ) => {
-        const logic = displayLogics[logicIndex];
-        const condition = logic.conditions[conditionIndex];
+        const logic = DisplayLogics[logicIndex];
+        const condition = logic.Conditions[conditionIndex];
         const newCondition = { ...condition, [key]: value };
-        const newConditions = [...logic.conditions];
+        const newConditions = [...logic.Conditions];
         newConditions[conditionIndex] = newCondition;
-        const newLogics = [...displayLogics];
+        const newLogics = [...DisplayLogics];
         newLogics[logicIndex] = {
             ...logic,
-            conditions: newConditions,
+            Conditions: newConditions,
         };
-        handleUpdateQuestion("configJsonString", {
+        handleUpdateQuestion("ConfigJson", {
             ...configJson,
-            displayLogics: newLogics,
+            DisplayLogics: newLogics,
         });
     };
 
     const handleSaveLogic = () => {
-        const isValid = displayLogics.every((logic) => {
-            if (!logic.targetQuestionOrder) {
+        const isValid = DisplayLogics.every((logic) => {
+            if (!logic.TargetQuestionOrder) {
                 return false;
             }
-            return logic.conditions.every((condition) => {
-                if (!condition.questionOrder || !condition.operator) {
+            return logic.Conditions.every((condition) => {
+                if (!condition.QuestionOrder || !condition.Operator) {
                     return false;
                 }
-                if (["Chọn", "Không Chọn"].includes(condition.operator)) {
-                    return condition.optionOrder !== 0;
+                if (["Chọn", "Không Chọn"].includes(condition.Operator)) {
+                    return condition.OptionOrder !== 0;
                 }
                 if (
-                    ["=", "≠", ">", "≥", "<", "≤"].includes(condition.operator)
+                    ["=", "≠", ">", "≥", "<", "≤"].includes(condition.Operator)
                 ) {
-                    return condition.compareValue !== 0;
+                    return condition.CompareValue !== 0;
                 }
                 return true;
             });
@@ -229,9 +229,9 @@ function ModalLogic({
     };
 
     const getOperatorsForQuestion = (
-        questionTypeId: number
+        QuestionTypeId: number
     ): OperatorType[] => {
-        switch (questionTypeId) {
+        switch (QuestionTypeId) {
             case 1:
                 return [
                     { value: "Chọn", label: "Chọn" },
@@ -269,7 +269,7 @@ function ModalLogic({
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-4">
-                    {displayLogics.map((logic, logicIndex) => (
+                    {DisplayLogics.map((logic, logicIndex) => (
                         <div
                             key={logicIndex}
                             className="mb-6 bg-white border border-gray-200 rounded-lg p-4"
@@ -287,7 +287,7 @@ function ModalLogic({
                                     >
                                         + Thêm điều kiện
                                     </button>
-                                    {displayLogics.length > 1 && (
+                                    {DisplayLogics.length > 1 && (
                                         <button
                                             onClick={() =>
                                                 handleDeleteLogic(logicIndex)
@@ -301,8 +301,8 @@ function ModalLogic({
                             </div>
 
                             <div className="space-y-3">
-                                {logic.conditions.map(
-                                    (condition, conditionIndex) => (
+                                {logic.Conditions.map(
+                                    (condition: DisplayLogicType["Conditions"][number], conditionIndex: number) => (
                                         <div
                                             key={conditionIndex}
                                             className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100"
@@ -310,14 +310,14 @@ function ModalLogic({
                                             {conditionIndex > 0 && (
                                                 <select
                                                     value={
-                                                        condition.conjunction ||
+                                                        condition.Conjunction ||
                                                         "AND"
                                                     }
                                                     onChange={(e) =>
                                                         handleUpdateCondition(
                                                             logicIndex,
                                                             conditionIndex,
-                                                            "conjunction",
+                                                            "Conjunction",
                                                             e.target.value
                                                         )
                                                     }
@@ -334,14 +334,14 @@ function ModalLogic({
 
                                             <select
                                                 value={
-                                                    condition.questionOrder?.toString() ||
+                                                    condition.QuestionOrder?.toString() ||
                                                     ""
                                                 }
                                                 onChange={(e) =>
                                                     handleUpdateCondition(
                                                         logicIndex,
                                                         conditionIndex,
-                                                        "questionOrder",
+                                                        "QuestionOrder",
                                                         parseInt(e.target.value)
                                                     )
                                                 }
@@ -353,25 +353,25 @@ function ModalLogic({
                                                 {questionsData
                                                     ?.filter(
                                                         (item) =>
-                                                            item.questionTypeId ===
+                                                            item.QuestionTypeId ===
                                                                 1 ||
-                                                            item.questionTypeId ===
+                                                            item.QuestionTypeId ===
                                                                 2 ||
-                                                            item.questionTypeId ===
+                                                            item.QuestionTypeId ===
                                                                 6
                                                     )
                                                     ?.map((q) => (
                                                         <option
-                                                            key={q.order}
-                                                            value={q.order.toString()}
+                                                            key={q.Order}
+                                                            value={q.Order.toString()}
                                                         >
-                                                            {q.order} .
-                                                            {q.content &&
-                                                                ` ${q.content.substring(
+                                                            {q.Order} .
+                                                            {q.Content &&
+                                                                ` ${q.Content.substring(
                                                                     0,
                                                                     50
                                                                 )}${
-                                                                    q.content
+                                                                    q.Content
                                                                         .length >
                                                                     50
                                                                         ? "..."
@@ -382,30 +382,30 @@ function ModalLogic({
                                             </select>
 
                                             <select
-                                                value={condition.operator || ""}
+                                                value={condition.Operator || ""}
                                                 onChange={(e) =>
                                                     handleUpdateCondition(
                                                         logicIndex,
                                                         conditionIndex,
-                                                        "operator",
+                                                        "Operator",
                                                         e.target.value
                                                     )
                                                 }
                                                 className="w-40 px-2 py-1.5 border border-gray-300 rounded hover:border-blue-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                                                 disabled={
-                                                    !condition.questionOrder
+                                                    !condition.QuestionOrder
                                                 }
                                             >
                                                 <option value="">
                                                     Chọn điều kiện
                                                 </option>
-                                                {condition.questionOrder &&
+                                                {condition.QuestionOrder &&
                                                     getOperatorsForQuestion(
                                                         questionsData.find(
                                                             (q) =>
-                                                                q.order ===
-                                                                condition.questionOrder
-                                                        )?.questionTypeId || 0
+                                                                q.Order ===
+                                                                condition.QuestionOrder
+                                                        )?.QuestionTypeId || 0
                                                     ).map((op) => (
                                                         <option
                                                             key={op.value}
@@ -417,18 +417,18 @@ function ModalLogic({
                                             </select>
 
                                             {["Chọn", "Không Chọn"].includes(
-                                                condition.operator || ""
+                                                condition.Operator || ""
                                             ) && (
                                                 <select
                                                     value={
-                                                        condition.optionOrder?.toString() ||
+                                                        condition.OptionOrder?.toString() ||
                                                         ""
                                                     }
                                                     onChange={(e) =>
                                                         handleUpdateCondition(
                                                             logicIndex,
                                                             conditionIndex,
-                                                            "optionOrder",
+                                                            "OptionOrder",
                                                             parseInt(
                                                                 e.target.value
                                                             )
@@ -436,29 +436,29 @@ function ModalLogic({
                                                     }
                                                     className="w-40 px-2 py-1.5 border border-gray-300 rounded hover:border-blue-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                                                     disabled={
-                                                        !condition.operator
+                                                        !condition.Operator
                                                     }
                                                 >
                                                     <option value="">
                                                         Chọn đáp án
                                                     </option>
-                                                    {condition.questionOrder &&
+                                                    {condition.QuestionOrder &&
                                                         questionsData
                                                             .find(
                                                                 (q) =>
-                                                                    q.order ===
-                                                                    condition.questionOrder
+                                                                    q.Order ===
+                                                                    condition.QuestionOrder
                                                             )
-                                                            ?.options?.map(
+                                                            ?.Options?.map(
                                                                 (opt) => (
                                                                     <option
                                                                         key={
-                                                                            opt.order
+                                                                            opt.Order
                                                                         }
-                                                                        value={opt.order.toString()}
+                                                                        value={opt.Order.toString()}
                                                                     >
                                                                         {
-                                                                            opt.content
+                                                                            opt.Content
                                                                         }
                                                                     </option>
                                                                 )
@@ -474,19 +474,19 @@ function ModalLogic({
                                                 "<",
                                                 "≤",
                                             ].includes(
-                                                condition.operator || ""
+                                                condition.Operator || ""
                                             ) && (
                                                 <input
                                                     type="number"
                                                     value={
-                                                        condition.compareValue ||
+                                                        condition.CompareValue ||
                                                         ""
                                                     }
                                                     onChange={(e) =>
                                                         handleUpdateCondition(
                                                             logicIndex,
                                                             conditionIndex,
-                                                            "compareValue",
+                                                            "CompareValue",
                                                             parseInt(
                                                                 e.target.value
                                                             )
@@ -495,7 +495,7 @@ function ModalLogic({
                                                     className="w-32 px-2 py-1.5 border border-gray-300 rounded hover:border-blue-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                                                     placeholder="Nhập giá trị"
                                                     disabled={
-                                                        !condition.operator
+                                                        !condition.Operator
                                                     }
                                                 />
                                             )}
@@ -537,31 +537,30 @@ function ModalLogic({
                                     </button>
                                     <select
                                         value={
-                                            logic.targetQuestionOrder === "end"
+                                            logic.TargetQuestionOrder === "end"
                                                 ? "end"
-                                                : logic.targetQuestionOrder.toString()
+                                                : logic.TargetQuestionOrder.toString()
                                         }
                                         onChange={(e) => {
-                                            const updatedLogic: DisplayLogicType =
-                                                {
-                                                    ...logic,
-                                                    targetQuestionOrder:
-                                                        e.target.value === "end"
-                                                            ? "end"
-                                                            : parseInt(
-                                                                  e.target.value
-                                                              ),
-                                                };
+                                            const updatedLogic: DisplayLogicType = {
+                                                ...logic,
+                                                TargetQuestionOrder:
+                                                    e.target.value === "end"
+                                                        ? "end"
+                                                        : parseInt(
+                                                              e.target.value
+                                                          ),
+                                            };
                                             const newLogics = [
-                                                ...displayLogics,
+                                                ...DisplayLogics,
                                             ];
                                             newLogics[logicIndex] =
                                                 updatedLogic;
                                             handleUpdateQuestion(
-                                                "configJsonString",
+                                                "ConfigJson",
                                                 {
                                                     ...configJson,
-                                                    displayLogics: newLogics,
+                                                    DisplayLogics: newLogics,
                                                 }
                                             );
                                         }}
@@ -572,16 +571,16 @@ function ModalLogic({
                                         </option>
                                         {questionsData.map((q) => (
                                             <option
-                                                key={q.order}
-                                                value={q.order.toString()}
+                                                key={q.Order}
+                                                value={q.Order.toString()}
                                             >
-                                                Câu hỏi {q.order}
-                                                {q.content &&
-                                                    ` - ${q.content.substring(
+                                                Câu hỏi {q.Order}
+                                                {q.Content &&
+                                                    ` - ${q.Content.substring(
                                                         0,
                                                         50
                                                     )}${
-                                                        q.content.length > 50
+                                                        q.Content.length > 50
                                                             ? "..."
                                                             : ""
                                                     }`}

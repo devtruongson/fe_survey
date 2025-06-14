@@ -16,26 +16,26 @@ type Props = {
     ) => void;
 };
 const optionDefault = {
-    order: 1,
-    content: "",
+    Order: 1,
+    Content: "",
 };
 const ShortSentences = ({ question, handleUpdateQuestion }: Props) => {
     const handleAddOption = useCallback(() => {
-        handleUpdateQuestion("options", [
-            ...question.options,
-            { ...optionDefault, order: question.options.length + 1 },
+        handleUpdateQuestion("Options", [
+            ...question.Options,
+            { ...optionDefault, Order: question.Options.length + 1 },
         ]);
-    }, [handleUpdateQuestion, question.options]);
+    }, [handleUpdateQuestion, question.Options]);
 
     useEffect(() => {
-        if (!question?.options?.length) {
-            handleUpdateQuestion("options", [optionDefault]);
+        if (!question?.Options?.length) {
+            handleUpdateQuestion("Options", [optionDefault]);
         }
     }, [handleUpdateQuestion, question]);
     return (
         <div className="short-sentences-container">
-            {question?.options?.length
-                ? question.options.map((_, index) => {
+            {question?.Options?.length
+                ? question.Options.map((_, index) => {
                       return (
                           <input
                               key={index}

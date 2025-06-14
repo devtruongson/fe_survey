@@ -21,29 +21,29 @@ import MainTemPlate from "../../templates/MainTemPlate";
 import "./styles.scss";
 
 const defaultValue = {
-    id: 999,
-    requesterId: 10,
-    title: "",
-    description: "",
-    marketSurveyVersionStatusId: null, // surveyStatusId: 3
-    surveyTypeId: 2,
-    surveyTopicId: 2,
-    surveySpecificTopicId: 5,
-    surveyStatusId: 2, // 
-    securityModeId: 1,
-    background: "/assets/start1.webp",
-    configJsonString: {
-        backgroundGradient1Color: "#ffffff",
-        backgroundGradient2Color: "#f0f0f0",
-        titleColor: "#000000",
-        contentColor: "#333333",
-        buttonBackgroundColor: "#007bff",
-        buttonContentColor: "#ffffff",
-        password: "123456",
-        brightness: 100,
+    Id: 999,
+    RequesterId: 10,
+    Title: "",
+    Description: "",
+    MarketSurveyVersionStatusId: null, // SurveyStatusId: 3
+    SurveyTypeId: 2,
+    SurveyTopicId: 2,
+    SurveySpecificTopicId: 5,
+    SurveyStatusId: 2, //
+    SecurityModeId: 1,
+    Background: "/assets/start1.webp",
+    ConfigJson: {
+        BackgroundGradient1Color: "#ffffff",
+        BackgroundGradient2Color: "#f0f0f0",
+        TitleColor: "#000000",
+        ContentColor: "#333333",
+        ButtonBackgroundColor: "#007bff",
+        ButtonContentColor: "#ffffff",
+        Password: "123456",
+        Brightness: 100,
     },
-    questions: [],
-    skipStartPage: false,
+    Questions: [],
+    SkipStartPage: false,
 };
 
 const SurveyNew = () => {
@@ -57,9 +57,9 @@ const SurveyNew = () => {
     const timeoutRef = useRef<number | null>(null);
     const countdownRef = useRef<number | null>(null);
 
-    const isTrigger = useMemo(() => formData?.surveyStatusId === 2 && formData?.marketSurveyVersionStatusId !== 1, [formData]);
+    const isTrigger = useMemo(() => formData?.SurveyStatusId === 2 && formData?.MarketSurveyVersionStatusId !== 1, [formData]);
     const isDisable = useMemo(
-        () => typeof formData?.marketSurveyVersionStatusId === "object" ? false : formData?.marketSurveyVersionStatusId !== 1,
+        () => typeof formData?.MarketSurveyVersionStatusId === "object" ? false : formData?.MarketSurveyVersionStatusId !== 1,
         [formData]
     );
 

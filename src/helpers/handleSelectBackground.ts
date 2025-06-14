@@ -13,62 +13,65 @@
 interface BackgroundConfig {
     imagePath: string;
     colors: {
-        titleColor: string;
-        contentColor: string;
-        buttonBackgroundColor: string;
-        buttonContentColor: string;
+        TitleColor: string;
+        ContentColor: string;
+        ButtonBackgroundColor: string;
+        ButtonContentColor: string;
     };
 }
 
-interface ConfigJsonString {
-    backgroundGradient1Color: string;
-    backgroundGradient2Color: string;
-    titleColor: string;
-    contentColor: string;
-    buttonBackgroundColor: string;
-    buttonContentColor: string;
-    password: string;
+interface ConfigJson {
+    BackgroundGradient1Color: string;
+    BackgroundGradient2Color: string;
+    TitleColor: string;
+    ContentColor: string;
+    ButtonBackgroundColor: string;
+    ButtonContentColor: string;
+    Password: string;
 }
 
 const defaultColors = {
-    titleColor: "#2f2f2f",
-    contentColor: "#444444",
-    buttonBackgroundColor: "#f75c83",
-    buttonContentColor: "#ffffff",
+    TitleColor: "#2f2f2f",
+    ContentColor: "#444444",
+    ButtonBackgroundColor: "#f75c83",
+    ButtonContentColor: "#ffffff",
 };
 
 const backgroundConfigs: Record<string, Omit<BackgroundConfig, 'imagePath'> & { imagePath?: string }> = {
-    start1: { imagePath: "/assets/start1.webp", colors: { ...defaultColors, buttonBackgroundColor: "#FEC347" } },
-    start2: { imagePath: "/assets/start2.webp", colors: { ...defaultColors, buttonBackgroundColor: "#FCBC72" } },
-    start3: { imagePath: "/assets/start3.webp", colors: { ...defaultColors, buttonBackgroundColor: "#BC73BC" } },
-    start4: { imagePath: "/assets/start4.webp", colors: { ...defaultColors, buttonBackgroundColor: "#4EA295" } },
-    start6: { imagePath: "/assets/start6.webp", colors: { ...defaultColors, buttonBackgroundColor: "#BC6235" } },
-    start7: { imagePath: "/assets/start7.webp", colors: { ...defaultColors, buttonBackgroundColor: "linear-gradient(to right, #F27186, #F83D6E)" } },
-    start8: { imagePath: "/assets/start8.webp", colors: { ...defaultColors, buttonBackgroundColor: "linear-gradient(to right, #19A0BB, #1CB3D1)" } },
-    start9: { imagePath: "/assets/start9.webp", colors: { ...defaultColors, buttonBackgroundColor: "#027186" } },
-    start10: { imagePath: "/assets/start10.webp", colors: { ...defaultColors, buttonBackgroundColor: "#6EAF99" } },
-    start11: { imagePath: "/assets/start11.webp", colors: { ...defaultColors, buttonBackgroundColor: "linear-gradient(to right, #F52828, #E84F4F)" } },
-    start12: { imagePath: "/assets/start12.webp", colors: { ...defaultColors, buttonBackgroundColor: "#00BBC1" } },
+    start1: { imagePath: "/assets/start1.webp", colors: { ...defaultColors, ButtonBackgroundColor: "#FEC347" } },
+    start2: { imagePath: "/assets/start2.webp", colors: { ...defaultColors, ButtonBackgroundColor: "#FCBC72" } },
+    start3: { imagePath: "/assets/start3.webp", colors: { ...defaultColors, ButtonBackgroundColor: "#BC73BC" } },
+    start4: { imagePath: "/assets/start4.webp", colors: { ...defaultColors, ButtonBackgroundColor: "#4EA295" } },
+    start6: { imagePath: "/assets/start6.webp", colors: { ...defaultColors, ButtonBackgroundColor: "#BC6235" } },
+    start7: { imagePath: "/assets/start7.webp", colors: { ...defaultColors, ButtonBackgroundColor: "linear-gradient(to right, #F27186, #F83D6E)" } },
+    start8: { imagePath: "/assets/start8.webp", colors: { ...defaultColors, ButtonBackgroundColor: "linear-gradient(to right, #19A0BB, #1CB3D1)" } },
+    start9: { imagePath: "/assets/start9.webp", colors: { ...defaultColors, ButtonBackgroundColor: "#027186" } },
+    start10: { imagePath: "/assets/start10.webp", colors: { ...defaultColors, ButtonBackgroundColor: "#6EAF99" } },
+    start11: { imagePath: "/assets/start11.webp", colors: { ...defaultColors, ButtonBackgroundColor: "linear-gradient(to right, #F52828, #E84F4F)" } },
+    start12: { imagePath: "/assets/start12.webp", colors: { ...defaultColors, ButtonBackgroundColor: "#00BBC1" } },
     default_color: {
         imagePath: "",
         colors: {
-            titleColor: "#2f2f2f",
-            contentColor: "#444444",
-            buttonBackgroundColor: "#f75c83",
-            buttonContentColor: "#ffffff",
+            TitleColor: "#2f2f2f",
+            ContentColor: "#444444",
+            ButtonBackgroundColor: "#f75c83",
+            ButtonContentColor: "#ffffff",
         },
     },
     custom: { colors: { ...defaultColors } }, // For custom uploaded images
 };
 
-export const handleSelectBackground = (background: string, configJsonString?: ConfigJsonString): BackgroundConfig => {
-    if (background === 'color_gradient' && configJsonString) {
+export const handleSelectBackground = (
+    background: string,
+    ConfigJson?: ConfigJson
+): BackgroundConfig => {
+    if (background === 'color_gradient' && ConfigJson) {
         return {
             imagePath: "",
             colors: {
                 ...defaultColors,
-                buttonBackgroundColor: defaultColors.buttonBackgroundColor,
-                buttonContentColor: defaultColors.buttonContentColor,
+                ButtonBackgroundColor: defaultColors.ButtonBackgroundColor,
+                ButtonContentColor: defaultColors.ButtonContentColor,
             },
         };
     }
