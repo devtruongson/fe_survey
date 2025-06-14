@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { SurveyType } from "../../../types/survey";
 import "./styles.scss";
+
+interface BackgroundItem {
+    id: number;
+    url: string;
+}
 
 interface SharePageProps {
     formData: SurveyType;
@@ -9,6 +14,13 @@ interface SharePageProps {
 
 const SharePage = ({ formData }: SharePageProps) => {
     const [isCopyLink, setIsCopyLink] = useState(false);
+    const [listBackground, setListBackground] = useState<BackgroundItem[]>([]);
+
+    useEffect(() => {
+        setListBackground(
+            JSON.parse(localStorage.getItem("listBackground") || "[]")
+        );
+    }, []);
 
     return (
         <div
