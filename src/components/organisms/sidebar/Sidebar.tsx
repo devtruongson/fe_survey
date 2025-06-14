@@ -12,7 +12,7 @@ import Voice from "../../molecules/voice/Voice";
 import LogicComponent from "../QuestionPage/components/ModalLogic";
 import LogicComponentDisplay from "../QuestionPage/components/ModalLogicDisplay";
 import SwitchCustomize from "../QuestionPage/components/SwitchCustomize";
-import type { RangeSliderConfigJsonStringType } from "../RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../RangeSlider/RangeSlider";
 
 const Sidebar = ({
     question,
@@ -32,22 +32,22 @@ const Sidebar = ({
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
     listComponent: any;
 }) => {
     const handleChangeType = (type: number) => {
         handleUpdateQuestion("questionTypeId", type);
-        handleUpdateQuestion("configJsonString", {});
+        handleUpdateQuestion("ConfigJson", {});
         if (question?.options?.length) {
             handleUpdateQuestion("options", []);
         }
     };
 
-    // const isBasic = useMemo(() => formData?.securityModeId === 1, [formData]);
-    const isAdvance = useMemo(() => formData?.securityModeId === 2, [formData]);
-    const isPro = useMemo(() => formData?.securityModeId === 3, [formData]);
+    // const isBasic = useMemo(() => formData?.SecurityModeId === 1, [formData]);
+    const isAdvance = useMemo(() => formData?.SecurityModeId === 2, [formData]);
+    const isPro = useMemo(() => formData?.SecurityModeId === 3, [formData]);
     return (
         <>
             <p>Chọn loại câu hỏi</p>
@@ -95,7 +95,7 @@ const Sidebar = ({
                     return Item.children;
                 })}
 
-            {formData?.surveyTypeId === 3 ? null : (
+            {formData?.SurveyTypeId === 3 ? null : (
                 <>
                     <LogicComponent
                         questions={formData?.questions || []}

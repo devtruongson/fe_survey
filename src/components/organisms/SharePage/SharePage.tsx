@@ -36,23 +36,23 @@ const SharePage = ({ formData }: SharePageProps) => {
                     ...(backgroundMode === "image" && {
                         backgroundImage: `url(${
                             formData.customBackgroundImageUrl ||
-                            formData.background
+                            formData.Background
                         })`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
-                        filter: `brightness(${
-                            formData.configJsonString.brightness / 100
+                        filter: `Brightness(${
+                            formData.ConfigJson.Brightness / 100
                         })`,
                         backgroundColor: "transparent",
                     }),
                     ...(backgroundMode === "color" && {
-                        ...(formData.background.startsWith("#")
+                        ...(formData.Background.startsWith("#")
                             ? {
-                                  backgroundColor: formData.background,
+                                  backgroundColor: formData.Background,
                               }
                             : {
-                                  background: `linear-gradient(to right, ${formData.configJsonString.backgroundGradient1Color}, ${formData.configJsonString.backgroundGradient2Color})`,
+                                  background: `linear-gradient(to right, ${formData.ConfigJson.BackgroundGradient1Color}, ${formData.ConfigJson.BackgroundGradient2Color})`,
                               }),
                     }),
                 }}
@@ -63,7 +63,7 @@ const SharePage = ({ formData }: SharePageProps) => {
                             className="text-2xl font-semibold mb-4 text-center"
                             style={{
                                 color:
-                                    formData.configJsonString.titleColor ||
+                                    formData.ConfigJson.TitleColor ||
                                     "#ffffff",
                             }}
                         >

@@ -63,7 +63,7 @@ const Answer = ({
                     placeholder="Nhập câu trả lời tại đây"
                     onChange={handleChange}
                     style={{
-                        color: `${formData?.configJsonString?.contentColor}`,
+                        color: `${formData?.ConfigJson?.ContentColor}`,
                     }}
                 />
                 <input
