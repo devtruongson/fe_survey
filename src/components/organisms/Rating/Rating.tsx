@@ -32,9 +32,9 @@ type Props = {
 const Rating = ({ question, handleUpdateQuestion }: Props) => {
     const config = useMemo(
         () =>
-            (question?.configJsonString as Record<string, string | number>) ||
+            (question?.ConfigJson as Record<string, string | number>) ||
             {},
-        [question?.configJsonString]
+        [question?.ConfigJson]
     );
 
     const ratingLength = useMemo(
@@ -111,7 +111,7 @@ const Rating = ({ question, handleUpdateQuestion }: Props) => {
 
     useEffect(() => {
         if (!config?.ratingLength || !config?.ratingIcon) {
-            handleUpdateQuestion("configJsonString", {
+            handleUpdateQuestion("ConfigJson", {
                 ratingIcon: config?.ratingIcon ?? "StarBorderIcon",
                 ratingLength: config?.ratingLength ?? 5,
             });

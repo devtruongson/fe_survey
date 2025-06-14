@@ -13,7 +13,7 @@ import type {
 } from "../../../types/survey";
 import FormSelectType from "../../molecules/form-select-type/FormSelectType";
 import MultipleChoice from "../MultipleChoice/MultipleChoice";
-import type { RangeSliderConfigJsonStringType } from "../RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../RangeSlider/RangeSlider";
 import RangeSlider from "../RangeSlider/RangeSlider";
 import Ranking from "../Ranking/Ranking";
 import Rating from "../Rating/Rating";
@@ -27,14 +27,14 @@ import RatingIcon from "./components/rating-icon/RatingIcon";
 import "./styles.scss";
 
 const questionDefault = {
-    questionTypeId: 0,
-    content: "",
-    description: "",
-    timeLimit: 0,
-    isVoice: false,
-    order: 0,
-    configJsonString: {},
-    options: [],
+    QuestionTypeId: 0,
+    Content: "",
+    Description: "",
+    TimeLimit: 0,
+    IsVoice: false,
+    Order: 0,
+    ConfigJson: {},
+    Options: [],
 };
 
 type Props = {
@@ -48,8 +48,8 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
     const [isOpenOverlay, setIsOpenOverlay] = useState(false);
 
     const questionedit = useMemo(() => {
-        return (formData?.questions || []).find((item) => {
-            return item?.order === orderCurrent;
+        return (formData?.Questions || []).find((item) => {
+            return item?.Order === orderCurrent;
         });
     }, [formData, orderCurrent]);
 
@@ -62,15 +62,15 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 | boolean
                 | OptionType[]
                 | Record<string, string | number>
-                | RangeSliderConfigJsonStringType
+                | RangeSliderConfigJsonType
                 | Record<string, unknown>
         ) => {
             setFormData((prev) => ({
                 ...prev,
-                questions: prev.questions.map((item) => {
+                Questions: prev.Questions.map((item) => {
                     if (
-                        questionedit?.order &&
-                        item.order === questionedit?.order
+                        questionedit?.Order &&
+                        item.Order === questionedit?.Order
                     ) {
                         return {
                             ...item,
@@ -82,7 +82,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
             }));
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [questionedit?.order]
+        [questionedit?.Order]
     );
 
     const rulesType = SurveyQuestionType.map((item) => {
@@ -329,32 +329,34 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
         if (isTrigger) return;
         setFormData((prev) => ({
             ...prev,
-            questions: [
-                ...prev.questions,
+            Questions: [
+                ...prev.Questions,
                 {
                     ...questionDefault,
-                    order: prev.questions[prev.questions.length - 1].order + 1,
+                    Order:
+                        (prev.Questions[prev.Questions.length - 1]?.Order || 0) +
+                        1,
                 },
             ],
         }));
-        setOrderCurrent(formData?.questions?.length + 1);
-    }, [formData?.questions?.length, setFormData, isTrigger]);
+        setOrderCurrent(formData?.Questions?.length + 1);
+    }, [formData?.Questions?.length, setFormData, isTrigger]);
 
-    const handleChangeQuestion = (order: number) => {
-        setOrderCurrent(order);
+    const handleChangeQuestion = (Order: number) => {
+        setOrderCurrent(Order);
     };
 
     const handleDeleteQuestion = () => {
         if (!orderCurrent) return;
-        const newQuestions = formData?.questions
-            .filter((item) => item.order !== orderCurrent)
+        const newQuestions = formData?.Questions
+            .filter((item) => item.Order !== orderCurrent)
             .map((item, index) => ({
                 ...item,
-                order: index + 1,
+                Order: index + 1,
             }));
         setFormData((prev) => ({
             ...prev,
-            questions: newQuestions,
+            Questions: newQuestions,
         }));
     };
 
@@ -366,12 +368,12 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
             return; // Không hợp lệ
         }
 
-        const questions = [...formData.questions];
+        const questions = [...formData.Questions];
         const currentIndex = questions.findIndex(
-            (item) => item.order === currentOrder
+            (item) => item.Order === currentOrder
         );
         const targetIndex = questions.findIndex(
-            (item) => item.order === targetOrder
+            (item) => item.Order === targetOrder
         );
 
         if (currentIndex === -1 || targetIndex === -1) {
@@ -386,12 +388,12 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
         // Cập nhật lại order cho tất cả câu hỏi
         const newQuestions = questions.map((item, idx) => ({
             ...item,
-            order: idx + 1,
+            Order: idx + 1,
         }));
 
         setFormData((prev) => ({
             ...prev,
-            questions: newQuestions,
+            Questions: newQuestions,
         }));
 
         // Đặt lại orderCurrent là vị trí mới
@@ -399,13 +401,13 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
     };
 
     useEffect(() => {
-        if (!formData?.questions?.length) {
+        if (!formData?.Questions?.length) {
             setFormData((prev) => ({
                 ...prev,
-                questions: [{ ...questionDefault, order: 1 }],
+                Questions: [{ ...questionDefault, Order: 1 }],
             }));
         }
-    }, [formData?.questions?.length, setFormData]);
+    }, [formData?.Questions?.length, setFormData]);
 
     const handleUploadImageBase64 = (e: any) => {
         const file = e.target.files[0];
@@ -413,7 +415,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
             const reader = new FileReader();
             reader.onload = () => {
                 const base64String = reader.result;
-                handleUpdateQuestion("image_header", base64String as string);
+                handleUpdateQuestion("ImageHeader", base64String as string);
             };
             reader.onerror = (error) => {
                 console.error("Error reading file:", error);
@@ -445,35 +447,35 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 <div
                     className="question-main flex-1 flex flex-col overflow-y-auto relative"
                     style={{
-                        ...(formData?.background?.startsWith("/") && {
-                            backgroundImage: `url(${formData?.background})`,
+                        ...(formData?.Background?.startsWith("/") && {
+                            backgroundImage: `url(${formData?.Background})`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
-                            filter: `brightness(${
-                                formData?.configJsonString.brightness / 100
+                            filter: `Brightness(${
+                                formData?.ConfigJson.Brightness / 100
                             })`,
                             backgroundColor: "transparent",
                         }),
-                        ...(formData?.background === "color_gradient" && {
-                            background: `linear-gradient(to right, ${formData?.configJsonString.backgroundGradient1Color}, ${formData?.configJsonString.backgroundGradient2Color})`,
-                            filter: `brightness(${
-                                formData?.configJsonString.brightness / 100
+                        ...(formData?.Background === "color_gradient" && {
+                            background: `linear-gradient(to right, ${formData?.ConfigJson.BackgroundGradient1Color}, ${formData?.ConfigJson.BackgroundGradient2Color})`,
+                            filter: `Brightness(${
+                                formData?.ConfigJson.Brightness / 100
                             })`,
                         }),
-                        ...(formData?.background?.startsWith("#") && {
-                            backgroundColor: formData?.background,
-                            filter: `brightness(${
-                                formData?.configJsonString.brightness / 100
+                        ...(formData?.Background?.startsWith("#") && {
+                            backgroundColor: formData?.Background,
+                            filter: `Brightness(${
+                                formData?.ConfigJson.Brightness / 100
                             })`,
                         }),
                     }}
                 >
                     <div className="question-input-container relative z-10 flex flex-col items-center">
-                        {questionedit?.image_header &&
-                        questionedit.configJsonString?.image_end_question ? (
+                        {questionedit?.ImageHeader &&
+                        questionedit.ConfigJson?.image_end_question ? (
                             <img
-                                src={questionedit?.image_header}
+                                src={questionedit?.ImageHeader}
                                 className="rounded-2xl "
                                 alt=""
                             />
@@ -494,31 +496,31 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                             placeholder="Nhập câu hỏi tại đây"
                             className="question-title-input"
                             style={{
-                                color: `${formData?.configJsonString?.titleColor}`,
+                                color: `${formData?.ConfigJson?.TitleColor}`,
                             }}
-                            value={questionedit?.content || ""}
+                            value={questionedit?.Content || ""}
                             onChange={(e) =>
-                                handleUpdateQuestion("content", e.target.value)
+                                handleUpdateQuestion("Content", e.target.value)
                             }
                         />
                         <textarea
                             placeholder="Nhập mô tả tại đây"
                             rows={2}
                             className="question-description-input"
-                            value={questionedit?.description || ""}
+                            value={questionedit?.Description || ""}
                             style={{
-                                color: `${formData?.configJsonString?.contentColor}`,
+                                color: `${formData?.ConfigJson?.ContentColor}`,
                             }}
                             onChange={(e) =>
                                 handleUpdateQuestion(
-                                    "description",
+                                    "Description",
                                     e.target.value
                                 )
                             }
                         ></textarea>
                     </div>
                     <div className="flex justify-center">
-                        {handleRenderView(questionedit?.questionTypeId || 0)}
+                        {handleRenderView(questionedit?.QuestionTypeId || 0)}
                     </div>
                 </div>
 
@@ -531,7 +533,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                         listComponent={
                             rulesType.find(
                                 (item) =>
-                                    item.type === questionedit?.questionTypeId
+                                    item.type === questionedit?.QuestionTypeId
                             )?.rules as []
                         }
                     />
@@ -540,10 +542,10 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
             <div className="question-footer flex items-center">
                 <div className="footer-content flex">
-                    {(formData?.questions || [])?.map((item) => (
+                    {(formData?.Questions || [])?.map((item) => (
                         <QuestionItem
-                            key={item.order}
-                            order={item.order}
+                            key={item.Order}
+                            order={item.Order}
                             orderCurrent={orderCurrent}
                             onChange={handleChangeQuestion}
                             onOpenOverlay={() => setIsOpenOverlay(true)}

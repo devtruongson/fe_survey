@@ -4,7 +4,7 @@ import type {
     QuestionType,
     SurveyType,
 } from "../../../types/survey";
-import type { RangeSliderConfigJsonStringType } from "../../organisms/RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../../organisms/RangeSlider/RangeSlider";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -21,7 +21,7 @@ type Props = {
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
 };
@@ -33,15 +33,15 @@ const TimeLimit = ({
     setFormData,
 }: Props) => {
     const [isOpen, setIsOpne] = useState(false);
-    const value = useMemo(() => Number(question?.timeLimit) || 0, [question]);
+    const value = useMemo(() => Number(question?.TimeLimit) || 0, [question]);
 
     const action = useCallback(() => {
         if (isOpen) {
-            handleUpdateQuestion("timeLimit", 0);
-            setFormData((prev) => ({ ...prev, securityModeId: 1 }));
+            handleUpdateQuestion("TimeLimit", 0);
+            setFormData((prev) => ({ ...prev, SecurityModeId: 1 }));
         }
         if (!isOpen && !isAdvance) {
-            setFormData((prev) => ({ ...prev, securityModeId: 2 }));
+            setFormData((prev) => ({ ...prev, SecurityModeId: 2 }));
             toast("Đã cập nhật Chế độ bảo mật thành Advance");
         }
         setIsOpne(!isOpen);
@@ -84,17 +84,17 @@ const TimeLimit = ({
     };
 
     const handleChangeValue = (value: number) => {
-        handleUpdateQuestion("timeLimit", value);
+        handleUpdateQuestion("TimeLimit", value);
     };
 
     useEffect(() => {
-        if (Boolean(question?.timeLimit) && !isOpen) {
+        if (Boolean(question?.TimeLimit) && !isOpen) {
             setIsOpne(true);
         }
-        if (!question?.timeLimit && isOpen) {
+        if (!question?.TimeLimit && isOpen) {
             setIsOpne(false);
         }
-    }, [question?.order]);
+    }, [question?.Order]);
     return (
         <div className="w-full mb-2">
             <div>

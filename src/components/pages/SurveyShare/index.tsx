@@ -29,27 +29,27 @@ import { useGetSurvey } from '../../../services/survey/get';
 
 // Type definitions
 interface SurveyConfig {
-    backgroundGradient1Color: string;
-    backgroundGradient2Color: string;
-    titleColor: string;
-    contentColor: string;
-    buttonBackgroundColor: string;
-    buttonContentColor: string;
-    password?: string;
-    brightness: number;
+    BackgroundGradient1Color: string;
+    BackgroundGradient2Color: string;
+    TitleColor: string;
+    ContentColor: string;
+    ButtonBackgroundColor: string;
+    ButtonContentColor: string;
+    Password?: string;
+    Brightness: number;
 }
 
 interface QuestionOption {
-    content: string;
-    order: number;
+    Content: string;
+    Order: number;
 }
 
 interface JumpLogicCondition {
-    questionOrder: number;
-    conjunction: string | null;
-    operator: string;
-    optionOrder: number;
-    compareValue: number;
+    QuestionOrder: number;
+    Conjunction: string | null;
+    Operator: string;
+    OptionOrder: number;
+    CompareValue: number;
 }
 
 interface JumpLogic {
@@ -64,18 +64,18 @@ interface DisplayLogic {
 
 interface MatrixDataItem {
     label?: string;
-    min: number;
-    max: number;
-    step: number;
-    unit: string;
+    Min: number;
+    Max: number;
+    Step: number;
+    Unit: string;
 }
 
 interface QuestionConfig {
     image_end_question?: boolean;
-    min?: number;
-    max?: number;
-    step?: number;
-    unit?: string;
+    Min?: number;
+    Max?: number;
+    Step?: number;
+    Unit?: string;
     data?: MatrixDataItem[];
     ratingIcon?: string;
     ratingLength?: number;
@@ -86,32 +86,32 @@ interface QuestionConfig {
 }
 
 interface Question {
-    questionTypeId: number;
-    content: string;
-    description: string;
-    timeLimit: number;
-    isVoice: boolean;
-    order: number;
-    configJsonString: QuestionConfig;
-    options: QuestionOption[];
-    image_header?: string;
+    QuestionTypeId: number;
+    Content: string;
+    Description: string;
+    TimeLimit: number;
+    IsVoice: boolean;
+    Order: number;
+    ConfigJson: QuestionConfig;
+    Options: QuestionOption[];
+    ImageHeader?: string;
 }
 
 interface SurveyData {
-    id: number;
-    requesterId: number;
-    title: string;
-    description: string;
-    surveyTypeId: number;
-    surveyTopicId: number;
-    surveySpecificTopicId: number;
-    surveyStatusId: number;
-    securityModeId: number;
-    background: string;
-    configJsonString: SurveyConfig;
-    questions: Question[];
-    skipStartPage: boolean;
-    customBackgroundImageUrl: string | null;
+    Id: number;
+    RequesterId: number;
+    Title: string;
+    Description: string;
+    SurveyTypeId: number;
+    SurveyTopicId: number;
+    SurveySpecificTopicId: number;
+    SurveyStatusId: number;
+    SecurityModeId: number;
+    Background: string;
+    ConfigJson: SurveyConfig;
+    Questions: Question[];
+    SkipStartPage: boolean;
+    CustomBackgroundImageUrl: string | null;
 }
 
 
@@ -176,7 +176,7 @@ const SurveyPreview: React.FC = () => {
 
         return (
             <Card
-                key={question.order}
+                key={question.Order}
                 sx={{
                     mb: 2,
                     opacity: isActive ? 1 : 0.7,
@@ -185,11 +185,11 @@ const SurveyPreview: React.FC = () => {
                     border: isActive ? '2px solid #FCBC72' : '1px solid #e0e0e0'
                 }}
             >
-                {question.image_header && (
+                {question.ImageHeader && (
                     <CardMedia
                         component="img"
                         height="200"
-                        image={question.image_header}
+                        image={question.ImageHeader}
                         alt="Question header"
                     />
                 )}
@@ -197,17 +197,17 @@ const SurveyPreview: React.FC = () => {
                 <Box sx={{ p: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                         <Chip
-                            label={getQuestionTypeName(question.questionTypeId)}
+                            label={getQuestionTypeName(question.QuestionTypeId)}
                             size="small"
                             sx={{ mr: 1, bgcolor: '#FCBC72', color: 'white' }}
                         />
                         <Chip
-                            label={`Câu ${question.order}`}
+                            label={`Câu ${question.Order}`}
                             size="small"
                             variant="outlined"
                             sx={{ mr: 1 }}
                         />
-                        {question.isVoice && (
+                        {question.IsVoice && (
                             <Chip
                                 icon={<VolumeUp />}
                                 label="Có âm thanh"
@@ -216,10 +216,10 @@ const SurveyPreview: React.FC = () => {
                                 sx={{ mr: 1 }}
                             />
                         )}
-                        {question.timeLimit > 0 && (
+                        {question.TimeLimit > 0 && (
                             <Chip
                                 icon={<Timer />}
-                                label={`${question.timeLimit}s`}
+                                label={`${question.TimeLimit}s`}
                                 size="small"
                                 color="warning"
                             />
@@ -229,40 +229,40 @@ const SurveyPreview: React.FC = () => {
                     <Typography
                         variant="h6"
                         sx={{
-                            color: surveyData.configJsonString.titleColor,
+                            color: surveyData.ConfigJson.TitleColor,
                             mb: 1,
                             fontWeight: 600
                         }}
                     >
-                        {question.content || `Câu hỏi ${question.order}`}
+                        {question.Content || `Câu hỏi ${question.Order}`}
                     </Typography>
 
-                    {question.description && (
+                    {question.Description && (
                         <Typography
                             variant="body2"
                             sx={{
-                                color: surveyData.configJsonString.contentColor,
+                                color: surveyData.ConfigJson.ContentColor,
                                 mb: 2,
                                 fontStyle: 'italic'
                             }}
                         >
-                            {question.description}
+                            {question.Description}
                         </Typography>
                     )}
 
                     {/* Single Choice (Radio) */}
-                    {question.questionTypeId === 1 && (
+                    {question.QuestionTypeId === 1 && (
                         <FormControl component="fieldset">
                             <RadioGroup
-                                value={answers[question.order] as string || ''}
-                                onChange={(e) => handleAnswerChange(question.order, e.target.value)}
+                                value={answers[question.Order] as string || ''}
+                                onChange={(e) => handleAnswerChange(question.Order, e.target.value)}
                             >
-                                {question.options.map((option: QuestionOption) => (
+                                {question.Options.map((option: QuestionOption) => (
                                     <FormControlLabel
-                                        key={option.order}
-                                        value={option.content}
+                                        key={option.Order}
+                                        value={option.Content}
                                         control={<Radio sx={{ color: '#FCBC72' }} />}
-                                        label={option.content}
+                                        label={option.Content}
                                     />
                                 ))}
                             </RadioGroup>
@@ -270,71 +270,71 @@ const SurveyPreview: React.FC = () => {
                     )}
 
                     {/* Multiple Choice (Checkbox) */}
-                    {question.questionTypeId === 2 && (
+                    {question.QuestionTypeId === 2 && (
                         <FormGroup>
-                            {question.options.map((option: QuestionOption) => (
+                            {question.Options.map((option: QuestionOption) => (
                                 <FormControlLabel
-                                    key={option.order}
+                                    key={option.Order}
                                     control={
                                         <Checkbox
                                             sx={{ color: '#FCBC72' }}
                                             onChange={(e) => handleMultipleChoiceChange(
-                                                question.order,
-                                                option.content,
+                                                question.Order,
+                                                option.Content,
                                                 e.target.checked
                                             )}
                                         />
                                     }
-                                    label={option.content}
+                                    label={option.Content}
                                 />
                             ))}
                         </FormGroup>
                     )}
 
                     {/* Slider Scale */}
-                    {question.questionTypeId === 3 && (
+                    {question.QuestionTypeId === 3 && (
                         <Box sx={{ mt: 2 }}>
                             <Typography gutterBottom>
-                                Giá trị: {(answers[question.order] as number) || question.configJsonString.min || 0} {question.configJsonString.unit || ''}
+                                Giá trị: {(answers[question.Order] as number) || question.ConfigJson.Min || 0} {question.ConfigJson.Unit || ''}
                             </Typography>
                             <Slider
-                                value={(answers[question.order] as number) || question.configJsonString.min || 0}
-                                onChange={(_, value) => handleAnswerChange(question.order, value)}
-                                min={question.configJsonString.min || 0}
-                                max={question.configJsonString.max || 10}
-                                step={question.configJsonString.step || 1}
+                                value={(answers[question.Order] as number) || question.ConfigJson.Min || 0}
+                                onChange={(_, value) => handleAnswerChange(question.Order, value)}
+                                min={question.ConfigJson.Min || 0}
+                                max={question.ConfigJson.Max || 10}
+                                step={question.ConfigJson.Step || 1}
                                 marks
                                 valueLabelDisplay="auto"
                                 sx={{ color: '#FCBC72' }}
                             />
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
-                                <Typography variant="caption">{question.configJsonString.min || 0}</Typography>
-                                <Typography variant="caption">{question.configJsonString.max || 10}</Typography>
+                                <Typography variant="caption">{question.ConfigJson.Min || 0}</Typography>
+                                <Typography variant="caption">{question.ConfigJson.Max || 10}</Typography>
                             </Box>
                         </Box>
                     )}
 
                     {/* Matrix Rating */}
-                    {question.questionTypeId === 4 && (
+                    {question.QuestionTypeId === 4 && (
                         <Box>
-                            {question.configJsonString.data?.map((item: MatrixDataItem, idx: number) => (
+                            {question.ConfigJson.data?.map((item: MatrixDataItem, idx: number) => (
                                 <Box key={idx} sx={{ mb: 3 }}>
                                     <Typography variant="subtitle2" sx={{ mb: 1 }}>
                                         {item.label || `Tiêu chí ${idx + 1}`}
                                     </Typography>
                                     <Slider
-                                        value={(answers[`${question.order}_${idx}`] as number) || item.min}
-                                        onChange={(_, value) => handleAnswerChange(`${(question).order}_${idx}`, value)}
-                                        min={item.min}
-                                        max={item.max}
-                                        step={item.step}
+                                        value={(answers[`${question.Order}_${idx}`] as number) || item.Min}
+                                        onChange={(_, value) => handleAnswerChange(`${question.Order}_${idx}`, value)}
+                                        min={item.Min}
+                                        max={item.Max}
+                                        step={item.Step}
                                         marks
                                         valueLabelDisplay="auto"
                                         sx={{ color: '#FCBC72' }}
                                     />
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
-                                        <Typography variant="caption">{item.min}</Typography>
-                                        <Typography variant="caption">{item.max}</Typography>
+                                        <Typography variant="caption">{item.Min}</Typography>
+                                        <Typography variant="caption">{item.Max}</Typography>
                                     </Box>
                                 </Box>
                             ))}
@@ -342,36 +342,36 @@ const SurveyPreview: React.FC = () => {
                     )}
 
                     {/* Star Rating */}
-                    {question.questionTypeId === 6 && (
+                    {question.QuestionTypeId === 6 && (
                         <Box sx={{ mt: 2 }}>
                             <Rating
-                                value={(answers[question.order] as number) || 0}
-                                onChange={(_, value) => handleAnswerChange(question.order, value)}
-                                max={question.configJsonString.ratingLength || 5}
+                                value={(answers[question.Order] as number) || 0}
+                                onChange={(_, value) => handleAnswerChange(question.Order, value)}
+                                max={question.ConfigJson.ratingLength || 5}
                                 icon={<FreeBreakfast fontSize="inherit" />}
                                 emptyIcon={<FreeBreakfast fontSize="inherit" />}
                                 sx={{ color: '#FCBC72' }}
                             />
                             <Typography variant="body2" sx={{ mt: 1 }}>
-                                {(answers[question.order] as number) || 0} / {question.configJsonString.ratingLength || 5}
+                                {(answers[question.Order] as number) || 0} / {question.ConfigJson.ratingLength || 5}
                             </Typography>
                         </Box>
                     )}
 
                     {/* Jump Logic Info */}
-                    {question.configJsonString.jumpLogics && question.configJsonString.jumpLogics.length > 0 && (
+                    {question.ConfigJson.jumpLogics && question.ConfigJson.jumpLogics.length > 0 && (
                         <Box sx={{ mt: 2, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
                             <Typography variant="caption" color="text.secondary">
-                                <strong>Logic nhảy:</strong> Có điều kiện chuyển câu hỏi ({question.configJsonString.jumpLogics.length} điều kiện)
+                                <strong>Logic nhảy:</strong> Có điều kiện chuyển câu hỏi ({question.ConfigJson.jumpLogics.length} điều kiện)
                             </Typography>
                         </Box>
                     )}
 
                     {/* Display Logic Info */}
-                    {question.configJsonString.displayLogics && question.configJsonString.displayLogics.length > 0 && (
+                    {question.ConfigJson.displayLogics && question.ConfigJson.displayLogics.length > 0 && (
                         <Box sx={{ mt: 1, p: 2, bgcolor: '#f0f8ff', borderRadius: 1 }}>
                             <Typography variant="caption" color="text.secondary">
-                                <strong>Logic hiển thị:</strong> Có điều kiện hiển thị ({question.configJsonString.displayLogics.length} điều kiện)
+                                <strong>Logic hiển thị:</strong> Có điều kiện hiển thị ({question.ConfigJson.displayLogics.length} điều kiện)
                             </Typography>
                         </Box>
                     )}
@@ -385,17 +385,17 @@ const SurveyPreview: React.FC = () => {
     };
 
     const handleNextQuestion = (): void => {
-        setCurrentQuestion(prev => Math.min(surveyData.questions.length - 1, prev + 1));
+        setCurrentQuestion(prev => Math.min(surveyData.Questions.length - 1, prev + 1));
     };
 
-    const progressPercentage = ((currentQuestion + 1) / surveyData.questions.length) * 100;
-    const isLastQuestion = currentQuestion === surveyData.questions.length - 1;
+    const progressPercentage = ((currentQuestion + 1) / surveyData.Questions.length) * 100;
+    const isLastQuestion = currentQuestion === surveyData.Questions.length - 1;
 
     return (
         <Box
             sx={{
                 minHeight: '100vh',
-                background: `linear-gradient(135deg, ${surveyData.configJsonString.backgroundGradient1Color} 0%, ${surveyData.configJsonString.backgroundGradient2Color} 100%)`,
+                background: `linear-gradient(135deg, ${surveyData.ConfigJson.BackgroundGradient1Color} 0%, ${surveyData.ConfigJson.BackgroundGradient2Color} 100%)`,
                 p: 3
             }}
         >
@@ -413,30 +413,30 @@ const SurveyPreview: React.FC = () => {
                     <Typography
                         variant="h4"
                         sx={{
-                            color: surveyData.configJsonString.titleColor,
+                            color: surveyData.ConfigJson.TitleColor,
                             fontWeight: 'bold',
                             mb: 2
                         }}
                     >
-                        {surveyData.title || 'Khảo sát không có tiêu đề'}
+                        {surveyData.Title || 'Khảo sát không có tiêu đề'}
                     </Typography>
 
                     <Typography
                         variant="body1"
                         sx={{
-                            color: surveyData.configJsonString.contentColor,
+                            color: surveyData.ConfigJson.ContentColor,
                             mb: 3
                         }}
                     >
-                        {surveyData.description || 'Không có mô tả'}
+                        {surveyData.Description || 'Không có mô tả'}
                     </Typography>
 
                     <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', flexWrap: 'wrap', mb: 3 }}>
-                        <Chip label={`ID: ${surveyData.id}`} size="small" />
-                        <Chip label={`Loại: ${surveyData.surveyTypeId}`} size="small" />
-                        <Chip label={`Chủ đề: ${surveyData.surveyTopicId}`} size="small" />
-                        <Chip label={`Trạng thái: ${surveyData.surveyStatusId}`} size="small" />
-                        <Chip label={`Bảo mật: ${surveyData.securityModeId}`} size="small" />
+                        <Chip label={`ID: ${surveyData.Id}`} size="small" />
+                        <Chip label={`Loại: ${surveyData.SurveyTypeId}`} size="small" />
+                        <Chip label={`Chủ đề: ${surveyData.SurveyTopicId}`} size="small" />
+                        <Chip label={`Trạng thái: ${surveyData.SurveyStatusId}`} size="small" />
+                        <Chip label={`Bảo mật: ${surveyData.SecurityModeId}`} size="small" />
                     </Box>
 
                     <LinearProgress
@@ -447,19 +447,19 @@ const SurveyPreview: React.FC = () => {
                             borderRadius: 4,
                             bgcolor: '#e0e0e0',
                             '& .MuiLinearProgress-bar': {
-                                bgcolor: surveyData.configJsonString.buttonBackgroundColor
+                                bgcolor: surveyData.ConfigJson.ButtonBackgroundColor
                             }
                         }}
                     />
                     <Typography variant="body2" sx={{ mt: 1 }}>
-                        Câu hỏi {currentQuestion + 1} / {surveyData.questions.length}
+                        Câu hỏi {currentQuestion + 1} / {surveyData.Questions.length}
                     </Typography>
                 </Box>
 
                 <Divider sx={{ mb: 4 }} />
 
                 {/* Questions */}
-                {surveyData.questions.map((question: Question, index: number) =>
+                {surveyData.Questions.map((question: Question, index: number) =>
                     renderQuestion(question, index)
                 )}
 
@@ -470,8 +470,8 @@ const SurveyPreview: React.FC = () => {
                         disabled={currentQuestion === 0}
                         onClick={handlePreviousQuestion}
                         sx={{
-                            borderColor: surveyData.configJsonString.buttonBackgroundColor,
-                            color: surveyData.configJsonString.buttonBackgroundColor
+                            borderColor: surveyData.ConfigJson.ButtonBackgroundColor,
+                            color: surveyData.ConfigJson.ButtonBackgroundColor
                         }}
                     >
                         Câu trước
@@ -482,8 +482,8 @@ const SurveyPreview: React.FC = () => {
                         disabled={isLastQuestion}
                         onClick={handleNextQuestion}
                         sx={{
-                            bgcolor: surveyData.configJsonString.buttonBackgroundColor,
-                            color: surveyData.configJsonString.buttonContentColor,
+                            bgcolor: surveyData.ConfigJson.ButtonBackgroundColor,
+                            color: surveyData.ConfigJson.ButtonContentColor,
                             '&:hover': {
                                 bgcolor: '#e6a862'
                             }
@@ -498,22 +498,22 @@ const SurveyPreview: React.FC = () => {
                     <Typography variant="h6" gutterBottom>Cấu hình khảo sát:</Typography>
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 2 }}>
                         <Typography variant="body2">
-                            <strong>Màu tiêu đề:</strong> {surveyData.configJsonString.titleColor}
+                            <strong>Màu tiêu đề:</strong> {surveyData.ConfigJson.TitleColor}
                         </Typography>
                         <Typography variant="body2">
-                            <strong>Màu nội dung:</strong> {surveyData.configJsonString.contentColor}
+                            <strong>Màu nội dung:</strong> {surveyData.ConfigJson.ContentColor}
                         </Typography>
                         <Typography variant="body2">
-                            <strong>Màu nút:</strong> {surveyData.configJsonString.buttonBackgroundColor}
+                            <strong>Màu nút:</strong> {surveyData.ConfigJson.ButtonBackgroundColor}
                         </Typography>
                         <Typography variant="body2">
-                            <strong>Độ sáng:</strong> {surveyData.configJsonString.brightness}%
+                            <strong>Độ sáng:</strong> {surveyData.ConfigJson.Brightness}%
                         </Typography>
                         <Typography variant="body2">
-                            <strong>Bỏ qua trang bắt đầu:</strong> {surveyData.skipStartPage ? 'Có' : 'Không'}
+                            <strong>Bỏ qua trang bắt đầu:</strong> {surveyData.SkipStartPage ? 'Có' : 'Không'}
                         </Typography>
                         <Typography variant="body2">
-                            <strong>Mật khẩu:</strong> {surveyData.configJsonString.password ? '******' : 'Không có'}
+                            <strong>Mật khẩu:</strong> {surveyData.ConfigJson.Password ? '******' : 'Không có'}
                         </Typography>
                     </Box>
                 </Box>

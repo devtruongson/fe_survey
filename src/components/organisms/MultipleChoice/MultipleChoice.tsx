@@ -22,70 +22,70 @@ type Props = {
 
 const MultipleChoice = ({ question, handleUpdateQuestion }: Props) => {
     useEffect(() => {
-        if (!question?.options?.length) {
-            handleUpdateQuestion("options", [{ ...answerDefault, order: 1 }]);
+        if (!question?.Options?.length) {
+            handleUpdateQuestion("Options", [{ ...answerDefault, Order: 1 }]);
         }
     }, [question]);
 
     const handleUpdateOption = (updatedOption: OptionType) => {
-        const updatedOptions = question.options.map((option) =>
-            option.order === updatedOption.order ? updatedOption : option
+        const updatedOptions = question.Options.map((option) =>
+            option.Order === updatedOption.Order ? updatedOption : option
         );
-        handleUpdateQuestion("options", updatedOptions);
+        handleUpdateQuestion("Options", updatedOptions);
     };
 
     const handleDeleteOption = (orderToDelete: number) => {
-        const updatedOptions = question.options.filter(
-            (option) => option.order !== orderToDelete
+        const updatedOptions = question.Options.filter(
+            (option) => option.Order !== orderToDelete
         );
-        handleUpdateQuestion("options", updatedOptions);
+        handleUpdateQuestion("Options", updatedOptions);
     };
 
     const handleAddAnswer = () => {
         const newOrder =
-            question.options.length > 0
-                ? Math.max(...question.options.map((o) => o.order)) + 1
+            question.Options.length > 0
+                ? Math.max(...question.Options.map((o) => o.Order)) + 1
                 : 1;
-        const newOption = { ...answerDefault, order: newOrder };
-        const updatedOptions = [...question.options, newOption];
-        handleUpdateQuestion("options", updatedOptions);
+        const newOption = { ...answerDefault, Order: newOrder };
+        const updatedOptions = [...question.Options, newOption];
+        handleUpdateQuestion("Options", updatedOptions);
     };
 
     return (
         <div className="multiple-choice flex flex-col gap-2">
-            {question?.options?.length
-                ? question.options.map((item) => {
+            {question?.Options?.length
+                ? question.Options.map((item) => {
                       return (
                           <Answer
                               data={item}
-                              key={item.order}
+                              key={item.Order}
                               handleUpdateOption={handleUpdateOption}
                               handleDeleteOption={handleDeleteOption}
                               isDisableClose={false}
                               formData={{
-                                  id: 0,
-                                  requesterId: 0,
-                                  title: "",
-                                  description: "",
-                                  marketSurveyVersionStatusId: 1,
-                                  surveyTypeId: 0,
-                                  surveyTopicId: 0,
-                                  surveySpecificTopicId: 0,
-                                  surveyStatusId: 0,
-                                  securityModeId: 0,
-                                  background: "",
-                                  configJsonString: {
-                                      backgroundGradient1Color: "",
-                                      backgroundGradient2Color: "",
-                                      titleColor: "",
-                                      contentColor: "",
-                                      buttonBackgroundColor: "",
-                                      buttonContentColor: "",
-                                      password: "",
-                                      brightness: 0,
+                                  Id: 0,
+                                  RequesterId: 0,
+                                  Title: "",
+                                  Description: "",
+                                  MarketSurveyVersionStatusId: 1,
+                                  SurveyTypeId: 0,
+                                  SurveyTopicId: 0,
+                                  SurveySpecificTopicId: 0,
+                                  SurveyStatusId: 0,
+                                  SecurityModeId: 0,
+                                  Background: "",
+                                  ConfigJson: {
+                                      BackgroundGradient1Color: "",
+                                      BackgroundGradient2Color: "",
+                                      TitleColor: "",
+                                      ContentColor: "",
+                                      ButtonBackgroundColor: "",
+                                      ButtonContentColor: "",
+                                      Password: "",
+                                      Brightness: 0,
                                   },
-                                  questions: [],
-                                  skipStartPage: false,
+                                  Questions: [],
+                                  SkipStartPage: false,
                               }}
                           />
                       );

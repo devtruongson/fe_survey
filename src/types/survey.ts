@@ -1,67 +1,64 @@
 export type OptionType = {
-    content: string;
-    order: number;
-    image?: string; // base64 image data
+    Content: string;
+    Order: number;
+    Image?: string; // base64 image data
 };
 
 export type SlideType = {
-    min: number;
-    max: number;
-    step: number;
-    unit: string;
+    Min: number;
+    Max: number;
+    Step: number;
+    Unit: string;
 };
 
 export type JumpLogicsType = {
-    conditions: {
-        questionOrder: number;
-        conjunction: string;
-        operator: string;
-        compareValue: number;
+    Conditions: {
+        QuestionOrder: number;
+        Conjunction: string;
+        Operator: string;
+        CompareValue: number;
     }[];
-    targetQuestionOrder: number;
+    TargetQuestionOrder: number;
 };
 export type QuestionType = {
-    image_header?: string;
-    questionTypeId: number;
-    content: string;
-    description: string;
-    timeLimit: number;
-    isVoice: boolean;
-    order: number;
-    configJsonString: Record<
-        string,
-        string | number | SlideType[] | JumpLogicsType[]
-    >;
-    options: OptionType[];
+    ImageHeader?: string;
+    QuestionTypeId: number;
+    Content: string;
+    Description: string;
+    TimeLimit: number;
+    IsVoice: boolean;
+    Order: number;
+    ConfigJson: Record<string, string | number | SlideType[] | JumpLogicsType[]>;
+    Options: OptionType[];
 };
 
 export type SurveyType = {
-    id: number;
-    requesterId: number;
-    title: string;
-    description: string;
-    marketSurveyVersionStatusId: number;
-    surveyTypeId: number;
-    surveyTopicId: number;
-    surveySpecificTopicId: number;
-    surveyStatusId: number;
-    securityModeId: number;
-    background: string;
+    Id: number;
+    RequesterId: number;
+    Title: string;
+    Description: string;
+    MarketSurveyVersionStatusId: number | null;
+    SurveyTypeId: number;
+    SurveyTopicId: number;
+    SurveySpecificTopicId: number;
+    SurveyStatusId: number;
+    SecurityModeId: number;
+    Background: string;
     ImageBase64?: string;
-    customBackgroundImageUrl?: string | null;
-    configJsonString: {
-        backgroundGradient1Color: string;
-        backgroundGradient2Color: string;
-        titleColor: string;
-        contentColor: string;
-        buttonBackgroundColor: string;
-        buttonContentColor: string;
-        password: string | null;
-        brightness: number;
-        isResizableIframeEnabled?: boolean;
+    CustomBackgroundImageUrl?: string | null;
+    ConfigJson: {
+        BackgroundGradient1Color: string;
+        BackgroundGradient2Color: string;
+        TitleColor: string;
+        ContentColor: string;
+        ButtonBackgroundColor: string;
+        ButtonContentColor: string;
+        Password: string | null;
+        Brightness: number;
+        IsResizableIframeEnabled?: boolean;
     };
-    questions: QuestionType[];
-    skipStartPage: boolean;
+    Questions: QuestionType[];
+    SkipStartPage: boolean;
 };
 
 export interface PageProps {

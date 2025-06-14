@@ -5,7 +5,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
 import type { OptionType, SurveyType } from "../../../types/survey";
@@ -28,11 +27,11 @@ const Answer = ({
     const [showImage, setShowImage] = useState(false);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        handleUpdateOption({ ...data, content: event.target.value });
+        handleUpdateOption({ ...data, Content: event.target.value });
     };
 
     const handleDelete = () => {
-        handleDeleteOption(data.order);
+        handleDeleteOption(data.Order);
     };
 
     const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +40,7 @@ const Answer = ({
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64String = reader.result as string;
-                handleUpdateOption({ ...data, image: base64String });
+                handleUpdateOption({ ...data, Image: base64String });
                 setShowImage(true); // Auto show image after upload
             };
             reader.readAsDataURL(file);
@@ -56,14 +55,14 @@ const Answer = ({
         <div className="answer-container">
             <div className="flex items-center">
                 <TextField
-                    value={data.content}
+                    value={data.Content}
                     variant="outlined"
                     size="small"
                     className="answer-input flex-grow"
                     placeholder="Nhập câu trả lời tại đây"
                     onChange={handleChange}
                     style={{
-                        color: `${formData?.configJsonString?.contentColor}`,
+                        color: `${formData?.ConfigJson?.ContentColor}`,
                     }}
                 />
                 <input
@@ -71,9 +70,9 @@ const Answer = ({
                     accept="image/*"
                     onChange={handleImageUpload}
                     style={{ display: 'none' }}
-                    id={`image-upload-${data.order}`}
+                    id={`image-upload-${data.Order}`}
                 />
-                <label htmlFor={`image-upload-${data.order}`}>
+                <label htmlFor={`image-upload-${data.Order}`}>
                     <IconButton
                         size="small"
                         component="span"
@@ -81,7 +80,7 @@ const Answer = ({
                         <ImageIcon fontSize="small" />
                     </IconButton>
                 </label>
-                {data.image && (
+                {data.Image && (
                     <IconButton
                         size="small"
                         onClick={toggleImage}
@@ -103,10 +102,10 @@ const Answer = ({
                     <SettingsIcon fontSize="small" />
                 </IconButton>
             </div>
-            {data.image && showImage && (
+            {data.Image && showImage && (
                 <div className="mt-2" style={{ maxWidth: '300px' }}>
                     <img 
-                        src={data.image} 
+                        src={data.Image}
                         alt="Uploaded answer" 
                         style={{ 
                             width: '100%', 

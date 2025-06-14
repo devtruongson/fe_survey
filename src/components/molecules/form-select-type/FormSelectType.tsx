@@ -59,7 +59,7 @@ const FormSelectType = ({ handleUpdateQuestion }: Props) => {
                             key={type.id}
                             className="form-select-type-card flex flex-col items-center justify-center p-4 cursor-pointer"
                             onClick={() =>
-                                handleUpdateQuestion("questionTypeId", type.id)
+                                handleUpdateQuestion("QuestionTypeId", type.id)
                             }
                         >
                             <div className="form-select-type-icon mb-2">

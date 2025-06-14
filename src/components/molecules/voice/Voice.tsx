@@ -9,7 +9,7 @@ import type {
     QuestionType,
     SurveyType,
 } from "../../../types/survey";
-import type { RangeSliderConfigJsonStringType } from "../../organisms/RangeSlider/RangeSlider";
+import type { RangeSliderConfigJsonType } from "../../organisms/RangeSlider/RangeSlider";
 
 interface SwitchCustomizeProps {
     label: React.ReactNode;
@@ -24,7 +24,7 @@ interface SwitchCustomizeProps {
             | boolean
             | OptionType[]
             | Record<string, string | number>
-            | RangeSliderConfigJsonStringType
+            | RangeSliderConfigJsonType
             | Record<string, unknown>
     ) => void;
 }
@@ -36,16 +36,16 @@ const Voice = ({
     setFormData,
     handleUpdateQuestion,
 }: SwitchCustomizeProps) => {
-    console.log(question?.isVoice);
+    console.log(question?.IsVoice);
     const checked = useMemo(() => {
-        return question?.isVoice || false;
+        return question?.IsVoice || false;
     }, [question]);
 
     const handleChange = useCallback(() => {
         if (isPro) {
-            handleUpdateQuestion("isVoice", !checked);
+            handleUpdateQuestion("IsVoice", !checked);
             if (!isPro) {
-                setFormData((prev) => ({ ...prev, securityModeId: 3 }));
+                setFormData((prev) => ({ ...prev, SecurityModeId: 3 }));
             }
             if (!checked && !isPro) {
                 toast("Đã cập nhật Chế độ bảo mật thành Pro");
@@ -78,9 +78,9 @@ const Voice = ({
             `,
         }).then((result) => {
             if (result.isConfirmed) {
-                handleUpdateQuestion("isVoice", !checked);
+                handleUpdateQuestion("IsVoice", !checked);
                 if (!isPro) {
-                    setFormData((prev) => ({ ...prev, securityModeId: 3 }));
+                    setFormData((prev) => ({ ...prev, SecurityModeId: 3 }));
                 }
                 if (!checked && !isPro) {
                     toast("Đã cập nhật Chế độ bảo mật thành Pro");

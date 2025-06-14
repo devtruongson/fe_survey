@@ -43,24 +43,24 @@ const SingleInput = ({ question, handleUpdateQuestion }: Props) => {
 
     const handleUpdateTypeQuestion = useCallback(
         (id: number) => {
-            handleUpdateQuestion("configJsonString", {
-                ...question.configJsonString,
+            handleUpdateQuestion("ConfigJson", {
+                ...question.ConfigJson,
                 fieldInputTypeId: id,
             });
-            if (question?.options?.length) {
-                handleUpdateQuestion("options", []);
+            if (question?.Options?.length) {
+                handleUpdateQuestion("Options", []);
             }
         },
         [
             handleUpdateQuestion,
-            question.configJsonString,
-            question?.options?.length,
+            question.ConfigJson,
+            question?.Options?.length,
         ]
     );
 
     const viewRender = useMemo(() => {
         const fieldInputTypeIdValue =
-            question?.configJsonString?.fieldInputTypeId;
+            question?.ConfigJson?.fieldInputTypeId;
         const typeId = Number(fieldInputTypeIdValue) || 1;
         if (typeId === 1) {
             return (
@@ -103,7 +103,7 @@ const SingleInput = ({ question, handleUpdateQuestion }: Props) => {
                 );
         }
     }, [
-        question?.configJsonString?.fieldInputTypeId,
+        question?.ConfigJson?.fieldInputTypeId,
         handleUpdateQuestion,
         question,
     ]);
@@ -118,7 +118,7 @@ const SingleInput = ({ question, handleUpdateQuestion }: Props) => {
                 <InputLabel>Kiểu câu trả lời</InputLabel>
                 <Select
                     value={
-                        question?.configJsonString?.fieldInputTypeId ||
+                        question?.ConfigJson?.fieldInputTypeId ||
                         questionTypes[0].id ||
                         0
                     }
