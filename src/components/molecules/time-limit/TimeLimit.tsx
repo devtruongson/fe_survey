@@ -1,11 +1,11 @@
-import { Box, Input, Switch, Typography } from "@mui/material";
+import { Box, Switch, Typography } from "@mui/material";
 import type {
     OptionType,
     QuestionType,
     SurveyType,
 } from "../../../types/survey";
 import type { RangeSliderConfigJsonType } from "../../organisms/RangeSlider/RangeSlider";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
@@ -32,20 +32,41 @@ const TimeLimit = ({
     isAdvance,
     setFormData,
 }: Props) => {
-    const [isOpen, setIsOpne] = useState(false);
-    const value = useMemo(() => Number(question?.TimeLimit) || 0, [question]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [inputValue, setInputValue] = useState("");
+
+    useEffect(() => {
+        const timeLimit = Number(question?.TimeLimit) || 0;
+        const hasTimeLimit = Boolean(timeLimit);
+
+        setIsOpen(hasTimeLimit);
+        setInputValue(timeLimit.toString());
+    }, [question?.TimeLimit]);
 
     const action = useCallback(() => {
         if (isOpen) {
             handleUpdateQuestion("TimeLimit", 0);
+            setInputValue("0");
             setFormData((prev) => ({ ...prev, SecurityModeId: 1 }));
+        } else {
+            if (!isAdvance) {
+                setFormData((prev) => ({ ...prev, SecurityModeId: 2 }));
+                toast("Đã cập nhật Chế độ bảo mật thành Advance");
+            }
+            const currentValue = Number(question?.TimeLimit) || 0;
+            if (currentValue === 0) {
+                handleUpdateQuestion("TimeLimit", 30);
+                setInputValue("30");
+            }
         }
-        if (!isOpen && !isAdvance) {
-            setFormData((prev) => ({ ...prev, SecurityModeId: 2 }));
-            toast("Đã cập nhật Chế độ bảo mật thành Advance");
-        }
-        setIsOpne(!isOpen);
-    }, [handleUpdateQuestion, isAdvance, isOpen, setFormData]);
+        setIsOpen(!isOpen);
+    }, [
+        handleUpdateQuestion,
+        isAdvance,
+        isOpen,
+        setFormData,
+        question?.TimeLimit,
+    ]);
 
     const handleChangeSwitch = () => {
         if (isAdvance && !isOpen) {
@@ -83,18 +104,29 @@ const TimeLimit = ({
         });
     };
 
-    const handleChangeValue = (value: number) => {
-        handleUpdateQuestion("TimeLimit", value);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setInputValue(value);
+        if (value === "") {
+            return;
+        }
+        const numValue = Number(value);
+        if (!isNaN(numValue) && numValue >= 0) {
+            handleUpdateQuestion("TimeLimit", numValue);
+        }
     };
 
-    useEffect(() => {
-        if (Boolean(question?.TimeLimit) && !isOpen) {
-            setIsOpne(true);
+    const handleInputBlur = () => {
+        const numValue = Number(inputValue);
+        const currentValue = Number(question?.TimeLimit) || 0;
+
+        if (inputValue === "" || isNaN(numValue) || numValue < 0) {
+            setInputValue(currentValue.toString());
         }
-        if (!question?.TimeLimit && isOpen) {
-            setIsOpne(false);
-        }
-    }, [question?.Order]);
+    };
+
+    const currentTimeLimit = Number(question?.TimeLimit) || 0;
+
     return (
         <div className="w-full mb-2">
             <div>
@@ -123,16 +155,16 @@ const TimeLimit = ({
                 </Box>
                 {isOpen ? (
                     <>
-                        <Input
-                            className="w-full px-2 border-[1px] border-[#ccc] border-solid"
+                        <input
+                            className="w-full px-3 py-3 border-[1px] border-[#ccc] border-solid outline-none rounded-lg"
                             placeholder="Thời gian (giây)"
-                            value={value}
+                            value={inputValue}
                             type="number"
-                            onChange={(e) =>
-                                handleChangeValue(Number(e.target.value))
-                            }
+                            min="0"
+                            onChange={handleInputChange}
+                            onBlur={handleInputBlur}
                         />
-                        <p>{value} giây</p>
+                        <p>{currentTimeLimit} giây</p>
                     </>
                 ) : null}
             </div>

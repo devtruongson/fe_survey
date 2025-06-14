@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { SurveyType } from "../../../types/survey";
 import "./styles.scss";
 import Box from "@mui/material/Box";
@@ -14,15 +15,29 @@ const EndPage = ({ formData }: Props) => {
     const [listBackground, setListBackground] = useState<any[]>([]);
 
     useEffect(() => {
-        setListBackground(JSON.parse(localStorage.getItem("listBackground") || "[]"));
-    },[]);
-    
+        setListBackground(
+            JSON.parse(localStorage.getItem("listBackground") || "[]")
+        );
+    }, []);
+
     return (
         <div
             className="min-h-[100%] question-main flex-1 flex flex-col overflow-y-auto relative items-center justify-center"
             style={{
-                ...(formData?.Background === "image" && {
-                    backgroundImage: `url(${formData?.IsUseBackgroundImageBase64 && formData.BackgroundImageBase64 ? formData.BackgroundImageBase64: formData?.ConfigJson?.DefaultBackgroundImageId ? listBackground.find(item => item.id === formData?.ConfigJson?.DefaultBackgroundImageId)?.url : ""})`,
+                ...(formData?.ConfigJson?.Background === "image" && {
+                    backgroundImage: `url(${
+                        formData?.ConfigJson?.IsUseBackgroundImageBase64 &&
+                        formData.BackgroundImageBase64
+                            ? formData.BackgroundImageBase64
+                            : formData?.ConfigJson?.DefaultBackgroundImageId
+                            ? listBackground.find(
+                                  (item) =>
+                                      item.id ===
+                                      formData?.ConfigJson
+                                          ?.DefaultBackgroundImageId
+                              )?.url
+                            : ""
+                    })`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -31,14 +46,14 @@ const EndPage = ({ formData }: Props) => {
                     })`,
                     backgroundColor: "transparent",
                 }),
-                ...(formData.Background === "color_gradient" && {
+                ...(formData?.ConfigJson?.Background === "color_gradient" && {
                     background: `linear-gradient(to right, ${formData.ConfigJson.BackgroundGradient1Color}, ${formData.ConfigJson.BackgroundGradient2Color})`,
                     filter: `Brightness(${
                         formData.ConfigJson.Brightness / 100
                     })`,
                 }),
-                ...(formData.Background.startsWith("#") && {
-                    backgroundColor: formData.Background,
+                ...(formData?.ConfigJson?.Background.startsWith("#") && {
+                    backgroundColor: formData?.ConfigJson?.Background,
                     filter: `Brightness(${
                         formData.ConfigJson.Brightness / 100
                     })`,

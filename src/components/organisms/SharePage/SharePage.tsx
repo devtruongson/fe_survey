@@ -8,21 +8,6 @@ interface SharePageProps {
 }
 
 const SharePage = ({ formData }: SharePageProps) => {
-    const getBackgroundMode = (data: SurveyType) => {
-        if (data.Background === "custom" && data.CustomBackgroundImageUrl) {
-            return "image";
-        } else if (data.Background.startsWith("/assets/start")) {
-            return "image";
-        } else if (
-            data.Background.startsWith("#") ||
-            data.Background === "color_gradient"
-        ) {
-            return "color";
-        }
-        return "image"; // Default to image mode
-    };
-
-    const backgroundMode = getBackgroundMode(formData);
     const [isCopyLink, setIsCopyLink] = useState(false);
 
     return (
@@ -33,10 +18,19 @@ const SharePage = ({ formData }: SharePageProps) => {
             <div
                 className="relative flex-1 flex items-center justify-center"
                 style={{
-                    ...(backgroundMode === "image" && {
+                    ...(formData?.ConfigJson?.Background === "image" && {
                         backgroundImage: `url(${
-                            formData.CustomBackgroundImageUrl ||
-                            formData.Background
+                            formData?.ConfigJson?.IsUseBackgroundImageBase64 &&
+                            formData.BackgroundImageBase64
+                                ? formData.BackgroundImageBase64
+                                : formData?.ConfigJson?.DefaultBackgroundImageId
+                                ? listBackground.find(
+                                      (item) =>
+                                          item.id ===
+                                          formData?.ConfigJson
+                                              ?.DefaultBackgroundImageId
+                                  )?.url
+                                : ""
                         })`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
@@ -46,14 +40,18 @@ const SharePage = ({ formData }: SharePageProps) => {
                         })`,
                         backgroundColor: "transparent",
                     }),
-                    ...(backgroundMode === "color" && {
-                        ...(formData.Background.startsWith("#")
-                            ? {
-                                  backgroundColor: formData.Background,
-                              }
-                            : {
-                                  background: `linear-gradient(to right, ${formData.ConfigJson.BackgroundGradient1Color}, ${formData.ConfigJson.BackgroundGradient2Color})`,
-                              }),
+                    ...(formData?.ConfigJson?.Background ===
+                        "color_gradient" && {
+                        background: `linear-gradient(to right, ${formData.ConfigJson.BackgroundGradient1Color}, ${formData.ConfigJson.BackgroundGradient2Color})`,
+                        filter: `Brightness(${
+                            formData.ConfigJson.Brightness / 100
+                        })`,
+                    }),
+                    ...(formData?.ConfigJson?.Background.startsWith("#") && {
+                        backgroundColor: formData?.ConfigJson?.Background,
+                        filter: `Brightness(${
+                            formData.ConfigJson.Brightness / 100
+                        })`,
                     }),
                 }}
             >
@@ -63,8 +61,7 @@ const SharePage = ({ formData }: SharePageProps) => {
                             className="text-2xl font-semibold mb-4 text-center"
                             style={{
                                 color:
-                                    formData.ConfigJson.TitleColor ||
-                                    "#ffffff",
+                                    formData.ConfigJson.TitleColor || "#ffffff",
                             }}
                         >
                             CHIA SẺ KHẢO SÁT CỦA BẠN

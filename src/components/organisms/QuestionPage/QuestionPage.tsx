@@ -311,6 +311,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 case 7:
                     return questionedit ? (
                         <Ranking
+                            formData={formData}
                             question={questionedit}
                             handleUpdateQuestion={handleUpdateQuestion}
                         />
@@ -457,9 +458,10 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 <div
                     className="question-main flex-1 flex flex-col overflow-y-auto relative"
                     style={{
-                        ...(formData?.Background === "image" && {
+                        ...(formData?.ConfigJson?.Background === "image" && {
                             backgroundImage: `url(${
-                                formData?.IsUseBackgroundImageBase64 &&
+                                formData?.ConfigJson
+                                    ?.IsUseBackgroundImageBase64 &&
                                 formData.BackgroundImageBase64
                                     ? formData.BackgroundImageBase64
                                     : formData?.ConfigJson
@@ -480,14 +482,17 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                             })`,
                             backgroundColor: "transparent",
                         }),
-                        ...(formData?.Background === "color_gradient" && {
+                        ...(formData?.ConfigJson?.Background ===
+                            "color_gradient" && {
                             background: `linear-gradient(to right, ${formData?.ConfigJson.BackgroundGradient1Color}, ${formData?.ConfigJson.BackgroundGradient2Color})`,
                             filter: `Brightness(${
                                 formData?.ConfigJson.Brightness / 100
                             })`,
                         }),
-                        ...(formData?.Background?.startsWith("#") && {
-                            backgroundColor: formData?.Background,
+                        ...(formData?.ConfigJson?.Background?.startsWith(
+                            "#"
+                        ) && {
+                            backgroundColor: formData?.ConfigJson?.Background,
                             filter: `Brightness(${
                                 formData?.ConfigJson.Brightness / 100
                             })`,

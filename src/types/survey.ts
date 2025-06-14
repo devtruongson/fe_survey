@@ -49,12 +49,11 @@ export type SurveyType = {
     SurveySpecificTopicId: number;
     SurveyStatusId: number;
     SecurityModeId: number;
-    Background: string;
-    ImageBase64?: string;
+    MainImageBase64?: string;
     BackgroundImageBase64?: string;
-    IsUseBackgroundImageBase64?: boolean;
-    CustomBackgroundImageUrl?: string | null;
     ConfigJson: {
+        Background: string;
+        IsUseBackgroundImageBase64?: boolean;
         BackgroundGradient1Color: string;
         BackgroundGradient2Color: string;
         TitleColor: string;
@@ -65,9 +64,9 @@ export type SurveyType = {
         Brightness: number;
         IsResizableIframeEnabled?: boolean;
         DefaultBackgroundImageId: number;
+        SkipStartPage: boolean;
     };
     Questions: QuestionType[];
-    SkipStartPage: boolean;
 };
 
 export interface PageProps {
