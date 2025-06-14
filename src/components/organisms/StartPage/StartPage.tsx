@@ -13,7 +13,7 @@ import {
 } from "../../../data/surveyData";
 import { handleSelectBackground } from "../../../helpers/handleSelectBackground";
 import type { PageProps, SurveyType } from "../../../types/survey";
-import OverlayDisable from "../../molecules/overlay-disable/OverlayDisable";
+// import OverlayDisable from "../../molecules/overlay-disable/OverlayDisable";
 import ColorPickerModal from "./Components/ColorPickerModal";
 import SecurityModal from "./Components/SecurityModal";
 import "./styles.scss";
@@ -72,7 +72,7 @@ const StartPage = ({
     formData,
     setFormData,
     handleTabClick,
-    isDisable,
+    // isDisable,
     isTrigger,
 }: PageProps) => {
     const handleInputChange = (
@@ -290,7 +290,7 @@ const StartPage = ({
             className="startpage-root flex"
             style={{ height: "100vh", overflow: "hidden" }}
         >
-            {isDisable ? <OverlayDisable /> : null}
+            {/* {isDisable ? <OverlayDisable /> : null} */}
             <div
                 className="relative flex-1 flex items-center justify-center"
                 style={{
@@ -834,7 +834,8 @@ function CustomizePassword({
     setFormData,
     handleCustomizePassword,
 }: any) {
-    const hasPassword = formData?.ConfigJson?.Password !== null &&
+    const hasPassword =
+        formData?.ConfigJson?.Password !== null &&
         formData?.ConfigJson?.Password !== undefined;
 
     return (

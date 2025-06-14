@@ -28,7 +28,10 @@ export type QuestionType = {
     TimeLimit: number;
     IsVoice: boolean;
     Order: number;
-    ConfigJson: Record<string, string | number | SlideType[] | JumpLogicsType[]>;
+    ConfigJson: Record<
+        string,
+        string | number | SlideType[] | JumpLogicsType[]
+    >;
     Options: OptionType[];
 };
 
