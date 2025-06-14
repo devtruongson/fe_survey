@@ -72,9 +72,9 @@ const StartPage = ({
     formData,
     setFormData,
     handleTabClick,
-    // isDisable,
-    isTrigger,
-}: PageProps) => {
+}: // isDisable,
+// isTrigger,
+PageProps) => {
     const handleInputChange = (
         field: keyof SurveyType,
         value: string | boolean
@@ -268,22 +268,24 @@ const StartPage = ({
     const handleCustomizePassword = () => {
         setShowPasswordModal(true);
     };
-    
-    const [listBackground, setListBackground] = useState<{
-        id: number;
-        TitleColor: string;
-        ContentColor: string;
-        ButtonBackgroundColor: string;
-        ButtonContentColor: string;
-        url: string;
-    }[]>([]);
+
+    const [listBackground, setListBackground] = useState<
+        {
+            id: number;
+            TitleColor: string;
+            ContentColor: string;
+            ButtonBackgroundColor: string;
+            ButtonContentColor: string;
+            url: string;
+        }[]
+    >([]);
 
     useEffect(() => {
         const listBackground = localStorage.getItem("listBackground");
         if (listBackground) {
             setListBackground(JSON.parse(listBackground));
         }
-    },[]);
+    }, []);
 
     return (
         <div
@@ -304,7 +306,20 @@ const StartPage = ({
                     <div
                         className="absolute inset-0"
                         style={{
-                            backgroundImage: `url(${formData?.IsUseBackgroundImageBase64 && formData.BackgroundImageBase64 ? formData.BackgroundImageBase64: formData?.ConfigJson?.DefaultBackgroundImageId ? listBackground.find(item => item.id === formData?.ConfigJson?.DefaultBackgroundImageId)?.url : ""})`,
+                            backgroundImage: `url(${
+                                formData?.IsUseBackgroundImageBase64 &&
+                                formData.BackgroundImageBase64
+                                    ? formData.BackgroundImageBase64
+                                    : formData?.ConfigJson
+                                          ?.DefaultBackgroundImageId
+                                    ? listBackground.find(
+                                          (item) =>
+                                              item.id ===
+                                              formData?.ConfigJson
+                                                  ?.DefaultBackgroundImageId
+                                      )?.url
+                                    : ""
+                            })`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
@@ -390,7 +405,7 @@ const StartPage = ({
                     <ToppicSurvey
                         selectedSurveyTopic={selectedSurveyTopic}
                         setSelectedSurveyTopic={setSelectedSurveyTopic}
-                        isTrigger={isTrigger}
+                        // isTrigger={isTrigger}
                         selectedSurveySpecificTopic={
                             selectedSurveySpecificTopic
                         }
@@ -667,14 +682,14 @@ function ToppicSurvey({
     selectedSurveySpecificTopic,
     setSelectedSurveySpecificTopic,
     setFormData,
-    isTrigger,
-}: any) {
+}: // isTrigger,
+any) {
     return (
         <>
             <div className="config-section">
                 <h3>CHỦ ĐỀ KHẢO SÁT</h3>
                 <FormControl
-                    disabled={isTrigger}
+                    // disabled={isTrigger}
                     fullWidth
                     sx={{
                         ".MuiOutlinedInput-root": {
@@ -765,7 +780,7 @@ function ToppicSurvey({
                     disabled={!selectedSurveyTopic}
                 >
                     <Select
-                        disabled={isTrigger}
+                        // disabled={isTrigger}
                         labelId="survey-specific-topic-select-label"
                         id="survey-specific-topic-select"
                         value={selectedSurveySpecificTopic}
@@ -834,7 +849,8 @@ function CustomizePassword({
     setFormData,
     handleCustomizePassword,
 }: any) {
-    const hasPassword = formData?.ConfigJson?.Password !== null &&
+    const hasPassword =
+        formData?.ConfigJson?.Password !== null &&
         formData?.ConfigJson?.Password !== undefined;
 
     return (
@@ -920,9 +936,8 @@ function BackgroundMode({
     Brightness: Brightness,
     setFormData: setFormData,
 }: any) {
-
     console.log("check formData: ", formData?.Background);
-    
+
     return (
         <>
             <div>
@@ -938,13 +953,13 @@ function BackgroundMode({
                     }}
                 >
                     <div
-                      onClick={() => {
-                        setFormData({
-                            ...formData,
-                            Background: "image",
-                        })
-                        document.getElementById("backgroundInput")?.click();
-                    }}
+                        onClick={() => {
+                            setFormData({
+                                ...formData,
+                                Background: "image",
+                            });
+                            document.getElementById("backgroundInput")?.click();
+                        }}
                         className="absolute bottom-4 left-4 z-10"
                         style={{
                             color: "white",
@@ -954,17 +969,24 @@ function BackgroundMode({
                     >
                         Click để đổi hình
                     </div>
-                    <CheckIcon style={{
-                        color: formData?.IsUseBackgroundImageBase64 && formData?.Background === "image" ? "blue" : "#ccc"
-                    }} 
-                    onClick={() => {
-                        setFormData((prev: any) => ({
-                            ...prev,
-                            IsUseBackgroundImageBase64: !prev.IsUseBackgroundImageBase64,
-                            Background: "image",
-                        }));
-                    }}
-                    className="absolute main-check-icon z-10 text-[blue]" />
+                    <CheckIcon
+                        style={{
+                            color:
+                                formData?.IsUseBackgroundImageBase64 &&
+                                formData?.Background === "image"
+                                    ? "blue"
+                                    : "#ccc",
+                        }}
+                        onClick={() => {
+                            setFormData((prev: any) => ({
+                                ...prev,
+                                IsUseBackgroundImageBase64:
+                                    !prev.IsUseBackgroundImageBase64,
+                                Background: "image",
+                            }));
+                        }}
+                        className="absolute main-check-icon z-10 text-[blue]"
+                    />
                     <div className="absolute inset-0 bg-black opacity-30 z-0"></div>
                 </div>
                 <input
@@ -1003,7 +1025,9 @@ function BackgroundMode({
                 <h3>SỬ DỤNG MÀU NỀN</h3>
                 <div
                     className={`background-main-preview ${
-                        formData?.Background === "color_gradient" ? "active" : ""
+                        formData?.Background === "color_gradient"
+                            ? "active"
+                            : ""
                     }`}
                     style={{
                         background:
@@ -1021,7 +1045,7 @@ function BackgroundMode({
                             setFormData({
                                 ...formData,
                                 Background: "color_gradient",
-                            })
+                            });
                             handleSelectColorBackground();
                         }}
                         className="absolute bottom-4 left-4 z-10"
@@ -1033,16 +1057,24 @@ function BackgroundMode({
                     >
                         Click để đổi màu
                     </div>
-                    <CheckIcon style={{
-                        color: formData?.Background === "color_gradient" && formData?.Background === "color_gradient" ? "blue" : "#ccc"
-                    }} 
-                    className="absolute main-check-icon z-10" 
-                    onClick={() => {
-                        setFormData((prev: any) => ({
-                            ...prev,
-                            Background: formData?.Background === "color_gradient" ? "image" : "color_gradient",
-                        }));
-                    }}
+                    <CheckIcon
+                        style={{
+                            color:
+                                formData?.Background === "color_gradient" &&
+                                formData?.Background === "color_gradient"
+                                    ? "blue"
+                                    : "#ccc",
+                        }}
+                        className="absolute main-check-icon z-10"
+                        onClick={() => {
+                            setFormData((prev: any) => ({
+                                ...prev,
+                                Background:
+                                    formData?.Background === "color_gradient"
+                                        ? "image"
+                                        : "color_gradient",
+                            }));
+                        }}
                     />
                     <div className="absolute inset-0 bg-black opacity-30 z-0"></div>
                 </div>
@@ -1194,24 +1226,28 @@ function DesignSuggestions({
     setBackgroundMode: any;
     backgroundMode: "image" | "color";
 }) {
-
-    const [listBackground, setListBackground] = useState<{
-        id: number;
-        TitleColor: string;
-        ContentColor: string;
-        ButtonBackgroundColor: string;
-        ButtonContentColor: string;
-        url: string;
-    }[]>([]);
+    const [listBackground, setListBackground] = useState<
+        {
+            id: number;
+            TitleColor: string;
+            ContentColor: string;
+            ButtonBackgroundColor: string;
+            ButtonContentColor: string;
+            url: string;
+        }[]
+    >([]);
 
     useEffect(() => {
         const fetchBackgrounds = async () => {
             const response = await axios.get("/survey/all-bg");
             setListBackground(response.data.data);
-            localStorage.setItem("listBackground", JSON.stringify(response.data.data));
+            localStorage.setItem(
+                "listBackground",
+                JSON.stringify(response.data.data)
+            );
         };
         fetchBackgrounds();
-    },[]);
+    }, []);
 
     return (
         <>
@@ -1225,7 +1261,9 @@ function DesignSuggestions({
                                     <div
                                         key={index}
                                         className={`background-thumbnail-item ${
-                                            formData?.ConfigJson?.DefaultBackgroundImageId === item.id &&
+                                            formData?.ConfigJson
+                                                ?.DefaultBackgroundImageId ===
+                                                item.id &&
                                             backgroundMode === "image"
                                                 ? "active"
                                                 : ""
@@ -1235,11 +1273,15 @@ function DesignSuggestions({
                                                 ...prev,
                                                 ConfigJson: {
                                                     ...prev.ConfigJson,
-                                                    DefaultBackgroundImageId: item.id,
+                                                    DefaultBackgroundImageId:
+                                                        item.id,
                                                     TitleColor: item.TitleColor,
-                                                    ContentColor: item.ContentColor,
-                                                    ButtonBackgroundColor: item.ButtonBackgroundColor,
-                                                    ButtonContentColor: item.ButtonContentColor,
+                                                    ContentColor:
+                                                        item.ContentColor,
+                                                    ButtonBackgroundColor:
+                                                        item.ButtonBackgroundColor,
+                                                    ButtonContentColor:
+                                                        item.ButtonContentColor,
                                                 },
                                             }));
                                             setBackgroundMode("image");

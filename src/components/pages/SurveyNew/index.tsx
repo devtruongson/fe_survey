@@ -44,7 +44,7 @@ const defaultValue = {
         ButtonContentColor: "#ffffff",
         Password: "123456",
         Brightness: 100,
-        DefaultBackgroundImageId: 1
+        DefaultBackgroundImageId: 1,
     },
     Questions: [],
     SkipStartPage: false,
@@ -81,7 +81,7 @@ const SurveyNew = () => {
             value: 0,
             component: (
                 <StartPage
-                    isTrigger={isTrigger}
+                    // isTrigger={isTrigger}
                     formData={formData}
                     setFormData={setFormData}
                     handleTabClick={handleTabClick}

@@ -40,7 +40,7 @@ const Answer = ({
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64String = reader.result as string;
-                handleUpdateOption({ ...data, Image: base64String });
+                handleUpdateOption({ ...data, MainImageBase64: base64String });
                 setShowImage(true); // Auto show image after upload
             };
             reader.readAsDataURL(file);
@@ -84,7 +84,7 @@ const Answer = ({
                         <ImageIcon fontSize="small" />
                     </IconButton>
                 </label>
-                {data.Image && (
+                {data?.MainImageBase64 && (
                     <IconButton
                         size="small"
                         onClick={toggleImage}
@@ -110,10 +110,10 @@ const Answer = ({
                     <SettingsIcon fontSize="small" />
                 </IconButton>
             </div>
-            {data.Image && showImage && (
+            {data?.MainImageBase64 && showImage && (
                 <div className="mt-2" style={{ maxWidth: "300px" }}>
                     <img
-                        src={data.Image}
+                        src={data?.MainImageBase64}
                         alt="Uploaded answer"
                         style={{
                             width: "100%",

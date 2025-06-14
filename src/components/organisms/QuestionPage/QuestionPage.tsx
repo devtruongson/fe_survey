@@ -336,8 +336,8 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 {
                     ...questionDefault,
                     Order:
-                        (prev.Questions[prev.Questions.length - 1]?.Order || 0) +
-                        1,
+                        (prev.Questions[prev.Questions.length - 1]?.Order ||
+                            0) + 1,
                 },
             ],
         }));
@@ -350,12 +350,12 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
     const handleDeleteQuestion = () => {
         if (!orderCurrent) return;
-        const newQuestions = formData?.Questions
-            .filter((item) => item.Order !== orderCurrent)
-            .map((item, index) => ({
-                ...item,
-                Order: index + 1,
-            }));
+        const newQuestions = formData?.Questions.filter(
+            (item) => item.Order !== orderCurrent
+        ).map((item, index) => ({
+            ...item,
+            Order: index + 1,
+        }));
         setFormData((prev) => ({
             ...prev,
             Questions: newQuestions,
@@ -417,7 +417,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
             const reader = new FileReader();
             reader.onload = () => {
                 const base64String = reader.result;
-                handleUpdateQuestion("ImageHeader", base64String as string);
+                handleUpdateQuestion("MainImageBase64", base64String as string);
             };
             reader.onerror = (error) => {
                 console.error("Error reading file:", error);
@@ -431,8 +431,10 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
     const [listBackground, setListBackground] = useState<any[]>([]);
 
     useEffect(() => {
-        setListBackground(JSON.parse(localStorage.getItem("listBackground") || "[]"));
-    },[]);
+        setListBackground(
+            JSON.parse(localStorage.getItem("listBackground") || "[]")
+        );
+    }, []);
 
     return (
         <div className="question-page flex flex-col h-full">
@@ -456,7 +458,20 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                     className="question-main flex-1 flex flex-col overflow-y-auto relative"
                     style={{
                         ...(formData?.Background === "image" && {
-                            backgroundImage: `url(${formData?.IsUseBackgroundImageBase64 && formData.BackgroundImageBase64 ? formData.BackgroundImageBase64: formData?.ConfigJson?.DefaultBackgroundImageId ? listBackground.find(item => item.id === formData?.ConfigJson?.DefaultBackgroundImageId)?.url : ""})`,
+                            backgroundImage: `url(${
+                                formData?.IsUseBackgroundImageBase64 &&
+                                formData.BackgroundImageBase64
+                                    ? formData.BackgroundImageBase64
+                                    : formData?.ConfigJson
+                                          ?.DefaultBackgroundImageId
+                                    ? listBackground.find(
+                                          (item) =>
+                                              item.id ===
+                                              formData?.ConfigJson
+                                                  ?.DefaultBackgroundImageId
+                                      )?.url
+                                    : ""
+                            })`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
@@ -480,10 +495,10 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                     }}
                 >
                     <div className="question-input-container relative z-10 flex flex-col items-center">
-                        {questionedit?.ImageHeader &&
+                        {questionedit?.MainImageBase64 &&
                         questionedit.ConfigJson?.image_end_question ? (
                             <img
-                                src={questionedit?.ImageHeader}
+                                src={questionedit?.MainImageBase64}
                                 className="rounded-2xl "
                                 alt=""
                             />
