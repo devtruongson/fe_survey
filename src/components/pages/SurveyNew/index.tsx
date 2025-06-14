@@ -25,7 +25,7 @@ const defaultValue = {
     RequesterId: 10,
     Title: "",
     Description: "",
-    MarketSurveyVersionStatusId: null, // SurveyStatusId: 3
+    MarketSurveyVersionStatusId: 1, // SurveyStatusId: 3
     SurveyTypeId: 2,
     SurveyTopicId: 2,
     SurveySpecificTopicId: 5,
@@ -124,7 +124,7 @@ const SurveyNew = () => {
                     window.history.pushState(
                         {},
                         "",
-                        `/survey/update/${newData.data.id}`
+                        `/survey/update/${newData.data.Id}`
                     );
                 }
             },
