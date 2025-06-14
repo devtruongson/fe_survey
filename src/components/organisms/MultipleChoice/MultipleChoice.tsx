@@ -1,6 +1,10 @@
 import "./styles.scss";
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { OptionType, QuestionType } from "../../../types/survey";
+import type {
+    OptionType,
+    QuestionType,
+    SurveyType,
+} from "../../../types/survey";
 /* eslint-enable @typescript-eslint/no-unused-vars */
 import ButtonAddAnswer from "../../molecules/buttons/ButtonAddAnswer";
 import Answer from "../../molecules/answer/Answer";
@@ -8,6 +12,7 @@ import { answerDefault } from "../../../constants/question";
 import { useEffect } from "react";
 
 type Props = {
+    formData: SurveyType;
     question: QuestionType;
     handleUpdateQuestion: (
         key: keyof QuestionType,
@@ -20,7 +25,11 @@ type Props = {
     ) => void;
 };
 
-const MultipleChoice = ({ question, handleUpdateQuestion }: Props) => {
+const MultipleChoice = ({
+    question,
+    handleUpdateQuestion,
+    formData,
+}: Props) => {
     useEffect(() => {
         if (!question?.Options?.length) {
             handleUpdateQuestion("Options", [{ ...answerDefault, Order: 1 }]);
@@ -62,31 +71,7 @@ const MultipleChoice = ({ question, handleUpdateQuestion }: Props) => {
                               handleUpdateOption={handleUpdateOption}
                               handleDeleteOption={handleDeleteOption}
                               isDisableClose={false}
-                              formData={{
-                                  Id: 0,
-                                  RequesterId: 0,
-                                  Title: "",
-                                  Description: "",
-                                  MarketSurveyVersionStatusId: 1,
-                                  SurveyTypeId: 0,
-                                  SurveyTopicId: 0,
-                                  SurveySpecificTopicId: 0,
-                                  SurveyStatusId: 0,
-                                  SecurityModeId: 0,
-                                  Background: "",
-                                  ConfigJson: {
-                                      BackgroundGradient1Color: "",
-                                      BackgroundGradient2Color: "",
-                                      TitleColor: "",
-                                      ContentColor: "",
-                                      ButtonBackgroundColor: "",
-                                      ButtonContentColor: "",
-                                      Password: "",
-                                      Brightness: 0,
-                                  },
-                                  Questions: [],
-                                  SkipStartPage: false,
-                              }}
+                              formData={formData}
                           />
                       );
                   })

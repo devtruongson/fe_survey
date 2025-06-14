@@ -27,6 +27,7 @@ import RatingIcon from "./components/rating-icon/RatingIcon";
 import "./styles.scss";
 
 const questionDefault = {
+    Id: null,
     QuestionTypeId: 0,
     Content: "",
     Description: "",
@@ -274,6 +275,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                         <MultipleChoice
                             question={questionedit}
                             handleUpdateQuestion={handleUpdateQuestion}
+                            formData={formData}
                         />
                     ) : null;
                 case 3:

@@ -13,7 +13,7 @@ export const SurveyQuestionType: SurveyQuestionType[] = [
     { id: 7, name: "Ranking" }, // Xếp hạng
 ];
 
-export const answerDefault = { Content: "", Order: 0 };
+export const answerDefault = { Id: null, Content: "", Order: 0 };
 
 export const SurveyFieldInputType = [
     { id: 1, name: "Kiểu câu ngắn không xuống dòng" },

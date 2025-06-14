@@ -1,4 +1,5 @@
 export type OptionType = {
+    Id?: number | null;
     Content: string;
     Order: number;
     Image?: string; // base64 image data
@@ -21,6 +22,7 @@ export type JumpLogicsType = {
     TargetQuestionOrder: number;
 };
 export type QuestionType = {
+    Id?: number | null;
     ImageHeader?: string;
     QuestionTypeId: number;
     Content: string;
