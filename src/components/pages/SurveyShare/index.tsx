@@ -53,13 +53,13 @@ interface JumpLogicCondition {
 }
 
 interface JumpLogic {
-    conditions: JumpLogicCondition[];
-    targetQuestionOrder: number;
+    Conditions: JumpLogicCondition[];
+    TargetQuestionOrder: number;
 }
 
 interface DisplayLogic {
-    conditions: JumpLogicCondition[];
-    targetQuestionOrder: number;
+    Conditions: JumpLogicCondition[];
+    TargetQuestionOrder: number;
 }
 
 interface MatrixDataItem {
@@ -81,8 +81,8 @@ interface QuestionConfig {
     ratingLength?: number;
     required_answer?: boolean;
     is_auto_view_show?: boolean;
-    jumpLogics?: JumpLogic[];
-    displayLogics?: DisplayLogic[];
+    JumpLogics?: JumpLogic[];
+    DisplayLogics?: DisplayLogic[];
 }
 
 interface Question {
@@ -359,19 +359,19 @@ const SurveyPreview: React.FC = () => {
                     )}
 
                     {/* Jump Logic Info */}
-                    {question.ConfigJson.jumpLogics && question.ConfigJson.jumpLogics.length > 0 && (
+                    {question.ConfigJson.JumpLogics && question.ConfigJson.JumpLogics.length > 0 && (
                         <Box sx={{ mt: 2, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
                             <Typography variant="caption" color="text.secondary">
-                                <strong>Logic nhảy:</strong> Có điều kiện chuyển câu hỏi ({question.ConfigJson.jumpLogics.length} điều kiện)
+                                <strong>Logic nhảy:</strong> Có điều kiện chuyển câu hỏi ({question.ConfigJson.JumpLogics.length} điều kiện)
                             </Typography>
                         </Box>
                     )}
 
                     {/* Display Logic Info */}
-                    {question.ConfigJson.displayLogics && question.ConfigJson.displayLogics.length > 0 && (
+                    {question.ConfigJson.DisplayLogics && question.ConfigJson.DisplayLogics.length > 0 && (
                         <Box sx={{ mt: 1, p: 2, bgcolor: '#f0f8ff', borderRadius: 1 }}>
                             <Typography variant="caption" color="text.secondary">
-                                <strong>Logic hiển thị:</strong> Có điều kiện hiển thị ({question.ConfigJson.displayLogics.length} điều kiện)
+                                <strong>Logic hiển thị:</strong> Có điều kiện hiển thị ({question.ConfigJson.DisplayLogics.length} điều kiện)
                             </Typography>
                         </Box>
                     )}
