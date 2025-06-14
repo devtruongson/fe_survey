@@ -36,14 +36,14 @@ const Voice = ({
     setFormData,
     handleUpdateQuestion,
 }: SwitchCustomizeProps) => {
-    console.log(question?.isVoice);
+    console.log(question?.IsVoice);
     const checked = useMemo(() => {
-        return question?.isVoice || false;
+        return question?.IsVoice || false;
     }, [question]);
 
     const handleChange = useCallback(() => {
         if (isPro) {
-            handleUpdateQuestion("isVoice", !checked);
+            handleUpdateQuestion("IsVoice", !checked);
             if (!isPro) {
                 setFormData((prev) => ({ ...prev, SecurityModeId: 3 }));
             }
@@ -78,7 +78,7 @@ const Voice = ({
             `,
         }).then((result) => {
             if (result.isConfirmed) {
-                handleUpdateQuestion("isVoice", !checked);
+                handleUpdateQuestion("IsVoice", !checked);
                 if (!isPro) {
                     setFormData((prev) => ({ ...prev, SecurityModeId: 3 }));
                 }

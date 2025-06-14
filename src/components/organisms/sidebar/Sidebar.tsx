@@ -38,10 +38,10 @@ const Sidebar = ({
     listComponent: any;
 }) => {
     const handleChangeType = (type: number) => {
-        handleUpdateQuestion("questionTypeId", type);
+        handleUpdateQuestion("QuestionTypeId", type);
         handleUpdateQuestion("ConfigJson", {});
-        if (question?.options?.length) {
-            handleUpdateQuestion("options", []);
+        if (question?.Options?.length) {
+            handleUpdateQuestion("Options", []);
         }
     };
 
@@ -52,7 +52,7 @@ const Sidebar = ({
         <>
             <p>Chọn loại câu hỏi</p>
             <Select
-                value={question?.questionTypeId || 0}
+                value={question?.QuestionTypeId || 0}
                 onChange={(e) => handleChangeType(e.target.value)}
                 label="Chọn loại câu hỏi"
                 className="mb-2"

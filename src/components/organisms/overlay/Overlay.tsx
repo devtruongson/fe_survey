@@ -124,8 +124,8 @@ const Confirm = ({
                 >
                     {formData.Questions.map((item, index) => {
                         return (
-                            <MenuItem value={item.order} key={index}>
-                                {item.order}.
+                            <MenuItem value={item.Order} key={index}>
+                                {item.Order}.
                             </MenuItem>
                         );
                     })}

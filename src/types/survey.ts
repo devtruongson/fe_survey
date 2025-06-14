@@ -1,35 +1,35 @@
 export type OptionType = {
-    content: string;
-    order: number;
-    image?: string; // base64 image data
+    Content: string;
+    Order: number;
+    Image?: string; // base64 image data
 };
 
 export type SlideType = {
-    min: number;
-    max: number;
-    step: number;
-    unit: string;
+    Min: number;
+    Max: number;
+    Step: number;
+    Unit: string;
 };
 
 export type JumpLogicsType = {
-    conditions: {
-        questionOrder: number;
-        conjunction: string;
-        operator: string;
-        compareValue: number;
+    Conditions: {
+        QuestionOrder: number;
+        Conjunction: string;
+        Operator: string;
+        CompareValue: number;
     }[];
-    targetQuestionOrder: number;
+    TargetQuestionOrder: number;
 };
 export type QuestionType = {
-    image_header?: string;
-    questionTypeId: number;
-    content: string;
-    description: string;
-    timeLimit: number;
-    isVoice: boolean;
-    order: number;
+    ImageHeader?: string;
+    QuestionTypeId: number;
+    Content: string;
+    Description: string;
+    TimeLimit: number;
+    IsVoice: boolean;
+    Order: number;
     ConfigJson: Record<string, string | number | SlideType[] | JumpLogicsType[]>;
-    options: OptionType[];
+    Options: OptionType[];
 };
 
 export type SurveyType = {
@@ -44,12 +44,9 @@ export type SurveyType = {
     SurveyStatusId: number;
     SecurityModeId: number;
     Background: string;
-    MainImageBase64?: string;
-    BackgroundImageBase64: string;
-    IsUseBackgroundImageBase64: boolean;
+    ImageBase64?: string;
     CustomBackgroundImageUrl?: string | null;
     ConfigJson: {
-        DefaultBackgroundImageId: number;
         BackgroundGradient1Color: string;
         BackgroundGradient2Color: string;
         TitleColor: string;

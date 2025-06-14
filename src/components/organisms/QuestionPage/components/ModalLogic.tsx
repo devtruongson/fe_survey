@@ -225,9 +225,9 @@ function ModalLogic({
     };
 
     const getOperatorsForQuestion = (
-        questionTypeId: number
+        QuestionTypeId: number
     ): OperatorType[] => {
-        switch (questionTypeId) {
+        switch (QuestionTypeId) {
             case 1:
                 return [
                     { value: "Chọn", label: "Chọn" },
@@ -349,25 +349,25 @@ function ModalLogic({
                                                 {questions
                                                     ?.filter(
                                                         (item) =>
-                                                            item.questionTypeId ===
+                                                            item.QuestionTypeId ===
                                                                 1 ||
-                                                            item.questionTypeId ===
+                                                            item.QuestionTypeId ===
                                                                 2 ||
-                                                            item.questionTypeId ===
+                                                            item.QuestionTypeId ===
                                                                 6
                                                     )
                                                     ?.map((q) => (
                                                         <option
-                                                            key={q.order}
-                                                            value={q.order.toString()}
+                                                            key={q.Order}
+                                                            value={q.Order.toString()}
                                                         >
-                                                            {q.order}.
-                                                            {q.content &&
-                                                                ` ${q.content.substring(
+                                                            {q.Order}.
+                                                            {q.Content &&
+                                                                ` ${q.Content.substring(
                                                                     0,
                                                                     50
                                                                 )}${
-                                                                    q.content
+                                                                    q.Content
                                                                         .length >
                                                                     50
                                                                         ? "..."
@@ -399,9 +399,9 @@ function ModalLogic({
                                                     getOperatorsForQuestion(
                                                         questions.find(
                                                             (q) =>
-                                                                q.order ===
+                                                                q.Order ===
                                                                 condition.questionOrder
-                                                        )?.questionTypeId || 0
+                                                        )?.QuestionTypeId || 0
                                                     ).map((op) => (
                                                         <option
                                                             key={op.value}
@@ -442,19 +442,19 @@ function ModalLogic({
                                                         questions
                                                             .find(
                                                                 (q) =>
-                                                                    q.order ===
+                                                                    q.Order ===
                                                                     condition.questionOrder
                                                             )
-                                                            ?.options?.map(
-                                                                (opt) => (
+                                                            ?.Options?.map(
+                                                                (opt: OptionType) => (
                                                                     <option
                                                                         key={
-                                                                            opt.order
+                                                                            opt.Order
                                                                         }
-                                                                        value={opt.order.toString()}
+                                                                        value={opt.Order.toString()}
                                                                     >
                                                                         {
-                                                                            opt.content
+                                                                            opt.Content
                                                                         }
                                                                     </option>
                                                                 )
@@ -563,16 +563,16 @@ function ModalLogic({
                                         </option>
                                         {questions.map((q) => (
                                             <option
-                                                key={q.order}
-                                                value={q.order.toString()}
+                                                key={q.Order}
+                                                value={q.Order.toString()}
                                             >
-                                                Câu hỏi {q.order}
-                                                {q.content &&
-                                                    ` - ${q.content.substring(
+                                                Câu hỏi {q.Order}
+                                                {q.Content &&
+                                                    ` - ${q.Content.substring(
                                                         0,
                                                         50
                                                     )}${
-                                                        q.content.length > 50
+                                                        q.Content.length > 50
                                                             ? "..."
                                                             : ""
                                                     }`}

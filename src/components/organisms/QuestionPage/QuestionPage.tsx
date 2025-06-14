@@ -27,14 +27,14 @@ import RatingIcon from "./components/rating-icon/RatingIcon";
 import "./styles.scss";
 
 const questionDefault = {
-    questionTypeId: 0,
-    content: "",
-    description: "",
-    timeLimit: 0,
-    isVoice: false,
-    order: 0,
+    QuestionTypeId: 0,
+    Content: "",
+    Description: "",
+    TimeLimit: 0,
+    IsVoice: false,
+    Order: 0,
     ConfigJson: {},
-    options: [],
+    Options: [],
 };
 
 type Props = {
@@ -49,7 +49,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
     const questionedit = useMemo(() => {
         return (formData?.Questions || []).find((item) => {
-            return item?.order === orderCurrent;
+            return item?.Order === orderCurrent;
         });
     }, [formData, orderCurrent]);
 
@@ -69,8 +69,8 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 ...prev,
                 Questions: prev.Questions.map((item) => {
                     if (
-                        questionedit?.order &&
-                        item.order === questionedit?.order
+                        questionedit?.Order &&
+                        item.Order === questionedit?.Order
                     ) {
                         return {
                             ...item,
@@ -82,7 +82,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
             }));
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [questionedit?.order]
+        [questionedit?.Order]
     );
 
     const rulesType = SurveyQuestionType.map((item) => {
@@ -333,8 +333,8 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 ...prev.Questions,
                 {
                     ...questionDefault,
-                    order:
-                        (prev.Questions[prev.Questions.length - 1]?.order || 0) +
+                    Order:
+                        (prev.Questions[prev.Questions.length - 1]?.Order || 0) +
                         1,
                 },
             ],
@@ -342,17 +342,17 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
         setOrderCurrent(formData?.Questions?.length + 1);
     }, [formData?.Questions?.length, setFormData, isTrigger]);
 
-    const handleChangeQuestion = (order: number) => {
-        setOrderCurrent(order);
+    const handleChangeQuestion = (Order: number) => {
+        setOrderCurrent(Order);
     };
 
     const handleDeleteQuestion = () => {
         if (!orderCurrent) return;
         const newQuestions = formData?.Questions
-            .filter((item) => item.order !== orderCurrent)
+            .filter((item) => item.Order !== orderCurrent)
             .map((item, index) => ({
                 ...item,
-                order: index + 1,
+                Order: index + 1,
             }));
         setFormData((prev) => ({
             ...prev,
@@ -370,10 +370,10 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
 
         const questions = [...formData.Questions];
         const currentIndex = questions.findIndex(
-            (item) => item.order === currentOrder
+            (item) => item.Order === currentOrder
         );
         const targetIndex = questions.findIndex(
-            (item) => item.order === targetOrder
+            (item) => item.Order === targetOrder
         );
 
         if (currentIndex === -1 || targetIndex === -1) {
@@ -388,7 +388,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
         // Cập nhật lại order cho tất cả câu hỏi
         const newQuestions = questions.map((item, idx) => ({
             ...item,
-            order: idx + 1,
+            Order: idx + 1,
         }));
 
         setFormData((prev) => ({
@@ -404,7 +404,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
         if (!formData?.Questions?.length) {
             setFormData((prev) => ({
                 ...prev,
-                Questions: [{ ...questionDefault, order: 1 }],
+                Questions: [{ ...questionDefault, Order: 1 }],
             }));
         }
     }, [formData?.Questions?.length, setFormData]);
@@ -415,7 +415,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
             const reader = new FileReader();
             reader.onload = () => {
                 const base64String = reader.result;
-                handleUpdateQuestion("image_header", base64String as string);
+                handleUpdateQuestion("ImageHeader", base64String as string);
             };
             reader.onerror = (error) => {
                 console.error("Error reading file:", error);
@@ -472,10 +472,10 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                     }}
                 >
                     <div className="question-input-container relative z-10 flex flex-col items-center">
-                        {questionedit?.image_header &&
+                        {questionedit?.ImageHeader &&
                         questionedit.ConfigJson?.image_end_question ? (
                             <img
-                                src={questionedit?.image_header}
+                                src={questionedit?.ImageHeader}
                                 className="rounded-2xl "
                                 alt=""
                             />
@@ -498,29 +498,29 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                             style={{
                                 color: `${formData?.ConfigJson?.TitleColor}`,
                             }}
-                            value={questionedit?.content || ""}
+                            value={questionedit?.Content || ""}
                             onChange={(e) =>
-                                handleUpdateQuestion("content", e.target.value)
+                                handleUpdateQuestion("Content", e.target.value)
                             }
                         />
                         <textarea
                             placeholder="Nhập mô tả tại đây"
                             rows={2}
                             className="question-description-input"
-                            value={questionedit?.description || ""}
+                            value={questionedit?.Description || ""}
                             style={{
                                 color: `${formData?.ConfigJson?.ContentColor}`,
                             }}
                             onChange={(e) =>
                                 handleUpdateQuestion(
-                                    "description",
+                                    "Description",
                                     e.target.value
                                 )
                             }
                         ></textarea>
                     </div>
                     <div className="flex justify-center">
-                        {handleRenderView(questionedit?.questionTypeId || 0)}
+                        {handleRenderView(questionedit?.QuestionTypeId || 0)}
                     </div>
                 </div>
 
@@ -533,7 +533,7 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                         listComponent={
                             rulesType.find(
                                 (item) =>
-                                    item.type === questionedit?.questionTypeId
+                                    item.type === questionedit?.QuestionTypeId
                             )?.rules as []
                         }
                     />
@@ -544,8 +544,8 @@ const QuestionPage = ({ formData, setFormData, isTrigger }: Props) => {
                 <div className="footer-content flex">
                     {(formData?.Questions || [])?.map((item) => (
                         <QuestionItem
-                            key={item.order}
-                            order={item.order}
+                            key={item.Order}
+                            order={item.Order}
                             orderCurrent={orderCurrent}
                             onChange={handleChangeQuestion}
                             onOpenOverlay={() => setIsOpenOverlay(true)}

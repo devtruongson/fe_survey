@@ -47,8 +47,8 @@ export default function SwitchCustomize({
         if (type === "is_choose_muitiple") {
             return (
                 question?.ConfigJson?.valueMinMax || {
-                    min: 0,
-                    max: 0,
+                    Min: 0,
+                    Max: 0,
                 }
             );
         }
@@ -61,8 +61,8 @@ export default function SwitchCustomize({
         handleUpdateQuestion("ConfigJson", {
             ...question.ConfigJson,
             valueMinMax: {
-                min: value,
-                max: question?.ConfigJson?.valueMinMax?.max,
+                Min: value,
+                Max: question?.ConfigJson?.valueMinMax?.Max,
             },
         });
     };
@@ -74,8 +74,8 @@ export default function SwitchCustomize({
         handleUpdateQuestion("ConfigJson", {
             ...question.ConfigJson,
             valueMinMax: {
-                max: value,
-                min: question?.ConfigJson?.valueMinMax?.min,
+                Max: value,
+                Min: question?.ConfigJson?.valueMinMax?.Min,
             },
         });
     };
@@ -129,7 +129,7 @@ export default function SwitchCustomize({
                         }}
                         type="number"
                         min={"0"}
-                        value={valueMinMax.min}
+                        value={valueMinMax.Min}
                     />
                     <div
                         style={{
@@ -153,7 +153,7 @@ export default function SwitchCustomize({
                             background: "#f5f5f5",
                             outline: "none",
                         }}
-                        value={valueMinMax.max}
+                        value={valueMinMax.Max}
                     />
                 </Box>
             ) : (

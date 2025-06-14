@@ -47,14 +47,14 @@ const SingleInput = ({ question, handleUpdateQuestion }: Props) => {
                 ...question.ConfigJson,
                 fieldInputTypeId: id,
             });
-            if (question?.options?.length) {
-                handleUpdateQuestion("options", []);
+            if (question?.Options?.length) {
+                handleUpdateQuestion("Options", []);
             }
         },
         [
             handleUpdateQuestion,
             question.ConfigJson,
-            question?.options?.length,
+            question?.Options?.length,
         ]
     );
 

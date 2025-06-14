@@ -8,10 +8,10 @@ import "./styles.scss";
 import { Box, Slider, TextField, Typography } from "@mui/material";
 
 type SliderDataType = {
-    min: number;
-    max: number;
-    step: number;
-    unit: string;
+    Min: number;
+    Max: number;
+    Step: number;
+    Unit: string;
 };
 
 export type RangeSliderConfigJsonType = SliderDataType;
@@ -32,16 +32,16 @@ type Props = {
 };
 
 const defaultData: SliderDataType = {
-    min: 1,
-    max: 10,
-    step: 1,
-    unit: "",
+    Min: 1,
+    Max: 10,
+    Step: 1,
+    Unit: "",
 };
 
 const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
     const [value, setValue] = useState<number[]>([
-        defaultData.min,
-        defaultData.max,
+        defaultData.Min,
+        defaultData.Max,
     ]);
 
     const handleSliderChange = (_event: Event, newValue: number | number[]) => {
@@ -72,10 +72,10 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
         if (isEmptyConfigObject || isDataMissing) {
             if (typeof handleUpdateQuestion === "function") {
                 handleUpdateQuestion("ConfigJson", { ...defaultData });
-                setValue([defaultData.min, defaultData.max]);
+                setValue([defaultData.Min, defaultData.Max]);
             }
         } else {
-            setValue([Number(config.min), Number(config.max)]);
+            setValue([Number(config.Min), Number(config.Max)]);
         }
     }, [question?.ConfigJson, handleUpdateQuestion]);
 
@@ -83,10 +83,10 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
     const currentData =
         config &&
         typeof config === "object" &&
-        "min" in config &&
-        "max" in config &&
-        "step" in config &&
-        "unit" in config
+        "Min" in config &&
+        "Max" in config &&
+        "Step" in config &&
+        "Unit" in config
             ? config
             : defaultData;
 
@@ -96,7 +96,7 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
                 <Box className="flex flex-col items-center w-full">
                     <Box className="flex justify-between w-full px-1 mb-2">
                         <Typography variant="body2" color="white">
-                            {currentData.min}
+                            {currentData.Min}
                         </Typography>
                         <Typography
                             variant="body2"
@@ -106,10 +106,10 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
                                 textAlign: "center",
                             }}
                         >
-                            {currentData.step}
+                            {currentData.Step}
                         </Typography>
                         <Typography variant="body2" color="white">
-                            {currentData.max}
+                            {currentData.Max}
                         </Typography>
                     </Box>
                     <Slider
@@ -117,9 +117,9 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
                         onChange={handleSliderChange}
                         aria-labelledby="range-slider"
                         valueLabelDisplay="auto"
-                        min={currentData.min}
-                        max={currentData.max}
-                        step={currentData.step}
+                        min={currentData.Min}
+                        max={currentData.Max}
+                        step={currentData.Step}
                         sx={{
                             "& .MuiSlider-thumb": {
                                 backgroundColor: formData?.ConfigJson
@@ -145,12 +145,12 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
                         </Typography>
                         <TextField
                             type="number"
-                            value={currentData.min}
+                            value={currentData.Min}
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                             ) =>
                                 handleRangeConfigChange(
-                                    "min",
+                                    "Min",
                                     Number(e.target.value)
                                 )
                             }
@@ -168,12 +168,12 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
                         </Typography>
                         <TextField
                             type="number"
-                            value={currentData.step}
+                            value={currentData.Step}
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                             ) =>
                                 handleRangeConfigChange(
-                                    "step",
+                                    "Step",
                                     Number(e.target.value)
                                 )
                             }
@@ -191,12 +191,12 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
                         </Typography>
                         <TextField
                             type="number"
-                            value={currentData.max}
+                            value={currentData.Max}
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                             ) =>
                                 handleRangeConfigChange(
-                                    "max",
+                                    "Max",
                                     Number(e.target.value)
                                 )
                             }
@@ -213,11 +213,11 @@ const RangeSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
                             Unit
                         </Typography>
                         <TextField
-                            value={currentData.unit}
+                            value={currentData.Unit}
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                             ) =>
-                                handleRangeConfigChange("unit", e.target.value)
+                                handleRangeConfigChange("Unit", e.target.value)
                             }
                             InputLabelProps={{ shrink: true }}
                             placeholder="Đơn vị"

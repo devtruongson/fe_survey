@@ -22,43 +22,43 @@ type Props = {
 
 const Ranking = ({ question, handleUpdateQuestion }: Props) => {
     useEffect(() => {
-        if (!question?.options?.length) {
-            handleUpdateQuestion("options", [{ ...answerDefault, order: 1 }]);
+        if (!question?.Options?.length) {
+            handleUpdateQuestion("Options", [{ ...answerDefault, Order: 1 }]);
         }
     }, [question, handleUpdateQuestion]);
 
     const handleUpdateOption = (updatedOption: OptionType) => {
-        const updatedOptions = (question?.options || []).map((option) =>
-            option.order === updatedOption.order ? updatedOption : option
+        const updatedOptions = (question?.Options || []).map((option) =>
+            option.Order === updatedOption.Order ? updatedOption : option
         );
-        handleUpdateQuestion("options", updatedOptions);
+        handleUpdateQuestion("Options", updatedOptions);
     };
 
     const handleDeleteOption = (orderToDelete: number) => {
-        const updatedOptions = (question?.options || []).filter(
-            (option) => option.order !== orderToDelete
+        const updatedOptions = (question?.Options || []).filter(
+            (option) => option.Order !== orderToDelete
         );
 
-        handleUpdateQuestion("options", updatedOptions);
+        handleUpdateQuestion("Options", updatedOptions);
     };
 
     const handleAddAnswer = () => {
-        const newOrder = question?.options?.length
-            ? Math.max(...question.options.map((o) => o.order)) + 1
+        const newOrder = question?.Options?.length
+            ? Math.max(...question.Options.map((o) => o.Order)) + 1
             : 1;
-        const newOption = { ...answerDefault, order: newOrder };
-        const updatedOptions = [...(question?.options || []), newOption];
-        handleUpdateQuestion("options", updatedOptions);
+        const newOption = { ...answerDefault, Order: newOrder };
+        const updatedOptions = [...(question?.Options || []), newOption];
+        handleUpdateQuestion("Options", updatedOptions);
     };
 
     return (
         <div className="ranking flex flex-col gap-2">
-            {question?.options?.length
-                ? question.options.map((item) => {
+            {question?.Options?.length
+                ? question.Options.map((item) => {
                       return (
                           <Answer
                               data={item}
-                              key={item.order}
+                              key={item.Order}
                               handleUpdateOption={handleUpdateOption}
                               handleDeleteOption={handleDeleteOption}
                               isDisableClose={false}

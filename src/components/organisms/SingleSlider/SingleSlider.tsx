@@ -26,22 +26,22 @@ type Props = {
 
 const SingleSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
     const [value, setValue] = useState(
-        Number(question?.ConfigJson?.max) || 10
+        Number(question?.ConfigJson?.Max) || 10
     );
     const min = useMemo(
-        () => Number(question?.ConfigJson?.min) || 0,
+        () => Number(question?.ConfigJson?.Min) || 0,
         [question]
     );
     const max = useMemo(
-        () => Number(question?.ConfigJson?.max) || 0,
+        () => Number(question?.ConfigJson?.Max) || 0,
         [question]
     );
     const step = useMemo(
-        () => Number(question?.ConfigJson?.step) || 0,
+        () => Number(question?.ConfigJson?.Step) || 0,
         [question]
     );
     const unit = useMemo(
-        () => question?.ConfigJson?.unit || "",
+        () => question?.ConfigJson?.Unit || "",
         [question]
     );
     const handleSliderChange = (_event: Event, newValue: number) => {
@@ -56,7 +56,7 @@ const SingleSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
             }
             handleUpdateQuestion("ConfigJson", {
                 ...question.ConfigJson,
-                min: value,
+                Min: value,
             });
         },
         [handleUpdateQuestion, max, question.ConfigJson]
@@ -70,7 +70,7 @@ const SingleSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
             }
             handleUpdateQuestion("ConfigJson", {
                 ...question.ConfigJson,
-                max: value,
+                Max: value,
             });
         },
         [handleUpdateQuestion, min, question.ConfigJson]
@@ -84,7 +84,7 @@ const SingleSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
             }
             handleUpdateQuestion("ConfigJson", {
                 ...question.ConfigJson,
-                step: event.target.value,
+                Step: event.target.value,
             });
         },
         [handleUpdateQuestion, max, min, question.ConfigJson]
@@ -93,17 +93,17 @@ const SingleSlider = ({ question, handleUpdateQuestion, formData }: Props) => {
     const handleUnitChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         handleUpdateQuestion("ConfigJson", {
             ...question.ConfigJson,
-            unit: event.target.value,
+            Unit: event.target.value,
         });
     };
 
     useEffect(() => {
         if (Object.keys(question.ConfigJson).length === 0) {
             handleUpdateQuestion("ConfigJson", {
-                min: 0,
-                max: 10,
-                step: 1,
-                unit: "",
+                Min: 0,
+                Max: 10,
+                Step: 1,
+                Unit: "",
             });
         }
     }, [handleUpdateQuestion, question.ConfigJson]);

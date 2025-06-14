@@ -12,24 +12,24 @@ const getErrors = (formData: SurveyType): string[] => {
     const errors: string[] = [];
     if (formData?.Questions) {
         formData.Questions.forEach((question) => {
-            if (!question.content) {
-                errors.push(`Câu hỏi ${question.order} chưa điền tiêu đề`);
+            if (!question.Content) {
+                errors.push(`Câu hỏi ${question.Order} chưa điền tiêu đề`);
             }
 
-            if (!question.questionTypeId) {
-                errors.push(`Câu hỏi ${question.order} chưa chọn loại câu hỏi`);
+            if (!question.QuestionTypeId) {
+                errors.push(`Câu hỏi ${question.Order} chưa chọn loại câu hỏi`);
             }
 
             if (
-                question.questionTypeId === 1 ||
-                question.questionTypeId === 2 ||
-                question.questionTypeId === 7
+                question.QuestionTypeId === 1 ||
+                question.QuestionTypeId === 2 ||
+                question.QuestionTypeId === 7
             ) {
-                if (question.options && question.options.length > 0) {
-                    question.options.forEach((option, optionIndex) => {
-                        if (!option.content) {
+                if (question.Options && question.Options.length > 0) {
+                    question.Options.forEach((option, optionIndex) => {
+                        if (!option.Content) {
                             errors.push(
-                                `Câu hỏi ${question.order}, Tùy chọn ${
+                                `Câu hỏi ${question.Order}, Tùy chọn ${
                                     optionIndex + 1
                                 } chưa điền nội dung`
                             );
@@ -37,10 +37,10 @@ const getErrors = (formData: SurveyType): string[] => {
                     });
                 } else {
                     errors.push(
-                        `Câu hỏi ${question.order} (${
-                            question.questionTypeId === 1
+                        `Câu hỏi ${question.Order} (${
+                            question.QuestionTypeId === 1
                                 ? "Trắc nghiệm 1 lựa chọn"
-                                : question.questionTypeId === 2
+                                : question.QuestionTypeId === 2
                                 ? "Trắc nghiệm nhiều lựa chọn"
                                 : "Xếp hạng"
                         }) cần có ít nhất một tùy chọn`

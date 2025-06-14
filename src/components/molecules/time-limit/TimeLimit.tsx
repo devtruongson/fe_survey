@@ -33,11 +33,11 @@ const TimeLimit = ({
     setFormData,
 }: Props) => {
     const [isOpen, setIsOpne] = useState(false);
-    const value = useMemo(() => Number(question?.timeLimit) || 0, [question]);
+    const value = useMemo(() => Number(question?.TimeLimit) || 0, [question]);
 
     const action = useCallback(() => {
         if (isOpen) {
-            handleUpdateQuestion("timeLimit", 0);
+            handleUpdateQuestion("TimeLimit", 0);
             setFormData((prev) => ({ ...prev, SecurityModeId: 1 }));
         }
         if (!isOpen && !isAdvance) {
@@ -84,17 +84,17 @@ const TimeLimit = ({
     };
 
     const handleChangeValue = (value: number) => {
-        handleUpdateQuestion("timeLimit", value);
+        handleUpdateQuestion("TimeLimit", value);
     };
 
     useEffect(() => {
-        if (Boolean(question?.timeLimit) && !isOpen) {
+        if (Boolean(question?.TimeLimit) && !isOpen) {
             setIsOpne(true);
         }
-        if (!question?.timeLimit && isOpen) {
+        if (!question?.TimeLimit && isOpen) {
             setIsOpne(false);
         }
-    }, [question?.order]);
+    }, [question?.Order]);
     return (
         <div className="w-full mb-2">
             <div>
