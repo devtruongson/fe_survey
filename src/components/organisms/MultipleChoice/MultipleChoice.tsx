@@ -84,7 +84,6 @@ const MultipleChoice = ({ question, handleUpdateQuestion }: Props) => {
                                       Password: "",
                                       Brightness: 0,
                                   },
-                                  Questions: [],
                                   SkipStartPage: false,
                               }}
                           />
