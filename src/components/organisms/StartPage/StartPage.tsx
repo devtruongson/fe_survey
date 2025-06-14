@@ -17,6 +17,7 @@ import OverlayDisable from "../../molecules/overlay-disable/OverlayDisable";
 import ColorPickerModal from "./Components/ColorPickerModal";
 import SecurityModal from "./Components/SecurityModal";
 import "./styles.scss";
+import axios from "../../../libs/axios";
 
 const backgrounds = Array.from(
     { length: 11 },
@@ -239,7 +240,8 @@ const StartPage = ({
                 setFormData((prev) => ({
                     ...prev,
                     Background: "custom",
-                    CustomBackgroundImageUrl: imageUrl,
+                    IsUseBackgroundImageBase64: true,
+                    BackgroundImageBase64: imageUrl,
                 }));
                 setBackgroundMode("image");
                 const defaultConfig = handleSelectBackground("default_color");
@@ -266,6 +268,22 @@ const StartPage = ({
     const handleCustomizePassword = () => {
         setShowPasswordModal(true);
     };
+    
+    const [listBackground, setListBackground] = useState<{
+        id: number;
+        TitleColor: string;
+        ContentColor: string;
+        ButtonBackgroundColor: string;
+        ButtonContentColor: string;
+        url: string;
+    }[]>([]);
+
+    useEffect(() => {
+        const listBackground = localStorage.getItem("listBackground");
+        if (listBackground) {
+            setListBackground(JSON.parse(listBackground));
+        }
+    }, []);
 
     return (
         <div
@@ -276,24 +294,17 @@ const StartPage = ({
             <div
                 className="relative flex-1 flex items-center justify-center"
                 style={{
-                    ...(backgroundMode === "color" && {
-                        ...(formData?.Background?.startsWith("#")
-                            ? {
-                                  backgroundColor: formData?.Background,
-                                  overflowY: "auto",
-                              }
-                            : {
-                                  background: `linear-gradient(to right, ${formData?.ConfigJson.BackgroundGradient1Color}, ${formData?.ConfigJson.BackgroundGradient2Color})`,
-                                  overflowY: "auto",
-                              }),
+                    ...(formData?.Background === "color_gradient" && {
+                        background: `linear-gradient(to right, ${formData?.ConfigJson.BackgroundGradient1Color}, ${formData?.ConfigJson.BackgroundGradient2Color})`,
+                        overflowY: "auto",
                     }),
                 }}
             >
-                {backgroundMode === "image" && (
+                {formData?.Background === "image" && (
                     <div
                         className="absolute inset-0"
                         style={{
-                            backgroundImage: `url(${formData?.Background})`,
+                            backgroundImage: `url(${formData?.IsUseBackgroundImageBase64 && formData.BackgroundImageBase64 ? formData.BackgroundImageBase64: formData?.ConfigJson?.DefaultBackgroundImageId ? listBackground.find(item => item.id === formData?.ConfigJson?.DefaultBackgroundImageId)?.url : ""})`,
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
@@ -410,7 +421,7 @@ const StartPage = ({
                                                 reader.result as string;
                                             setFormData((prev: any) => ({
                                                 ...prev,
-                                                ImageBase64: base64,
+                                                MainImageBase64: base64,
                                             }));
                                         };
                                         reader.readAsDataURL(file);
@@ -423,15 +434,15 @@ const StartPage = ({
                             >
                                 <CloudUploadIcon className="upload-icon" />
                                 <span className="upload-text">
-                                    {formData?.ImageBase64
+                                    {formData?.MainImageBase64
                                         ? "Thay đổi ảnh"
                                         : "Chọn ảnh"}
                                 </span>
                             </label>
-                            {formData?.ImageBase64 && (
+                            {formData?.MainImageBase64 && (
                                 <div className="image-preview">
                                     <img
-                                        src={formData.ImageBase64}
+                                        src={formData.MainImageBase64}
                                         alt="Preview"
                                         className="preview-image"
                                     />
@@ -440,7 +451,7 @@ const StartPage = ({
                                         onClick={() => {
                                             setFormData((prev: any) => ({
                                                 ...prev,
-                                                ImageBase64: null,
+                                                MainImageBase64: null,
                                             }));
                                         }}
                                     >
@@ -483,6 +494,7 @@ const StartPage = ({
                         handleSelectColorBackground={
                             handleSelectColorBackground
                         }
+                        setFormData={setFormData}
                         Brightness={Brightness}
                     />
                     <div className="w-full max-w-md mx-auto bg-white">
@@ -906,26 +918,33 @@ function BackgroundMode({
     handleBackgroundUpload: handleBackgroundUpload,
     handleSelectColorBackground: handleSelectColorBackground,
     Brightness: Brightness,
+    setFormData: setFormData,
 }: any) {
+
+    console.log("check formData: ", formData?.Background);
+    
     return (
         <>
             <div>
                 <h3>SỬ DỤNG HÌNH NỀN</h3>
                 <div
                     className={`background-main-preview ${
-                        backgroundMode === "image" ? "active" : ""
+                        formData?.Background === "image" ? "active" : ""
                     }`}
-                    onClick={() => {
-                        setBackgroundMode("image");
-                        document.getElementById("backgroundInput")?.click();
-                    }}
                     style={{
-                        backgroundImage: `url(${formData?.Background})`,
+                        backgroundImage: `url(${formData?.BackgroundImageBase64})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                     }}
                 >
                     <div
+                      onClick={() => {
+                        setFormData({
+                            ...formData,
+                            Background: "image",
+                        })
+                        document.getElementById("backgroundInput")?.click();
+                    }}
                         className="absolute bottom-4 left-4 z-10"
                         style={{
                             color: "white",
@@ -935,7 +954,17 @@ function BackgroundMode({
                     >
                         Click để đổi hình
                     </div>
-                    <CheckIcon className="absolute main-check-icon" />
+                    <CheckIcon style={{
+                        color: formData?.IsUseBackgroundImageBase64 && formData?.Background === "image" ? "blue" : "#ccc"
+                    }} 
+                    onClick={() => {
+                        setFormData((prev: any) => ({
+                            ...prev,
+                            IsUseBackgroundImageBase64: !prev.IsUseBackgroundImageBase64,
+                            Background: "image",
+                        }));
+                    }}
+                    className="absolute main-check-icon z-10 text-[blue]" />
                     <div className="absolute inset-0 bg-black opacity-30 z-0"></div>
                 </div>
                 <input
@@ -974,9 +1003,8 @@ function BackgroundMode({
                 <h3>SỬ DỤNG MÀU NỀN</h3>
                 <div
                     className={`background-main-preview ${
-                        backgroundMode === "color" ? "active" : ""
+                        formData?.Background === "color_gradient" ? "active" : ""
                     }`}
-                    onClick={handleSelectColorBackground}
                     style={{
                         background:
                             formData?.Background === "color_gradient"
@@ -989,6 +1017,13 @@ function BackgroundMode({
                     }}
                 >
                     <div
+                        onClick={() => {
+                            setFormData({
+                                ...formData,
+                                Background: "color_gradient",
+                            })
+                            handleSelectColorBackground();
+                        }}
                         className="absolute bottom-4 left-4 z-10"
                         style={{
                             color: "white",
@@ -998,7 +1033,17 @@ function BackgroundMode({
                     >
                         Click để đổi màu
                     </div>
-                    <CheckIcon className="absolute main-check-icon" />
+                    <CheckIcon style={{
+                        color: formData?.Background === "color_gradient" && formData?.Background === "color_gradient" ? "blue" : "#ccc"
+                    }} 
+                    className="absolute main-check-icon z-10" 
+                    onClick={() => {
+                        setFormData((prev: any) => ({
+                            ...prev,
+                            Background: formData?.Background === "color_gradient" ? "image" : "color_gradient",
+                        }));
+                    }}
+                    />
                     <div className="absolute inset-0 bg-black opacity-30 z-0"></div>
                 </div>
             </div>
@@ -1149,6 +1194,25 @@ function DesignSuggestions({
     setBackgroundMode: any;
     backgroundMode: "image" | "color";
 }) {
+
+    const [listBackground, setListBackground] = useState<{
+        id: number;
+        TitleColor: string;
+        ContentColor: string;
+        ButtonBackgroundColor: string;
+        ButtonContentColor: string;
+        url: string;
+    }[]>([]);
+
+    useEffect(() => {
+        const fetchBackgrounds = async () => {
+            const response = await axios.get("/survey/all-bg");
+            setListBackground(response.data.data);
+            localStorage.setItem("listBackground", JSON.stringify(response.data.data));
+        };
+        fetchBackgrounds();
+    },[]);
+
     return (
         <>
             <div className="config-section">
@@ -1156,18 +1220,12 @@ function DesignSuggestions({
                 <div className="background-preview">
                     <div className="background-thumbnail">
                         <div className="grid grid-cols-5 gap-4">
-                            {backgrounds.map((_item: any, index: number) => {
-                                const selectedConfig = handleSelectBackground(
-                                    `start${index + 1}`
-                                );
+                            {listBackground.map((item, index) => {
                                 return (
                                     <div
                                         key={index}
                                         className={`background-thumbnail-item ${
-                                            formData?.Background ===
-                                                `/assets/start${
-                                                    index + 1
-                                                }.webp` &&
+                                            formData?.ConfigJson?.DefaultBackgroundImageId === item.id &&
                                             backgroundMode === "image"
                                                 ? "active"
                                                 : ""
@@ -1175,32 +1233,20 @@ function DesignSuggestions({
                                         onClick={() => {
                                             setFormData((prev: any) => ({
                                                 ...prev,
-                                                Background: `/assets/start${
-                                                    index + 1
-                                                }.webp`,
                                                 ConfigJson: {
                                                     ...prev.ConfigJson,
-                                                    TitleColor:
-                                                        selectedConfig.colors
-                                                            .TitleColor,
-                                                    ContentColor:
-                                                        selectedConfig.colors
-                                                            .ContentColor,
-                                                    ButtonBackgroundColor:
-                                                        selectedConfig.colors
-                                                            .ButtonBackgroundColor,
-                                                    ButtonContentColor:
-                                                        selectedConfig.colors
-                                                            .ButtonContentColor,
+                                                    DefaultBackgroundImageId: item.id,
+                                                    TitleColor: item.TitleColor,
+                                                    ContentColor: item.ContentColor,
+                                                    ButtonBackgroundColor: item.ButtonBackgroundColor,
+                                                    ButtonContentColor: item.ButtonContentColor,
                                                 },
                                             }));
                                             setBackgroundMode("image");
                                         }}
                                     >
                                         <img
-                                            src={`/assets/start${
-                                                index + 1
-                                            }.webp`}
+                                            src={item.url}
                                             alt="background"
                                             className="w-full h-full object-cover"
                                         />
