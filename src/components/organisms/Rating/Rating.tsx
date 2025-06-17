@@ -110,11 +110,11 @@ const Rating = ({ question, handleUpdateQuestion }: Props) => {
     useEffect(() => {
         if (!config?.RatingLength || !config?.RatingIcon) {
             handleUpdateQuestion("ConfigJson", {
-                RatingIcon: config?.ratingIcon ?? "StarBorderIcon",
+                RatingIcon: config?.RatingIcon ?? "StarBorderIcon",
                 RatingLength: config?.RatingLength ?? 5,
             });
         }
-    }, [config, handleUpdateQuestion]);
+    }, []);
 
     return (
         <Box className="rating flex flex-col items-center justify-center p-4 bg-gray-100">
