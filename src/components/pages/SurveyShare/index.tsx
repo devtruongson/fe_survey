@@ -73,8 +73,8 @@ interface QuestionConfig {
     Step?: number;
     Unit?: string;
     data?: MatrixDataItem[];
-    ratingIcon?: string;
-    ratingLength?: number;
+    RatingIcon?: string;
+    RatingLength?: number;
     required_answer?: boolean;
     is_auto_view_show?: boolean;
     JumpLogics?: JumpLogic[];
@@ -417,14 +417,14 @@ const SurveyPreview: React.FC = () => {
                                 onChange={(_, value) =>
                                     handleAnswerChange(question.Order, value)
                                 }
-                                max={question.ConfigJson.ratingLength || 5}
+                                max={question.ConfigJson.RatingLength || 5}
                                 icon={<FreeBreakfast fontSize="inherit" />}
                                 emptyIcon={<FreeBreakfast fontSize="inherit" />}
                                 sx={{ color: "#FCBC72" }}
                             />
                             <Typography variant="body2" sx={{ mt: 1 }}>
                                 {(answers[question.Order] as number) || 0} /{" "}
-                                {question.ConfigJson.ratingLength || 5}
+                                {question.ConfigJson.RatingLength || 5}
                             </Typography>
                         </Box>
                     )}
