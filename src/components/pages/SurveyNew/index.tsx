@@ -62,7 +62,7 @@ const SurveyNew = () => {
     const timeoutRef = useRef<number | null>(null);
     const countdownRef = useRef<number | null>(null);
 
-    const isTrigger = useMemo(() => formData?.SurveyStatusId === 2, [formData]);
+    const isTrigger = useMemo(() => formData?.SurveyStatusId !== 2, [formData]);
 
     const { data } = useGetSurvey({ id: Number(id) || 0 });
 
