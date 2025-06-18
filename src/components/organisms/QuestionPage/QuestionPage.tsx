@@ -453,6 +453,7 @@ const QuestionPage = ({ formData, setFormData }: Props) => {
                         onSwap={handleSwapQuestion}
                         formData={formData}
                         orderCurrent={orderCurrent}
+                        setIsOpenOverlay={setIsOpenOverlay}
                     />
                 ) : null}
                 <div
