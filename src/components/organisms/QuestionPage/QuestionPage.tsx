@@ -98,17 +98,17 @@ const QuestionPage = ({ formData, setFormData }: Props) => {
             return {
                 type: item.id,
                 rules: [
-                    // {
-                    //     children: (
-                    //         <SwitchCustomize
-                    //             type="is_choose_muitiple"
-                    //             question={questionedit}
-                    //             isMinMax
-                    //             handleUpdateQuestion={handleUpdateQuestion}
-                    //             label="Chọn nhiều trả lời"
-                    //         />
-                    //     ),
-                    // },
+                    {
+                        children: (
+                            <SwitchCustomize
+                                type="IsChooseMuitiple"
+                                question={questionedit}
+                                isMinMax
+                                handleUpdateQuestion={handleUpdateQuestion}
+                                label="Chọn nhiều trả lời"
+                            />
+                        ),
+                    },
                     {
                         children: (
                             <SwitchCustomize
